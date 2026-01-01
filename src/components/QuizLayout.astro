@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from './Navigation.astro';
+import LessonMetadata from './LessonMetadata.astro';
+
+interface Props {
+	frontmatter: {
+		title: string;
+		chapter: number;
+		lesson: string;
+		author: string;
+		date: string;
+		description?: string;
+	};
+	Content: any;
+	prevLesson?: { chapter: number; lesson: number | string; title: string; slug: string };
+	nextLesson?: { chapter: number; lesson: number | string; title: string; slug: string };
+}
+
+const { frontmatter, Content, prevLesson, nextLesson } = Astro.props;
+const pageTitle = `${frontmatter.chapter}.x — Chapter ${frontmatter.chapter} summary and quiz`;
+---
+
+<BaseLayout title={pageTitle} description={frontmatter.description}>
+	<article class="quiz">
+		<header class="quiz-header">
+			<h1>{pageTitle}</h1>
+			<LessonMetadata author={frontmatter.author} date={frontmatter.date} />
+		</header>
+
+		<div class="quiz-content">
+			<Content />
+		</div>
+
+		<Navigation
+			currentChapter={frontmatter.chapter}
+			currentLesson={frontmatter.lesson}
+			prevLesson={prevLesson}
+			nextLesson={nextLesson}
+		/>
+	</article>
+</BaseLayout>
+
+<style>
+	.quiz {
+		width: 80%;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.quiz-header {
+		margin-bottom: 2rem;
+	}
+
+	.quiz-content {
+		line-height: 1.7;
+	}
+
+	/* Hide the first H1 in markdown content (duplicate of header title) */
+	.quiz-content :global(h1:first-of-type) {
+		display: none;
+	}
+
+	.quiz-content :global(h2) {
+		margin-top: 2.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.quiz-content :global(h3) {
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.quiz-content :global(p) {
+		margin-bottom: 1.25rem;
+	}
+
+	.quiz-content :global(ul),
+	.quiz-content :global(ol) {
+		margin: 1.25rem 0;
+	}
+
+	.quiz-content :global(li) {
+		margin-bottom: 0.75rem;
+	}
+
+	.quiz-content :global(code) {
+		background-color: #f8f8f8;
+		padding: 0.2em 0.5em;
+		border-radius: 3px;
+		font-size: 0.9em;
+		border: 1px solid #e8e8e8;
+		color: #c7254e;
+	}
+
+	.quiz-content :global(pre) {
+		background-color: #f8f8f8;
+		border: 1px solid #e8e8e8;
+		border-left: 4px solid #3498db;
+		padding: 1.25rem;
+		border-radius: 4px;
+		overflow-x: auto;
+		margin: 1.5rem 0;
+		line-height: 1.6;
+		position: relative;
+	}
+
+	/* Copy button for code blocks */
+	.quiz-content :global(.copy-code-button) {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+		background-color: #3498db;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		padding: 0.5rem 0.75rem;
+		font-size: 0.85rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+		z-index: 10;
+		opacity: 0.9;
+	}
+
+	.quiz-content :global(.copy-code-button:hover) {
+		background-color: #2980b9;
+		opacity: 1;
+		transform: translateY(-1px);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.quiz-content :global(.copy-code-button:active) {
+		transform: translateY(0);
+	}
+
+	.quiz-content :global(.copy-code-button.copied) {
+		background-color: #27ae60;
+	}
+
+	.quiz-content :global(.copy-code-button.copied:hover) {
+		background-color: #229954;
+	}
+
+	/* Ensure code blocks have enough padding for button */
+	.quiz-content :global(pre.has-copy-button) {
+		padding-top: 3rem;
+	}
+
+	.quiz-content :global(pre code) {
+		background-color: transparent;
+		padding: 0;
+		border: none;
+		color: #2c3e50;
+		font-size: 0.9em;
+	}
+
+	.quiz-content :global(table) {
+		margin: 1.5rem 0;
+	}
+
+	.quiz-content :global(blockquote) {
+		margin: 1.5rem 0;
+	}
+
+	@media (max-width: 768px) {
+		.quiz {
+			width: 90%;
+		}
+	}
+</style>
+

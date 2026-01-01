@@ -1,0 +1,111 @@
+---
+// TEMPLATE: Update this with your subject name
+// Example: "Learn Python Pandas", "Learn React", "Learn TypeScript"
+const SITE_TITLE = "Learn Probability for Quant Developers";
+---
+
+<header class="site-header">
+	<div class="header-content">
+		<a href="/" class="site-title">
+			<h1 class="site-title-text">{SITE_TITLE}</h1>
+		</a>
+		<nav class="header-nav">
+			<a href="/" class="nav-home">Table of Contents</a>
+		</nav>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		background-color: #fff;
+		border-bottom: 1px solid #e0e0e0;
+		margin-bottom: 2rem;
+		padding: 1rem 0;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	}
+
+	.header-content {
+		width: 80%;
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 0 2.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	@media (min-width: 1200px) {
+		.header-content {
+			padding-left: 3rem;
+			padding-right: 3rem;
+		}
+	}
+
+	.site-title {
+		text-decoration: none;
+		color: #333;
+		transition: opacity 0.2s;
+	}
+
+	.site-title:hover {
+		opacity: 0.8;
+		text-decoration: none;
+	}
+
+	.site-title-text {
+		font-size: 1.5rem;
+		font-weight: 600;
+		margin: 0;
+		color: #2c3e50;
+		letter-spacing: -0.02em;
+	}
+
+	.header-nav {
+		display: flex;
+		gap: 1.5rem;
+		align-items: center;
+	}
+
+	.nav-home {
+		color: #555;
+		text-decoration: none;
+		font-size: 0.95rem;
+		padding: 0.5rem 1rem;
+		border-radius: 4px;
+		transition: background-color 0.2s, color 0.2s;
+	}
+
+	.nav-home:hover {
+		background-color: #f5f5f5;
+		color: #333;
+		text-decoration: none;
+	}
+
+	@media (max-width: 768px) {
+		.site-header {
+			margin-bottom: 1.5rem;
+			padding: 0.75rem 0;
+		}
+
+		.header-content {
+			width: 90%;
+			flex-direction: column;
+			gap: 0.75rem;
+			align-items: flex-start;
+			padding: 0 1.25rem;
+		}
+
+		.site-title-text {
+			font-size: 1.25rem;
+		}
+
+		.header-nav {
+			width: 100%;
+			justify-content: flex-start;
+		}
+	}
+</style>
+

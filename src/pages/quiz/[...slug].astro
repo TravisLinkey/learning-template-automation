@@ -1,0 +1,85 @@
+---
+import QuizLayout from '../../components/QuizLayout.astro';
+import { getPrevNextLesson, sortLessons, type Lesson } from '../../utils/lessons';
+
+export async function getStaticPaths() {
+	const allMarkdownFiles = import.meta.glob('/content/lessons/**/*.md', { eager: true });
+	
+	const allLessons: Lesson[] = [];
+	const paths: Array<{ params: { slug: string }; props: any }> = [];
+	
+	// First, collect all lessons (including quizzes)
+	for (const path in allMarkdownFiles) {
+		const file = allMarkdownFiles[path] as any;
+		const frontmatter = file.frontmatter;
+		
+		const slug = frontmatter.lesson === 'x' 
+			? `${frontmatter.chapter}.x`
+			: `${frontmatter.chapter}.${frontmatter.lesson}`;
+		
+		const lesson: Lesson = {
+			chapter: frontmatter.chapter,
+			lesson: frontmatter.lesson,
+			title: frontmatter.title,
+			slug: slug,
+			author: frontmatter.author,
+			date: frontmatter.date,
+			description: frontmatter.description,
+			isQuiz: frontmatter.lesson === 'x',
+		};
+		
+		allLessons.push(lesson);
+		
+		// Only add quiz pages to paths
+		if (frontmatter.lesson === 'x') {
+			paths.push({
+				params: { slug: `${frontmatter.chapter}.x` },
+				props: {
+					frontmatter,
+					Content: file.default,
+					allLessons,
+				},
+			});
+		}
+	}
+	
+	return paths;
+}
+
+interface Props {
+	params: { slug: string };
+	frontmatter: any;
+	Content: any;
+	allLessons: Lesson[];
+}
+
+const { params, frontmatter, Content, allLessons } = Astro.props;
+const sortedLessons = sortLessons(allLessons);
+const { prev, next } = getPrevNextLesson(
+	sortedLessons,
+	frontmatter.chapter,
+	frontmatter.lesson
+);
+
+const prevLesson = prev ? {
+	chapter: prev.chapter,
+	lesson: prev.lesson,
+	title: prev.title,
+	slug: prev.slug,
+} : undefined;
+
+const nextLesson = next ? {
+	chapter: next.chapter,
+	lesson: next.lesson,
+	title: next.title,
+	slug: next.slug,
+} : undefined;
+---
+
+<QuizLayout
+	frontmatter={frontmatter}
+	Content={Content}
+	prevLesson={prevLesson}
+	nextLesson={nextLesson}
+/>
+

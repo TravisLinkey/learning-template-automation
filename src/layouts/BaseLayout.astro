@@ -1,0 +1,390 @@
+---
+import Header from '../components/Header.astro';
+
+// TEMPLATE: Update this default description with your subject
+const DEFAULT_DESCRIPTION = "Learn Python Pandas - A comprehensive tutorial series";
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbFLwXQz+Soc+QkcIB+azht+0nSDYPJ78tJxpbZZAp" crossorigin="anonymous" />
+		<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+	</head>
+	<body>
+		<Header />
+		<slot />
+		<script>
+			// Add copy buttons to all code blocks
+			document.addEventListener('DOMContentLoaded', function() {
+				const codeBlocks = document.querySelectorAll('pre code');
+				
+				codeBlocks.forEach((codeBlock) => {
+					const pre = codeBlock.parentElement;
+					if (!pre || pre.classList.contains('has-copy-button')) return;
+					
+					pre.classList.add('has-copy-button');
+					pre.style.position = 'relative';
+					
+					const copyButton = document.createElement('button');
+					copyButton.className = 'copy-code-button';
+					copyButton.innerHTML = '📋 Copy';
+					copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+					
+					copyButton.addEventListener('click', async function() {
+						const text = codeBlock.textContent || codeBlock.innerText;
+						
+						try {
+							await navigator.clipboard.writeText(text);
+							copyButton.innerHTML = '✓ Copied!';
+							copyButton.classList.add('copied');
+							
+							setTimeout(() => {
+								copyButton.innerHTML = '📋 Copy';
+								copyButton.classList.remove('copied');
+							}, 2000);
+						} catch (err) {
+							// Fallback for older browsers
+							const textArea = document.createElement('textarea');
+							textArea.value = text;
+							textArea.style.position = 'fixed';
+							textArea.style.opacity = '0';
+							document.body.appendChild(textArea);
+							textArea.select();
+							try {
+								document.execCommand('copy');
+								copyButton.innerHTML = '✓ Copied!';
+								copyButton.classList.add('copied');
+								setTimeout(() => {
+									copyButton.innerHTML = '📋 Copy';
+									copyButton.classList.remove('copied');
+								}, 2000);
+							} catch (err) {
+								copyButton.innerHTML = '❌ Failed';
+								setTimeout(() => {
+									copyButton.innerHTML = '📋 Copy';
+								}, 2000);
+							}
+							document.body.removeChild(textArea);
+						}
+					});
+					
+					pre.appendChild(copyButton);
+				});
+			});
+		</script>
+	</body>
+</html>
+
+<style is:global>
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	html {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+		font-size: 20px;
+		line-height: 1.7;
+		color: #2c3e50;
+		background-color: #fafafa;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	body {
+		max-width: 100%;
+		margin: 0;
+		padding: 0;
+		background-color: #fafafa;
+		min-height: 100vh;
+	}
+
+	body > :global(header) {
+		margin-bottom: 0;
+		max-width: 100%;
+	}
+
+	body > :global(main),
+	body > :global(article) {
+		width: 80% !important;
+		max-width: 800px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+		padding: 2rem 2.5rem 3rem;
+		background-color: #fff;
+		box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+	}
+
+	@media (min-width: 1200px) {
+		body > :global(main),
+		body > :global(article) {
+			margin: 0 auto;
+			padding-left: 3rem;
+			padding-right: 3rem;
+		}
+	}
+
+	/* Typography */
+	h1 {
+		font-size: 2.25rem;
+		font-weight: 700;
+		margin-bottom: 0.75rem;
+		line-height: 1.2;
+		color: #1a1a1a;
+		letter-spacing: -0.02em;
+	}
+
+	h2 {
+		font-size: 1.75rem;
+		font-weight: 600;
+		margin-top: 2.5rem;
+		margin-bottom: 1rem;
+		line-height: 1.3;
+		color: #2c3e50;
+		border-bottom: 2px solid #e8e8e8;
+		padding-bottom: 0.5rem;
+	}
+
+	h3 {
+		font-size: 1.35rem;
+		font-weight: 600;
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
+		line-height: 1.4;
+		color: #34495e;
+	}
+
+	p {
+		margin-bottom: 1.25rem;
+		color: #2c3e50;
+	}
+
+	/* Links */
+	a {
+		color: #2980b9;
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+
+	a:hover {
+		color: #1f5f8b;
+		text-decoration: underline;
+	}
+
+	/* Code */
+	code {
+		font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', 'Courier New', monospace;
+		font-size: 0.9em;
+		background-color: #f8f8f8;
+		padding: 0.2em 0.5em;
+		border-radius: 3px;
+		border: 1px solid #e8e8e8;
+		color: #c7254e;
+	}
+
+	pre {
+		background-color: #f8f8f8;
+		border: 1px solid #e8e8e8;
+		border-left: 4px solid #3498db;
+		padding: 1.25rem;
+		border-radius: 4px;
+		overflow-x: auto;
+		margin: 1.5rem 0;
+		line-height: 1.6;
+		position: relative;
+	}
+
+	/* Copy button for code blocks */
+	.copy-code-button {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+		background-color: #3498db;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		padding: 0.5rem 0.75rem;
+		font-size: 0.85rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+		z-index: 10;
+		opacity: 0.9;
+	}
+
+	.copy-code-button:hover {
+		background-color: #2980b9;
+		opacity: 1;
+		transform: translateY(-1px);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.copy-code-button:active {
+		transform: translateY(0);
+	}
+
+	.copy-code-button.copied {
+		background-color: #27ae60;
+	}
+
+	.copy-code-button.copied:hover {
+		background-color: #229954;
+	}
+
+	/* Ensure code blocks have enough padding for button */
+	pre.has-copy-button {
+		padding-top: 3rem;
+	}
+
+	pre code {
+		background-color: transparent;
+		padding: 0;
+		border: none;
+		color: #2c3e50;
+		font-size: 0.9em;
+	}
+
+	/* Lists */
+	ul, ol {
+		margin: 1rem 0;
+		padding-left: 2rem;
+	}
+
+	li {
+		margin-bottom: 0.5rem;
+	}
+
+	/* Tables */
+	table {
+		border-collapse: collapse;
+		width: 100%;
+		margin: 1.5rem 0;
+		border: 1px solid #e0e0e0;
+	}
+
+	th, td {
+		border: 1px solid #e0e0e0;
+		padding: 0.875rem 1rem;
+		text-align: left;
+	}
+
+	th {
+		background-color: #f5f7fa;
+		font-weight: 600;
+		color: #2c3e50;
+	}
+
+	tr:nth-child(even) {
+		background-color: #fafbfc;
+	}
+
+	/* Blockquotes */
+	blockquote {
+		border-left: 4px solid #3498db;
+		padding-left: 1.25rem;
+		margin: 1.5rem 0;
+		color: #555;
+		font-style: italic;
+		background-color: #f8f9fa;
+		padding: 1rem 1.25rem;
+		border-radius: 0 4px 4px 0;
+	}
+
+	/* Bold for key terms */
+	strong {
+		font-weight: 600;
+	}
+
+	/* Math equations (KaTeX) */
+	.katex {
+		font-size: 1.1em;
+	}
+
+	/* Hide MathML to prevent duplicate rendering */
+	:global(.katex mml\:math) {
+		display: none !important;
+	}
+
+	/* Ensure KaTeX symbols render correctly */
+	:global(.katex .mrel) {
+		font-family: KaTeX_Main, "Times New Roman", serif !important;
+	}
+
+	/* Display math (block equations) - styled as recessed card with label */
+	:global(.katex-display),
+	:global(span.katex-display) {
+		position: relative !important;
+		display: block !important;
+		margin: 2rem 0 1.5rem !important;
+		overflow-x: auto !important;
+		overflow-y: hidden !important;
+		background-color: #f0f2f5 !important;
+		border: 1px solid #d0d4d8 !important;
+		border-radius: 6px !important;
+		padding: 1.5rem !important;
+		text-align: center !important;
+		box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
+	}
+
+	/* Example label above display math */
+	:global(.katex-display::before),
+	:global(span.katex-display::before) {
+		content: "Example" !important;
+		position: absolute !important;
+		top: -0.75rem !important;
+		left: 1rem !important;
+		background-color: #fff !important;
+		color: #6c757d !important;
+		font-size: 0.75rem !important;
+		font-weight: 600 !important;
+		text-transform: uppercase !important;
+		letter-spacing: 0.05em !important;
+		padding: 0.25rem 0.75rem !important;
+		border: 1px solid #d0d4d8 !important;
+		border-radius: 4px !important;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+		z-index: 1 !important;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+	}
+
+	/* Inline math should not break line */
+	:global(.katex:not(.katex-display)) {
+		white-space: nowrap;
+		display: inline;
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		body > :global(main),
+		body > :global(article) {
+			width: 90% !important;
+			padding: 1.5rem 1.25rem 2rem;
+		}
+
+		h1 {
+			font-size: 1.75rem;
+		}
+
+		h2 {
+			font-size: 1.35rem;
+		}
+	}
+</style>
+

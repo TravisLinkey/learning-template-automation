@@ -1,0 +1,291 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { groupLessonsByChapter, sortLessons, type Lesson } from '../utils/lessons';
+
+// TEMPLATE: Update these values for your subject
+const SITE_TITLE = "Learn Probability for Quant Developers";
+const SITE_DESCRIPTION = "A comprehensive tutorial series for learning probability theory for quantitative finance and algorithmic trading";
+const TARGET_AUDIENCE = "quantitative developers and software engineers transitioning to quant roles";
+const SUBJECT_DESCRIPTION = "probability theory, stochastic processes, and statistical methods for quantitative finance";
+
+// Read all markdown files and organize by chapter
+const allMarkdownFiles = import.meta.glob('/content/lessons/**/*.md', { eager: true });
+
+const allLessons: Lesson[] = [];
+for (const path in allMarkdownFiles) {
+	const file = allMarkdownFiles[path] as any;
+	const frontmatter = file.frontmatter;
+	
+	const slug = frontmatter.lesson === 'x' 
+		? `${frontmatter.chapter}.x`
+		: `${frontmatter.chapter}.${frontmatter.lesson}`;
+	
+	const lesson: Lesson = {
+		chapter: frontmatter.chapter,
+		lesson: frontmatter.lesson,
+		title: frontmatter.title,
+		slug: slug,
+		author: frontmatter.author,
+		date: frontmatter.date,
+		description: frontmatter.description,
+		isQuiz: frontmatter.lesson === 'x',
+	};
+	
+	allLessons.push(lesson);
+}
+
+// Group lessons by chapter
+const chaptersMap = groupLessonsByChapter(sortLessons(allLessons));
+
+// Convert to array and sort by chapter number
+const chapters = Array.from(chaptersMap.entries())
+	.sort(([a], [b]) => a - b)
+	.map(([chapterNum, lessons]) => {
+		// Extract chapter title from first lesson or use default
+		const chapterTitle = lessons[0]?.title.includes('Chapter') 
+			? lessons[0].title.replace(/^.*Chapter \d+[:\s]+/, '').replace(' summary and quiz', '')
+			: getChapterTitle(chapterNum);
+		
+		return {
+			number: chapterNum,
+			title: chapterTitle,
+			lessons: lessons.filter(l => !l.isQuiz),
+			hasQuiz: lessons.some(l => l.isQuiz),
+		};
+	});
+
+// Helper function to get chapter titles (based on Quant Guild structure)
+function getChapterTitle(chapterNum: number): string {
+	const titles: Record<number, string> = {
+		0: "Introduction and Prerequisites",
+		1: "Basic Probability",
+		2: "Conditional Probability",
+		3: "Bayes' Theorem & Law of Total Probability",
+		4: "Random Variables",
+		5: "Bernoulli & Binomial Distributions",
+		6: "Geometric & Poisson Distributions",
+		7: "Continuous Random Variables",
+		8: "Law of Large Numbers",
+		9: "Central Limit Theorem",
+		10: "Markov Chains",
+		11: "Transition Probability Matrices",
+		12: "Stationary Distributions",
+		13: "Absorbing States",
+		14: "Communication Classes and Irreducibility",
+		15: "Periodicity and Aperiodicity",
+		16: "Recurrence and Transience",
+		17: "First Passage Times and Expected Return Times",
+		18: "Hitting Probabilities and Times",
+		19: "CTMC Fundamentals",
+		20: "Generator Matrices and Transition Functions",
+		21: "Kolmogorov Equations",
+		22: "Birth-Death Processes",
+		23: "Queueing Theory Applications",
+		24: "Stationary Distributions and Limiting Behavior (CTMC)",
+		25: "Brownian Motion",
+		26: "Conditional Expectation and Filtrations",
+		27: "Submartingales and Supermartingales",
+		28: "Martingale Convergence Theorems",
+		29: "Stopping Times and Optional Stopping Theorem",
+	};
+	return titles[chapterNum] || `Chapter ${chapterNum}`;
+}
+---
+
+<BaseLayout title={`${SITE_TITLE} - Table of Contents`} description={SITE_DESCRIPTION}>
+	<main class="toc">
+		<header class="toc-header">
+			<h1>{SITE_TITLE}</h1>
+			<p class="intro">
+				Welcome to {SITE_TITLE}! This tutorial series is designed for {TARGET_AUDIENCE} 
+				who want to master {SUBJECT_DESCRIPTION}. Each chapter builds 
+				upon previous concepts, taking you from beginner to intermediate level.
+			</p>
+			<p class="intro">
+				The lessons are organized by chapters, with each chapter containing multiple numbered lessons. 
+				At the end of each chapter, you'll find a summary and quiz to test your understanding.
+			</p>
+		</header>
+
+		<div class="chapters">
+			{chapters.map((chapter) => (
+				<section class="chapter" key={chapter.number}>
+					<h2 class="chapter-title">
+						Chapter {chapter.number}: {chapter.title}
+					</h2>
+					<ul class="lesson-list">
+						{chapter.lessons.map((lesson) => (
+							<li class="lesson-item" key={lesson.slug}>
+								<a href={`${import.meta.env.BASE_URL}lessons/${lesson.slug}`}>
+									{lesson.chapter}.{lesson.lesson} {lesson.title}
+								</a>
+							</li>
+						))}
+						{chapter.hasQuiz && (
+							<li class="lesson-item quiz-item">
+								<a href={`${import.meta.env.BASE_URL}quiz/${chapter.number}.x`}>
+									{chapter.number}.x Chapter {chapter.number} summary and quiz
+								</a>
+							</li>
+						)}
+					</ul>
+				</section>
+			))}
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.toc {
+		width: 80%;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.toc-header {
+		margin-bottom: 3.5rem;
+		padding-bottom: 2rem;
+		border-bottom: 2px solid #e8e8e8;
+	}
+
+	.toc-header h1 {
+		margin-bottom: 1.5rem;
+		color: #1a1a1a;
+		font-size: 2.5rem;
+	}
+
+	.intro {
+		margin-bottom: 1.25rem;
+		color: #555;
+		line-height: 1.8;
+		font-size: 1.05rem;
+	}
+
+	.chapters {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.chapter {
+		padding-bottom: 2.5rem;
+		border-bottom: 1px solid #e8e8e8;
+		background-color: #fafbfc;
+		padding: 2rem;
+		border-radius: 6px;
+		border: 1px solid #e0e0e0;
+	}
+
+	.chapter:last-child {
+		border-bottom: 1px solid #e8e8e8;
+	}
+
+	.chapter-title {
+		font-size: 1.75rem;
+		margin-bottom: 1.5rem;
+		color: #2c3e50;
+		font-weight: 600;
+		border-bottom: 2px solid #3498db;
+		padding-bottom: 0.75rem;
+	}
+
+	.lesson-list {
+		list-style: none;
+		padding-left: 0;
+		margin: 0;
+	}
+
+	.lesson-item {
+		margin-bottom: 0.75rem;
+		padding: 0.75rem 1rem;
+		padding-left: 2.5rem;
+		position: relative;
+		background-color: #fff;
+		border-radius: 4px;
+		border: 1px solid #e8e8e8;
+		transition: all 0.2s;
+	}
+
+	.lesson-item:hover {
+		background-color: #f0f7ff;
+		border-color: #3498db;
+		transform: translateX(4px);
+	}
+
+	.lesson-item::before {
+		content: "→";
+		position: absolute;
+		left: 1rem;
+		color: #3498db;
+		font-weight: 600;
+	}
+
+	.lesson-item a {
+		color: #2980b9;
+		text-decoration: none;
+		transition: color 0.2s;
+		display: block;
+		font-weight: 500;
+	}
+
+	.lesson-item a:hover {
+		color: #1f5f8b;
+		text-decoration: none;
+	}
+
+	.quiz-item {
+		margin-top: 1rem;
+		font-weight: 600;
+		background-color: #fff3cd;
+		border-color: #ffc107;
+	}
+
+	.quiz-item::before {
+		content: "📝";
+	}
+
+	.quiz-item a {
+		color: #856404;
+	}
+
+	.quiz-item:hover {
+		background-color: #ffe69c;
+		border-color: #ffc107;
+	}
+
+	@media (max-width: 768px) {
+		.toc-header {
+			margin-bottom: 2.5rem;
+			padding-bottom: 1.5rem;
+		}
+
+		.toc-header h1 {
+			font-size: 2rem;
+		}
+
+		.chapters {
+			gap: 2rem;
+		}
+
+		.chapter {
+			padding: 1.5rem;
+			padding-bottom: 2rem;
+		}
+
+		.chapter-title {
+			font-size: 1.5rem;
+		}
+
+		.lesson-item {
+			padding-left: 2rem;
+		}
+
+		.lesson-item::before {
+			left: 0.75rem;
+		}
+
+		.toc {
+			width: 90%;
+		}
+	}
+</style>
