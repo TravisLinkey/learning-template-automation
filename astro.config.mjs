@@ -6,7 +6,7 @@ import rehypeKatex from 'rehype-katex';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://travislinkey.github.io',
-	base: '/', // Set to '/your-repo-name/' for GitHub Pages deployment
+	base: '/',
 	markdown: {
 		remarkPlugins: [remarkMath],
 		rehypePlugins: [
