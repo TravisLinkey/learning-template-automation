@@ -31,3 +31,4 @@ export function getAllSubjects(): Subject[] {
 	return SUBJECTS;
 }
 
+
