@@ -17,7 +17,7 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<title>{title}</title>
@@ -180,16 +180,16 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 	}
 
 	/* Dark mode override - must come after light mode styles with maximum specificity */
-	:global(html.dark) body > :global(main),
-	:global(html.dark) body > :global(article),
-	:global(html.dark) body main,
-	:global(html.dark) body article,
-	:global(html.dark) main,
-	:global(html.dark) article,
-	:global(html.dark) main.homepage,
-	:global(html.dark) main.toc,
-	:global(html.dark) .homepage,
-	:global(html.dark) .toc {
+	html.dark body > :global(main),
+	html.dark body > :global(article),
+	html.dark body main,
+	html.dark body article,
+	html.dark main,
+	html.dark article,
+	html.dark main.homepage,
+	html.dark main.toc,
+	html.dark .homepage,
+	html.dark .toc {
 		background-color: #1a1a1a !important;
 		box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
 	}
@@ -451,8 +451,8 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 		}
 
 		/* Dark mode responsive override */
-		:global(html.dark) body > :global(main),
-		:global(html.dark) body > :global(article) {
+		html.dark body > :global(main),
+		html.dark body > :global(article) {
 			background-color: #1a1a1a !important;
 			box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
 		}
