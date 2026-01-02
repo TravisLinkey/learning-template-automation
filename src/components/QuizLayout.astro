@@ -84,7 +84,7 @@ const pageTitle = `${frontmatter.chapter}.x — Chapter ${frontmatter.chapter} s
 
 	/* Anchor link styling */
 	.quiz-content :global(.anchor-link) {
-		opacity: 0;
+		opacity: 1; /* Visible by default for mobile */
 		margin-left: 0.5rem;
 		text-decoration: none;
 		color: #3498db;
@@ -94,13 +94,20 @@ const pageTitle = `${frontmatter.chapter}.x — Chapter ${frontmatter.chapter} s
 		vertical-align: middle;
 	}
 
-	.quiz-content :global(h2:hover .anchor-link),
-	.quiz-content :global(h3:hover .anchor-link),
-	.quiz-content :global(h4:hover .anchor-link),
-	.quiz-content :global(h5:hover .anchor-link),
-	.quiz-content :global(h6:hover .anchor-link),
-	.quiz-content :global(.anchor-link:focus) {
-		opacity: 1;
+	/* Hide on desktop by default, show on hover */
+	@media (hover: hover) {
+		.quiz-content :global(.anchor-link) {
+			opacity: 0;
+		}
+
+		.quiz-content :global(h2:hover .anchor-link),
+		.quiz-content :global(h3:hover .anchor-link),
+		.quiz-content :global(h4:hover .anchor-link),
+		.quiz-content :global(h5:hover .anchor-link),
+		.quiz-content :global(h6:hover .anchor-link),
+		.quiz-content :global(.anchor-link:focus) {
+			opacity: 1;
+		}
 	}
 
 	.quiz-content :global(.anchor-link:hover) {
