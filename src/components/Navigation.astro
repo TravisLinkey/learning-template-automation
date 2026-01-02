@@ -2,25 +2,35 @@
 interface Props {
 	currentChapter: number;
 	currentLesson: number | string;
-	prevLesson?: { chapter: number; lesson: number | string; title: string; slug: string };
-	nextLesson?: { chapter: number; lesson: number | string; title: string; slug: string };
+	prevLesson?: { chapter: number; lesson: number | string; title: string; slug: string; subject?: string };
+	nextLesson?: { chapter: number; lesson: number | string; title: string; slug: string; subject?: string };
+	subject?: string;
 }
 
-const { currentChapter, currentLesson, prevLesson, nextLesson } = Astro.props;
+const { currentChapter, currentLesson, prevLesson, nextLesson, subject } = Astro.props;
 
-const getLessonPath = (chapter: number, lesson: number | string) => {
+const getLessonPath = (chapter: number, lesson: number | string, lessonSubject?: string) => {
 	const base = import.meta.env.BASE_URL;
+	const subjectPrefix = lessonSubject ? `${lessonSubject}/` : '';
 	if (lesson === 'x') {
-		return `${base}quiz/${chapter}.x`;
+		return `${base}${subjectPrefix}quiz/${chapter}.x`;
 	}
-	return `${base}lessons/${chapter}.${lesson}`;
+	return `${base}${subjectPrefix}lessons/${chapter}.${lesson}`;
+};
+
+const getTocPath = () => {
+	const base = import.meta.env.BASE_URL;
+	if (subject) {
+		return `${base}${subject}/`;
+	}
+	return base;
 };
 ---
 
 <nav class="navigation">
 	<div class="nav-section">
 		{prevLesson ? (
-			<a href={getLessonPath(prevLesson.chapter, prevLesson.lesson)} class="nav-link prev">
+			<a href={getLessonPath(prevLesson.chapter, prevLesson.lesson, prevLesson.subject)} class="nav-link prev">
 				<span class="nav-label">Previous lesson:</span>
 				<span class="nav-title">{prevLesson.chapter}.{prevLesson.lesson} {prevLesson.title}</span>
 			</a>
@@ -33,12 +43,12 @@ const getLessonPath = (chapter: number, lesson: number | string) => {
 	</div>
 
 	<div class="nav-section">
-		<a href={import.meta.env.BASE_URL} class="nav-link toc">Back to table of contents</a>
+		<a href={getTocPath()} class="nav-link toc">Back to table of contents</a>
 	</div>
 
 	<div class="nav-section">
 		{nextLesson ? (
-			<a href={getLessonPath(nextLesson.chapter, nextLesson.lesson)} class="nav-link next">
+			<a href={getLessonPath(nextLesson.chapter, nextLesson.lesson, nextLesson.subject)} class="nav-link next">
 				<span class="nav-label">Next lesson:</span>
 				<span class="nav-title">{nextLesson.chapter}.{nextLesson.lesson} {nextLesson.title}</span>
 			</a>
@@ -65,6 +75,7 @@ const getLessonPath = (chapter: number, lesson: number | string) => {
 		padding: 1.5rem;
 		border-radius: 6px;
 		margin-bottom: 2rem;
+		transition: background-color 0.3s, border-color 0.3s;
 	}
 
 	.nav-section {
@@ -100,6 +111,7 @@ const getLessonPath = (chapter: number, lesson: number | string) => {
 		flex: 1;
 		max-width: 100%;
 		min-height: 80px;
+		transition: all 0.3s;
 	}
 
 	.nav-link:hover:not(.disabled) {
@@ -199,6 +211,65 @@ const getLessonPath = (chapter: number, lesson: number | string) => {
 		.nav-link.toc {
 			min-width: auto;
 		}
+	}
+
+	/* Dark mode styles */
+	:global(html.dark) .navigation {
+		background-color: #2a2a2a;
+		border-top-color: #444;
+	}
+
+	:global(html.dark) .nav-link {
+		background-color: #333;
+		border-color: #444;
+		color: #5dade2;
+	}
+
+	:global(html.dark) .nav-link:hover:not(.disabled) {
+		background-color: #3a3a3a;
+		border-color: #3498db;
+		color: #85c1e9;
+	}
+
+	:global(html.dark) .nav-link.disabled {
+		background-color: #2a2a2a;
+		border-color: #444;
+		color: #666;
+	}
+
+	:global(html.dark) .nav-label {
+		color: #999;
+	}
+
+	:global(html.dark) .nav-link.disabled .nav-label {
+		color: #555;
+	}
+
+	:global(html.dark) .nav-title {
+		color: #d0d0d0;
+	}
+
+	:global(html.dark) .nav-link.disabled .nav-title {
+		color: #666;
+	}
+
+	:global(html.dark) .nav-link.toc {
+		background-color: #3498db;
+		border-color: #2980b9;
+		color: #fff;
+	}
+
+	:global(html.dark) .nav-link.toc:hover {
+		background-color: #2980b9;
+		color: #fff;
+	}
+
+	:global(html.dark) .nav-link.toc .nav-label {
+		color: rgba(255, 255, 255, 0.9);
+	}
+
+	:global(html.dark) .nav-link.toc .nav-title {
+		color: #fff;
 	}
 </style>
 

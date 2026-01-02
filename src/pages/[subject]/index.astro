@@ -1,18 +1,33 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { groupLessonsByChapter, sortLessons, type Lesson } from '../utils/lessons';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { groupLessonsByChapter, sortLessons, type Lesson } from '../../utils/lessons';
+import { getSubjectById } from '../../utils/subjects';
 
-// TEMPLATE: Update these values for your subject
-const SITE_TITLE = "Learn Probability for Quant Developers";
-const SITE_DESCRIPTION = "A comprehensive tutorial series for learning probability theory for quantitative finance and algorithmic trading";
-const TARGET_AUDIENCE = "quantitative developers and software engineers transitioning to quant roles";
-const SUBJECT_DESCRIPTION = "probability theory, stochastic processes, and statistical methods for quantitative finance";
+export async function getStaticPaths() {
+	const subjects = ['quant', 'python-pandas'];
+	
+	return subjects.map((subject) => ({
+		params: { subject },
+	}));
+}
 
-// Read all markdown files and organize by chapter
-const allMarkdownFiles = import.meta.glob('/content/lessons/**/*.md', { eager: true });
+const { subject: subjectId } = Astro.params;
+const subject = getSubjectById(subjectId || '');
+
+if (!subject) {
+	return Astro.redirect('/');
+}
+
+// Read all markdown files (static glob, then filter by subject)
+const allMarkdownFiles = import.meta.glob('/content/*/lessons/**/*.md', { eager: true });
 
 const allLessons: Lesson[] = [];
 for (const path in allMarkdownFiles) {
+	// Filter by subject ID
+	if (!path.includes(`/content/${subjectId}/lessons/`)) {
+		continue;
+	}
+	
 	const file = allMarkdownFiles[path] as any;
 	const frontmatter = file.frontmatter;
 	
@@ -21,6 +36,7 @@ for (const path in allMarkdownFiles) {
 		: `${frontmatter.chapter}.${frontmatter.lesson}`;
 	
 	const lesson: Lesson = {
+		subject: subjectId || '',
 		chapter: frontmatter.chapter,
 		lesson: frontmatter.lesson,
 		title: frontmatter.title,
@@ -44,7 +60,7 @@ const chapters = Array.from(chaptersMap.entries())
 		// Extract chapter title from first lesson or use default
 		const chapterTitle = lessons[0]?.title.includes('Chapter') 
 			? lessons[0].title.replace(/^.*Chapter \d+[:\s]+/, '').replace(' summary and quiz', '')
-			: getChapterTitle(chapterNum);
+			: getChapterTitle(chapterNum, subjectId || '');
 		
 		return {
 			number: chapterNum,
@@ -54,51 +70,57 @@ const chapters = Array.from(chaptersMap.entries())
 		};
 	});
 
-// Helper function to get chapter titles (based on Quant Guild structure)
-function getChapterTitle(chapterNum: number): string {
-	const titles: Record<number, string> = {
-		0: "Introduction and Prerequisites",
-		1: "Basic Probability",
-		2: "Conditional Probability",
-		3: "Bayes' Theorem & Law of Total Probability",
-		4: "Random Variables",
-		5: "Bernoulli & Binomial Distributions",
-		6: "Geometric & Poisson Distributions",
-		7: "Continuous Random Variables",
-		8: "Law of Large Numbers",
-		9: "Central Limit Theorem",
-		10: "Markov Chains",
-		11: "Transition Probability Matrices",
-		12: "Stationary Distributions",
-		13: "Absorbing States",
-		14: "Communication Classes and Irreducibility",
-		15: "Periodicity and Aperiodicity",
-		16: "Recurrence and Transience",
-		17: "First Passage Times and Expected Return Times",
-		18: "Hitting Probabilities and Times",
-		19: "CTMC Fundamentals",
-		20: "Generator Matrices and Transition Functions",
-		21: "Kolmogorov Equations",
-		22: "Birth-Death Processes",
-		23: "Queueing Theory Applications",
-		24: "Stationary Distributions and Limiting Behavior (CTMC)",
-		25: "Brownian Motion",
-		26: "Conditional Expectation and Filtrations",
-		27: "Submartingales and Supermartingales",
-		28: "Martingale Convergence Theorems",
-		29: "Stopping Times and Optional Stopping Theorem",
-	};
-	return titles[chapterNum] || `Chapter ${chapterNum}`;
+// Helper function to get chapter titles (subject-specific)
+function getChapterTitle(chapterNum: number, subject: string): string {
+	if (subject === 'quant') {
+		const titles: Record<number, string> = {
+			0: "Introduction and Prerequisites",
+			1: "Basic Probability",
+			2: "Conditional Probability",
+			3: "Bayes' Theorem & Law of Total Probability",
+			4: "Random Variables",
+			5: "Bernoulli & Binomial Distributions",
+			6: "Geometric & Poisson Distributions",
+			7: "Continuous Random Variables",
+			8: "Law of Large Numbers",
+			9: "Central Limit Theorem",
+			10: "Markov Chains",
+			11: "Transition Probability Matrices",
+			12: "Stationary Distributions",
+			13: "Absorbing States",
+			14: "Communication Classes and Irreducibility",
+			15: "Periodicity and Aperiodicity",
+			16: "Recurrence and Transience",
+			17: "First Passage Times and Expected Return Times",
+			18: "Hitting Probabilities and Times",
+			19: "CTMC Fundamentals",
+			20: "Generator Matrices and Transition Functions",
+			21: "Kolmogorov Equations",
+			22: "Birth-Death Processes",
+			23: "Queueing Theory Applications",
+			24: "Stationary Distributions and Limiting Behavior (CTMC)",
+			25: "Brownian Motion",
+			26: "Conditional Expectation and Filtrations",
+			27: "Submartingales and Supermartingales",
+			28: "Martingale Convergence Theorems",
+			29: "Stopping Times and Optional Stopping Theorem",
+		};
+		return titles[chapterNum] || `Chapter ${chapterNum}`;
+	}
+	// Default for other subjects
+	return `Chapter ${chapterNum}`;
 }
+
+const SITE_TITLE = `Learn ${subject.name}`;
 ---
 
-<BaseLayout title={`${SITE_TITLE} - Table of Contents`} description={SITE_DESCRIPTION}>
+<BaseLayout title={`${SITE_TITLE} - Table of Contents`} description={subject.description} subject={subjectId}>
 	<main class="toc">
 		<header class="toc-header">
 			<h1>{SITE_TITLE}</h1>
 			<p class="intro">
-				Welcome to {SITE_TITLE}! This tutorial series is designed for {TARGET_AUDIENCE} 
-				who want to master {SUBJECT_DESCRIPTION}. Each chapter builds 
+				Welcome to {SITE_TITLE}! This tutorial series is designed for {subject.targetAudience} 
+				who want to master {subject.subjectDescription}. Each chapter builds 
 				upon previous concepts, taking you from beginner to intermediate level.
 			</p>
 			<p class="intro">
@@ -116,14 +138,14 @@ function getChapterTitle(chapterNum: number): string {
 					<ul class="lesson-list">
 						{chapter.lessons.map((lesson) => (
 							<li class="lesson-item" key={lesson.slug}>
-								<a href={`${import.meta.env.BASE_URL}lessons/${lesson.slug}`}>
+								<a href={`${import.meta.env.BASE_URL}${subjectId}/lessons/${lesson.slug}`}>
 									{lesson.chapter}.{lesson.lesson} {lesson.title}
 								</a>
 							</li>
 						))}
 						{chapter.hasQuiz && (
 							<li class="lesson-item quiz-item">
-								<a href={`${import.meta.env.BASE_URL}quiz/${chapter.number}.x`}>
+								<a href={`${import.meta.env.BASE_URL}${subjectId}/quiz/${chapter.number}.x`}>
 									{chapter.number}.x Chapter {chapter.number} summary and quiz
 								</a>
 							</li>
@@ -140,6 +162,8 @@ function getChapterTitle(chapterNum: number): string {
 		width: 80%;
 		max-width: 800px;
 		margin: 0 auto;
+		transition: background-color 0.3s;
+		background-color: transparent;
 	}
 
 	.toc-header {
@@ -174,6 +198,7 @@ function getChapterTitle(chapterNum: number): string {
 		padding: 2rem;
 		border-radius: 6px;
 		border: 1px solid #e0e0e0;
+		transition: background-color 0.3s, border-color 0.3s;
 	}
 
 	.chapter:last-child {
@@ -203,7 +228,7 @@ function getChapterTitle(chapterNum: number): string {
 		background-color: #fff;
 		border-radius: 4px;
 		border: 1px solid #e8e8e8;
-		transition: all 0.2s;
+		transition: all 0.3s;
 	}
 
 	.lesson-item:hover {
@@ -287,6 +312,69 @@ function getChapterTitle(chapterNum: number): string {
 		.toc {
 			width: 90%;
 		}
+	}
+
+	/* Dark mode styles */
+	:global(html.dark) .toc {
+		background-color: transparent !important;
+	}
+
+	:global(html.dark) .toc-header {
+		border-bottom-color: #444;
+	}
+
+	:global(html.dark) .toc-header h1 {
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) .intro {
+		color: #b0b0b0;
+	}
+
+	:global(html.dark) .chapter {
+		background-color: #1a1a1a !important;
+		border-color: #444;
+	}
+
+	:global(html.dark) .chapter-title {
+		color: #d0d0d0;
+		border-bottom-color: #3498db;
+	}
+
+	:global(html.dark) .lesson-item {
+		background-color: #222 !important;
+		border-color: #444;
+	}
+
+	:global(html.dark) .lesson-item:hover {
+		background-color: #2a2a2a !important;
+		border-color: #3498db;
+	}
+
+	:global(html.dark) .lesson-item::before {
+		color: #3498db;
+	}
+
+	:global(html.dark) .lesson-item a {
+		color: #5dade2;
+	}
+
+	:global(html.dark) .lesson-item a:hover {
+		color: #85c1e9;
+	}
+
+	:global(html.dark) .quiz-item {
+		background-color: #2a2419 !important;
+		border-color: #f39c12;
+	}
+
+	:global(html.dark) .quiz-item:hover {
+		background-color: #3d2f1f !important;
+		border-color: #f39c12;
+	}
+
+	:global(html.dark) .quiz-item a {
+		color: #f39c12;
 	}
 </style>
 

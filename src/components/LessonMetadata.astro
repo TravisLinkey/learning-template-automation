@@ -4,7 +4,7 @@ interface Props {
 	date: string;
 }
 
-const { author, date } = Astro.props;
+const { date } = Astro.props;
 
 const formatDate = (dateString: string) => {
 	const date = new Date(dateString);
@@ -13,13 +13,6 @@ const formatDate = (dateString: string) => {
 ---
 
 <div class="metadata">
-	<span class="metadata-item">
-		<span class="metadata-icon">👤</span>
-		<span class="metadata-text">
-			<a href="#" class="author-link">{author}</a>
-		</span>
-	</span>
-	<span class="metadata-separator">|</span>
 	<span class="metadata-item">
 		<span class="metadata-icon">📅</span>
 		<span class="metadata-text">{formatDate(date)}</span>
@@ -49,24 +42,23 @@ const formatDate = (dateString: string) => {
 		opacity: 0.7;
 	}
 
-	.metadata-separator {
-		color: #bdc3c7;
-		font-weight: 300;
-	}
-
-	.author-link {
-		color: #2980b9;
-		text-decoration: none;
-		transition: color 0.2s;
-	}
-
-	.author-link:hover {
-		color: #1f5f8b;
-		text-decoration: underline;
-	}
 
 	.metadata-text {
 		color: #7f8c8d;
+	}
+
+	/* Dark mode styles */
+	:global(html.dark) .metadata {
+		border-bottom-color: #444;
+		color: #999;
+	}
+
+	:global(html.dark) .metadata-icon {
+		opacity: 0.8;
+	}
+
+	:global(html.dark) .metadata-text {
+		color: #b0b0b0;
 	}
 </style>
 

@@ -7,9 +7,10 @@ const DEFAULT_DESCRIPTION = "Learn Python Pandas - A comprehensive tutorial seri
 interface Props {
 	title: string;
 	description?: string;
+	subject?: string;
 }
 
-const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
+const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 ---
 
 <!doctype html>
@@ -23,11 +24,52 @@ const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
 		<title>{title}</title>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbFLwXQz+Soc+QkcIB+azht+0nSDYPJ78tJxpbZZAp" crossorigin="anonymous" />
 		<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+		<script is:inline>
+			// Dark mode - apply immediately before page renders to prevent flash
+			(function() {
+				try {
+					const theme = localStorage.getItem('theme') || 'light';
+					if (theme === 'dark') {
+						document.documentElement.classList.add('dark');
+					}
+				} catch (e) {
+					// localStorage might not be available in some contexts
+				}
+			})();
+		</script>
 	</head>
 	<body>
-		<Header />
+		<Header title={title} subject={subject} />
 		<slot />
 		<script>
+			// Dark mode toggle functionality
+			(function() {
+				const html = document.documentElement;
+				
+				// Set up toggle button
+				document.addEventListener('DOMContentLoaded', function() {
+					const toggle = document.getElementById('dark-mode-toggle');
+					if (!toggle) return;
+					
+					// Update icon based on current theme
+					const icon = toggle.querySelector('.dark-mode-icon');
+					if (icon) {
+						icon.textContent = html.classList.contains('dark') ? '☀️' : '🌙';
+					}
+					
+					toggle.addEventListener('click', function() {
+						html.classList.toggle('dark');
+						const isDark = html.classList.contains('dark');
+						localStorage.setItem('theme', isDark ? 'dark' : 'light');
+						
+						// Update icon
+						if (icon) {
+							icon.textContent = isDark ? '☀️' : '🌙';
+						}
+					});
+				});
+			})();
+			
 			// Add copy buttons to all code blocks
 			document.addEventListener('DOMContentLoaded', function() {
 				const codeBlocks = document.querySelectorAll('pre code');
@@ -45,7 +87,7 @@ const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
 					copyButton.setAttribute('aria-label', 'Copy code to clipboard');
 					
 					copyButton.addEventListener('click', async function() {
-						const text = codeBlock.textContent || codeBlock.innerText;
+						const text = codeBlock.textContent || (codeBlock as HTMLElement).innerText || '';
 						
 						try {
 							await navigator.clipboard.writeText(text);
@@ -104,6 +146,7 @@ const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
 		background-color: #fafafa;
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
+		transition: background-color 0.3s;
 	}
 
 	body {
@@ -112,6 +155,12 @@ const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
 		padding: 0;
 		background-color: #fafafa;
 		min-height: 100vh;
+		transition: background-color 0.3s;
+	}
+
+	/* Dark mode body override - must come immediately after body definition */
+	html.dark body {
+		background-color: #121212 !important;
 	}
 
 	body > :global(header) {
@@ -128,6 +177,22 @@ const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
 		padding: 2rem 2.5rem 3rem;
 		background-color: #fff;
 		box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+		transition: background-color 0.3s, box-shadow 0.3s;
+	}
+
+	/* Dark mode override - must come after light mode styles with maximum specificity */
+	:global(html.dark) body > :global(main),
+	:global(html.dark) body > :global(article),
+	:global(html.dark) body main,
+	:global(html.dark) body article,
+	:global(html.dark) main,
+	:global(html.dark) article,
+	:global(html.dark) main.homepage,
+	:global(html.dark) main.toc,
+	:global(html.dark) .homepage,
+	:global(html.dark) .toc {
+		background-color: #1a1a1a !important;
+		box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
 	}
 
 	@media (min-width: 1200px) {
@@ -385,6 +450,128 @@ const { title, description = DEFAULT_DESCRIPTION } = Astro.props;
 		h2 {
 			font-size: 1.35rem;
 		}
+
+		/* Dark mode responsive override */
+		:global(html.dark) body > :global(main),
+		:global(html.dark) body > :global(article) {
+			background-color: #1a1a1a !important;
+			box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+		}
 	}
+
+	/* Dark Mode Styles - HTML and Body backgrounds */
+	html.dark {
+		background-color: #121212 !important;
+		color: #e0e0e0;
+	}
+
+	html.dark body {
+		background-color: #121212 !important;
+		color: #e0e0e0;
+	}
+
+
+	:global(html.dark) h1 {
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) h2 {
+		color: #d0d0d0;
+		border-bottom-color: #444;
+	}
+
+	:global(html.dark) h3 {
+		color: #c0c0c0;
+	}
+
+	:global(html.dark) p {
+		color: #d0d0d0;
+	}
+
+	:global(html.dark) a {
+		color: #5dade2;
+	}
+
+	:global(html.dark) a:hover {
+		color: #85c1e9;
+	}
+
+	:global(html.dark) code {
+		background-color: #2a2a2a;
+		border-color: #444;
+		color: #f39c12;
+	}
+
+	:global(html.dark) pre {
+		background-color: #2a2a2a;
+		border-color: #444;
+		border-left-color: #3498db;
+	}
+
+	:global(html.dark) pre code {
+		background-color: transparent;
+		border: none;
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) .copy-code-button {
+		background-color: #3498db;
+		color: white;
+	}
+
+	:global(html.dark) .copy-code-button:hover {
+		background-color: #2980b9;
+	}
+
+	:global(html.dark) .copy-code-button.copied {
+		background-color: #27ae60;
+	}
+
+	:global(html.dark) .copy-code-button.copied:hover {
+		background-color: #229954;
+	}
+
+	:global(html.dark) table {
+		border-color: #444;
+	}
+
+	:global(html.dark) th {
+		background-color: #2a2a2a;
+		color: #e0e0e0;
+		border-color: #444;
+	}
+
+	:global(html.dark) td {
+		border-color: #444;
+	}
+
+	:global(html.dark) tr:nth-child(even) {
+		background-color: #222;
+	}
+
+	:global(html.dark) blockquote {
+		border-left-color: #3498db;
+		background-color: #222;
+		color: #c0c0c0;
+	}
+
+	:global(html.dark) .katex-display,
+	:global(html.dark) span.katex-display {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+	}
+
+	:global(html.dark) .katex-display::before,
+	:global(html.dark) span.katex-display::before {
+		background-color: #1a1a1a !important;
+		border-color: #444 !important;
+		color: #b0b0b0 !important;
+	}
+
+	/* Force dark backgrounds on all elements */
+	:global(html.dark) * {
+		transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+	}
+
 </style>
 

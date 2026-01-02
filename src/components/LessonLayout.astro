@@ -13,15 +13,17 @@ interface Props {
 		description?: string;
 	};
 	Content: any;
-	prevLesson?: { chapter: number; lesson: number | string; title: string; slug: string };
-	nextLesson?: { chapter: number; lesson: number | string; title: string; slug: string };
+	prevLesson?: { chapter: number; lesson: number | string; title: string; slug: string; subject?: string };
+	nextLesson?: { chapter: number; lesson: number | string; title: string; slug: string; subject?: string };
+	subject?: string;
+	subjectName?: string;
 }
 
-const { frontmatter, Content, prevLesson, nextLesson } = Astro.props;
+const { frontmatter, Content, prevLesson, nextLesson, subject, subjectName } = Astro.props;
 const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatter.title}`;
 ---
 
-<BaseLayout title={pageTitle} description={frontmatter.description}>
+<BaseLayout title={pageTitle} description={frontmatter.description} subject={subject}>
 	<article class="lesson">
 		<header class="lesson-header">
 			<h1>{pageTitle}</h1>
@@ -37,6 +39,7 @@ const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatte
 			currentLesson={frontmatter.lesson}
 			prevLesson={prevLesson}
 			nextLesson={nextLesson}
+			subject={subject}
 		/>
 	</article>
 </BaseLayout>
@@ -91,6 +94,7 @@ const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatte
 		font-size: 0.9em;
 		border: 1px solid #e8e8e8;
 		color: #c7254e;
+		transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 	}
 
 	.lesson-content :global(pre) {
@@ -103,6 +107,7 @@ const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatte
 		margin: 1.5rem 0;
 		line-height: 1.6;
 		position: relative;
+		transition: background-color 0.3s, border-color 0.3s;
 	}
 
 	/* Copy button for code blocks */
@@ -206,6 +211,38 @@ const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatte
 		.lesson {
 			width: 90%;
 		}
+	}
+
+	/* Dark mode styles */
+	:global(html.dark) .lesson-content :global(code) {
+		background-color: #2a2a2a;
+		border-color: #444;
+		color: #f39c12;
+	}
+
+	:global(html.dark) .lesson-content :global(pre) {
+		background-color: #2a2a2a;
+		border-color: #444;
+		border-left-color: #3498db;
+	}
+
+	:global(html.dark) .lesson-content :global(pre code) {
+		background-color: transparent;
+		border: none;
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) .lesson-content :global(.katex-display),
+	:global(html.dark) .lesson-content :global(span.katex-display) {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+	}
+
+	:global(html.dark) .lesson-content :global(.katex-display::before),
+	:global(html.dark) .lesson-content :global(span.katex-display::before) {
+		background-color: #1a1a1a !important;
+		border-color: #444 !important;
+		color: #b0b0b0 !important;
 	}
 </style>
 

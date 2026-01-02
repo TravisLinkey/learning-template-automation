@@ -1,4 +1,5 @@
 export interface Lesson {
+	subject: string;
 	chapter: number;
 	lesson: number | string;
 	title: string;
