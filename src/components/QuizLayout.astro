@@ -64,6 +64,14 @@ const pageTitle = `${frontmatter.chapter}.x — Chapter ${frontmatter.chapter} s
 		display: none;
 	}
 
+	.quiz-content :global(h2),
+	.quiz-content :global(h3),
+	.quiz-content :global(h4),
+	.quiz-content :global(h5),
+	.quiz-content :global(h6) {
+		position: relative;
+	}
+
 	.quiz-content :global(h2) {
 		margin-top: 2.5rem;
 		margin-bottom: 1rem;
@@ -72,6 +80,32 @@ const pageTitle = `${frontmatter.chapter}.x — Chapter ${frontmatter.chapter} s
 	.quiz-content :global(h3) {
 		margin-top: 2rem;
 		margin-bottom: 0.75rem;
+	}
+
+	/* Anchor link styling */
+	.quiz-content :global(.anchor-link) {
+		opacity: 0;
+		margin-left: 0.5rem;
+		text-decoration: none;
+		color: #3498db;
+		transition: opacity 0.2s ease;
+		font-weight: normal;
+		font-size: 0.8em;
+		vertical-align: middle;
+	}
+
+	.quiz-content :global(h2:hover .anchor-link),
+	.quiz-content :global(h3:hover .anchor-link),
+	.quiz-content :global(h4:hover .anchor-link),
+	.quiz-content :global(h5:hover .anchor-link),
+	.quiz-content :global(h6:hover .anchor-link),
+	.quiz-content :global(.anchor-link:focus) {
+		opacity: 1;
+	}
+
+	.quiz-content :global(.anchor-link:hover) {
+		color: #2980b9;
+		text-decoration: underline;
 	}
 
 	.quiz-content :global(p) {
@@ -190,7 +224,57 @@ const pageTitle = `${frontmatter.chapter}.x — Chapter ${frontmatter.chapter} s
 	:global(html.dark) .quiz-content :global(pre code) {
 		background-color: transparent;
 		border: none;
-		color: #e0e0e0;
+		color: #ffffff;
+	}
+
+	/* Dark mode heading color overrides */
+	:global(html.dark) .quiz-header :global(h1),
+	:global(html.dark) .quiz-content :global(h1),
+	:global(html.dark) .quiz-content :global(h2),
+	:global(html.dark) .quiz-content :global(h3),
+	:global(html.dark) .quiz-content :global(h4),
+	:global(html.dark) .quiz-content :global(h5),
+	:global(html.dark) .quiz-content :global(h6) {
+		color: #ffffff !important;
+	}
+
+	/* Dark mode table styles */
+	:global(html.dark) .quiz-content :global(table) {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+	}
+
+	:global(html.dark) .quiz-content :global(th) {
+		background-color: #333 !important;
+		color: #ffffff !important;
+		border-color: #444 !important;
+	}
+
+	:global(html.dark) .quiz-content :global(td) {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+		color: #ffffff !important;
+	}
+
+	:global(html.dark) .quiz-content :global(tr:nth-child(even) td) {
+		background-color: #222 !important;
+	}
+
+	/* Dark mode text color overrides */
+	:global(html.dark) .quiz-content :global(p),
+	:global(html.dark) .quiz-content :global(li),
+	:global(html.dark) .quiz-content :global(strong),
+	:global(html.dark) .quiz-content :global(span) {
+		color: #ffffff;
+	}
+
+	/* Dark mode anchor link styling */
+	:global(html.dark) .quiz-content :global(.anchor-link) {
+		color: #5dade2;
+	}
+
+	:global(html.dark) .quiz-content :global(.anchor-link:hover) {
+		color: #3498db;
 	}
 </style>
 

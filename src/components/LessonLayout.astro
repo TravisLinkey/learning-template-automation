@@ -64,6 +64,14 @@ const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatte
 		display: none;
 	}
 
+	.lesson-content :global(h2),
+	.lesson-content :global(h3),
+	.lesson-content :global(h4),
+	.lesson-content :global(h5),
+	.lesson-content :global(h6) {
+		position: relative;
+	}
+
 	.lesson-content :global(h2) {
 		margin-top: 2.5rem;
 		margin-bottom: 1rem;
@@ -72,6 +80,32 @@ const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatte
 	.lesson-content :global(h3) {
 		margin-top: 2rem;
 		margin-bottom: 0.75rem;
+	}
+
+	/* Anchor link styling */
+	.lesson-content :global(.anchor-link) {
+		opacity: 0;
+		margin-left: 0.5rem;
+		text-decoration: none;
+		color: #3498db;
+		transition: opacity 0.2s ease;
+		font-weight: normal;
+		font-size: 0.8em;
+		vertical-align: middle;
+	}
+
+	.lesson-content :global(h2:hover .anchor-link),
+	.lesson-content :global(h3:hover .anchor-link),
+	.lesson-content :global(h4:hover .anchor-link),
+	.lesson-content :global(h5:hover .anchor-link),
+	.lesson-content :global(h6:hover .anchor-link),
+	.lesson-content :global(.anchor-link:focus) {
+		opacity: 1;
+	}
+
+	.lesson-content :global(.anchor-link:hover) {
+		color: #2980b9;
+		text-decoration: underline;
 	}
 
 	.lesson-content :global(p) {
@@ -229,7 +263,7 @@ const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatte
 	:global(html.dark) .lesson-content :global(pre code) {
 		background-color: transparent;
 		border: none;
-		color: #e0e0e0;
+		color: #ffffff;
 	}
 
 	:global(html.dark) .lesson-content :global(.katex-display),
@@ -242,7 +276,57 @@ const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatte
 	:global(html.dark) .lesson-content :global(span.katex-display::before) {
 		background-color: #1a1a1a !important;
 		border-color: #444 !important;
-		color: #b0b0b0 !important;
+		color: #ffffff !important;
+	}
+
+	/* Dark mode heading color overrides */
+	:global(html.dark) .lesson-header :global(h1),
+	:global(html.dark) .lesson-content :global(h1),
+	:global(html.dark) .lesson-content :global(h2),
+	:global(html.dark) .lesson-content :global(h3),
+	:global(html.dark) .lesson-content :global(h4),
+	:global(html.dark) .lesson-content :global(h5),
+	:global(html.dark) .lesson-content :global(h6) {
+		color: #ffffff !important;
+	}
+
+	/* Dark mode table styles */
+	:global(html.dark) .lesson-content :global(table) {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+	}
+
+	:global(html.dark) .lesson-content :global(th) {
+		background-color: #333 !important;
+		color: #ffffff !important;
+		border-color: #444 !important;
+	}
+
+	:global(html.dark) .lesson-content :global(td) {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+		color: #ffffff !important;
+	}
+
+	:global(html.dark) .lesson-content :global(tr:nth-child(even) td) {
+		background-color: #222 !important;
+	}
+
+	/* Dark mode text color overrides */
+	:global(html.dark) .lesson-content :global(p),
+	:global(html.dark) .lesson-content :global(li),
+	:global(html.dark) .lesson-content :global(strong),
+	:global(html.dark) .lesson-content :global(span) {
+		color: #ffffff;
+	}
+
+	/* Dark mode anchor link styling */
+	:global(html.dark) .lesson-content :global(.anchor-link) {
+		color: #5dade2;
+	}
+
+	:global(html.dark) .lesson-content :global(.anchor-link:hover) {
+		color: #3498db;
 	}
 </style>
 

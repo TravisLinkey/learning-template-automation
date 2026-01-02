@@ -12,7 +12,9 @@
   "dependencies": {
     "astro": "^5.16.6",
     "katex": "^0.16.27",
+    "rehype-autolink-headings": "^7.1.0",
     "rehype-katex": "^7.0.1",
+    "rehype-slug": "^6.0.0",
     "remark-math": "^6.0.0"
   },
   "devDependencies": {

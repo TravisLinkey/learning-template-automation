@@ -461,30 +461,42 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 	/* Dark Mode Styles - HTML and Body backgrounds */
 	html.dark {
 		background-color: #121212 !important;
-		color: #e0e0e0;
+		color: #ffffff;
 	}
 
 	html.dark body {
 		background-color: #121212 !important;
-		color: #e0e0e0;
+		color: #ffffff;
 	}
 
 
 	:global(html.dark) h1 {
-		color: #e0e0e0;
+		color: #ffffff;
 	}
 
 	:global(html.dark) h2 {
-		color: #d0d0d0;
+		color: #ffffff;
 		border-bottom-color: #444;
 	}
 
 	:global(html.dark) h3 {
-		color: #c0c0c0;
+		color: #ffffff;
 	}
 
 	:global(html.dark) p {
-		color: #d0d0d0;
+		color: #ffffff;
+	}
+
+	:global(html.dark) li {
+		color: #ffffff;
+	}
+
+	:global(html.dark) td {
+		color: #ffffff;
+	}
+
+	:global(html.dark) strong {
+		color: #ffffff;
 	}
 
 	:global(html.dark) a {
@@ -510,7 +522,7 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 	:global(html.dark) pre code {
 		background-color: transparent;
 		border: none;
-		color: #e0e0e0;
+		color: #ffffff;
 	}
 
 	:global(html.dark) .copy-code-button {
@@ -531,27 +543,30 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 	}
 
 	:global(html.dark) table {
+		background-color: #2a2a2a;
 		border-color: #444;
 	}
 
 	:global(html.dark) th {
-		background-color: #2a2a2a;
-		color: #e0e0e0;
+		background-color: #333;
+		color: #ffffff;
 		border-color: #444;
 	}
 
 	:global(html.dark) td {
+		background-color: #2a2a2a;
 		border-color: #444;
+		color: #ffffff;
 	}
 
-	:global(html.dark) tr:nth-child(even) {
+	:global(html.dark) tr:nth-child(even) td {
 		background-color: #222;
 	}
 
 	:global(html.dark) blockquote {
 		border-left-color: #3498db;
 		background-color: #222;
-		color: #c0c0c0;
+		color: #ffffff;
 	}
 
 	:global(html.dark) .katex-display,
@@ -564,7 +579,7 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 	:global(html.dark) span.katex-display::before {
 		background-color: #1a1a1a !important;
 		border-color: #444 !important;
-		color: #b0b0b0 !important;
+		color: #ffffff !important;
 	}
 
 	/* Force dark backgrounds on all elements */

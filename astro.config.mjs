@@ -2,6 +2,8 @@
 import { defineConfig } from 'astro/config';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 
 // Use production base path only for builds, use root for dev
 // In dev mode, use root path. In build mode (for GitHub Pages), use the repo path
@@ -16,6 +18,19 @@ export default defineConfig({
 	markdown: {
 		remarkPlugins: [remarkMath],
 		rehypePlugins: [
+			rehypeSlug,
+			[rehypeAutolinkHeadings, {
+				behavior: 'append',
+				properties: {
+					className: ['anchor-link'],
+					ariaLabel: 'Link to this section',
+					ariaHidden: false,
+				},
+				content: {
+					type: 'text',
+					value: '#',
+				},
+			}],
 			[rehypeKatex, {
 				output: 'html',
 				throwOnError: false,
