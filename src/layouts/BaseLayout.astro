@@ -21,7 +21,7 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
 		<title>{title}</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbFLwXQz+Soc+QkcIB+azht+0nSDYPJ78tJxpbZZAp" crossorigin="anonymous" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css" crossorigin="anonymous" />
 		<link rel="preconnect" href="https://cdn.jsdelivr.net" />
 		<script is:inline>
 			// Dark mode - apply immediately before page renders to prevent flash
@@ -375,8 +375,16 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 	}
 
 	/* Math equations (KaTeX) */
-	.katex {
+	:global(.katex) {
 		font-size: 1.1em;
+		font-family: KaTeX_Main, "Times New Roman", serif;
+	}
+
+	/* Ensure KaTeX displays properly */
+	:global(.katex-display) {
+		display: block;
+		margin: 1em 0;
+		text-align: center;
 	}
 
 	/* Hide MathML to prevent duplicate rendering */
@@ -385,7 +393,10 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 	}
 
 	/* Ensure KaTeX symbols render correctly */
-	:global(.katex .mrel) {
+	:global(.katex .mrel),
+	:global(.katex .mop),
+	:global(.katex .mbin),
+	:global(.katex .mord) {
 		font-family: KaTeX_Main, "Times New Roman", serif !important;
 	}
 
