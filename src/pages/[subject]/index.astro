@@ -1,13 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { groupLessonsByChapter, sortLessons, type Lesson } from '../../utils/lessons';
-import { getSubjectById } from '../../utils/subjects';
+import { getSubjectById, getAllSubjectsUnfiltered } from '../../utils/subjects';
 
 export async function getStaticPaths() {
-	const subjects = ['quant', 'python-pandas'];
+	// Use unfiltered list so direct URLs work for all subjects (including hidden ones)
+	const subjects = getAllSubjectsUnfiltered();
 	
 	return subjects.map((subject) => ({
-		params: { subject },
+		params: { subject: subject.id },
 	}));
 }
 
@@ -18,13 +19,27 @@ if (!subject) {
 	return Astro.redirect('/');
 }
 
-// Read all markdown files (static glob, then filter by subject)
-const allMarkdownFiles = import.meta.glob('/content/*/lessons/**/*.md', { eager: true });
+// Helper function to match paths for both flat and nested subject structures
+function matchesSubjectPath(path: string, subjectId: string): boolean {
+	// Handle nested subjects (e.g., 'developer-python-pandas' -> '/content/developer/python-pandas/lessons/')
+	if (subjectId.includes('-')) {
+		const parts = subjectId.split('-');
+		const category = parts[0];
+		const subject = parts.slice(1).join('-');
+		const nestedPath = `/content/${category}/${subject}/lessons/`;
+		return path.includes(nestedPath);
+	}
+	// Handle flat subjects (e.g., 'quant' -> '/content/quant/lessons/')
+	return path.includes(`/content/${subjectId}/lessons/`);
+}
+
+// Read all markdown files (static glob, then filter by subject - handles both flat and nested structures)
+const allMarkdownFiles = import.meta.glob('/content/**/lessons/**/*.md', { eager: true });
 
 const allLessons: Lesson[] = [];
 for (const path in allMarkdownFiles) {
-	// Filter by subject ID
-	if (!path.includes(`/content/${subjectId}/lessons/`)) {
+	// Filter by subject ID (handles both flat and nested structures)
+	if (!matchesSubjectPath(path, subjectId || '')) {
 		continue;
 	}
 	
@@ -104,6 +119,22 @@ function getChapterTitle(chapterNum: number, subject: string): string {
 			27: "Submartingales and Supermartingales",
 			28: "Martingale Convergence Theorems",
 			29: "Stopping Times and Optional Stopping Theorem",
+		};
+		return titles[chapterNum] || `Chapter ${chapterNum}`;
+	}
+	if (subject === 'vim') {
+		const titles: Record<number, string> = {
+			0: "Introduction and Getting Started",
+			1: "Understanding Vim Modes",
+			2: "Basic Navigation",
+			3: "Operators and Motions",
+			4: "Text Objects",
+			5: "Search and Replace",
+			6: "Registers and Clipboard",
+			7: "Windows, Buffers, and Tabs",
+			8: "Macros and Automation",
+			9: "Configuration and Customization",
+			10: "Plugins and Ecosystem",
 		};
 		return titles[chapterNum] || `Chapter ${chapterNum}`;
 	}

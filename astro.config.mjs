@@ -36,5 +36,14 @@ export default defineConfig({
 				throwOnError: false,
 			}],
 		],
+		shikiConfig: {
+			// Use dual themes - light by default, dark when html.dark is active
+			themes: {
+				light: 'github-light',
+				dark: 'github-dark',
+			},
+			// Use CSS variables approach for theme switching
+			defaultColor: false,
+		},
 	},
 });

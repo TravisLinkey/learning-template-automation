@@ -5,6 +5,67 @@ import { getAllSubjects } from '../utils/subjects';
 const subjects = getAllSubjects();
 const SITE_TITLE = "Learning Library";
 const SITE_DESCRIPTION = "A comprehensive collection of educational tutorials and courses";
+
+// Category definitions
+interface Category {
+	id: string;
+	name: string;
+	description: string;
+}
+
+const CATEGORIES: Category[] = [
+	{
+		id: 'quant',
+		name: 'Quantitative Finance Theory',
+		description: 'Probability theory and stochastic processes for quantitative finance',
+	},
+	{
+		id: 'mathematics',
+		name: 'Mathematical Foundations',
+		description: 'Applied statistics, numerical methods, and linear algebra',
+	},
+	{
+		id: 'developer',
+		name: 'Developer',
+		description: 'Programming tools, operating systems, concurrency, performance, and networking',
+	},
+	{
+		id: 'tools',
+		name: 'Tools & Editors',
+		description: 'Master the essential tools for efficient software development',
+	},
+];
+
+// Helper function to determine category from subject ID
+function getCategoryFromSubjectId(subjectId: string): string {
+	if (subjectId === 'quant') {
+		return 'quant';
+	}
+	if (subjectId.startsWith('mathematics-')) {
+		return 'mathematics';
+	}
+	if (subjectId.startsWith('developer-')) {
+		return 'developer';
+	}
+	if (subjectId === 'vim') {
+		return 'tools';
+	}
+	return 'other';
+}
+
+// Group subjects by category
+const subjectsByCategory = new Map<string, typeof subjects>();
+for (const category of CATEGORIES) {
+	subjectsByCategory.set(category.id, []);
+}
+subjectsByCategory.set('other', []);
+
+for (const subject of subjects) {
+	const categoryId = getCategoryFromSubjectId(subject.id);
+	const categorySubjects = subjectsByCategory.get(categoryId) || [];
+	categorySubjects.push(subject);
+	subjectsByCategory.set(categoryId, categorySubjects);
+}
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
@@ -17,19 +78,34 @@ const SITE_DESCRIPTION = "A comprehensive collection of educational tutorials an
 			</p>
 		</header>
 
-		<div class="subjects">
-			{subjects.map((subject) => (
-				<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card" key={subject.id}>
-					<div class="subject-content">
-						<h2 class="subject-name">{subject.name}</h2>
-						<p class="subject-description">{subject.description}</p>
-						<div class="subject-meta">
-							<span class="subject-audience">For: {subject.targetAudience}</span>
+		<div class="categories">
+			{CATEGORIES.map((category) => {
+				const categorySubjects = subjectsByCategory.get(category.id) || [];
+				if (categorySubjects.length === 0) return null;
+				
+				return (
+					<section class="category" key={category.id}>
+						<header class="category-header">
+							<h2 class="category-name">{category.name}</h2>
+							<p class="category-description">{category.description}</p>
+						</header>
+						<div class="subjects">
+							{categorySubjects.map((subject) => (
+								<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card" key={subject.id}>
+									<div class="subject-content">
+										<h3 class="subject-name">{subject.name}</h3>
+										<p class="subject-description">{subject.description}</p>
+										<div class="subject-meta">
+											<span class="subject-audience">For: {subject.targetAudience}</span>
+										</div>
+									</div>
+									<div class="subject-arrow">→</div>
+								</a>
+							))}
 						</div>
-					</div>
-					<div class="subject-arrow">→</div>
-				</a>
-			))}
+					</section>
+				);
+			})}
 		</div>
 	</main>
 </BaseLayout>
@@ -66,11 +142,42 @@ const SITE_DESCRIPTION = "A comprehensive collection of educational tutorials an
 		margin: 0 auto;
 	}
 
+	.categories {
+		display: flex;
+		flex-direction: column;
+		gap: 4rem;
+		margin-top: 3rem;
+	}
+
+	.category {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.category-header {
+		margin-bottom: 1rem;
+		padding-bottom: 1rem;
+		border-bottom: 2px solid #3498db;
+	}
+
+	.category-name {
+		font-size: 2rem;
+		margin-bottom: 0.5rem;
+		color: #2c3e50;
+		font-weight: 700;
+	}
+
+	.category-description {
+		color: #666;
+		font-size: 1.1rem;
+		margin: 0;
+	}
+
 	.subjects {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 		gap: 2rem;
-		margin-top: 3rem;
 	}
 
 	.subject-card {
@@ -102,7 +209,7 @@ const SITE_DESCRIPTION = "A comprehensive collection of educational tutorials an
 	}
 
 	.subject-name {
-		font-size: 1.75rem;
+		font-size: 1.5rem;
 		margin-bottom: 1rem;
 		color: #2c3e50;
 		font-weight: 600;
@@ -146,6 +253,14 @@ const SITE_DESCRIPTION = "A comprehensive collection of educational tutorials an
 
 		.homepage-header h1 {
 			font-size: 2.25rem;
+		}
+
+		.categories {
+			gap: 3rem;
+		}
+
+		.category-name {
+			font-size: 1.75rem;
 		}
 
 		.subjects {
@@ -208,5 +323,17 @@ const SITE_DESCRIPTION = "A comprehensive collection of educational tutorials an
 
 	:global(html.dark) .subject-arrow {
 		color: #3498db;
+	}
+
+	:global(html.dark) .category-header {
+		border-bottom-color: #3498db;
+	}
+
+	:global(html.dark) .category-name {
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) .category-description {
+		color: #b0b0b0;
 	}
 </style>

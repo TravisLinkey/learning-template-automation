@@ -1,20 +1,34 @@
 ---
 import QuizLayout from '../../../components/QuizLayout.astro';
 import { getPrevNextLesson, sortLessons, type Lesson } from '../../../utils/lessons';
-import { getSubjectById } from '../../../utils/subjects';
+import { getSubjectById, getAllSubjectsUnfiltered } from '../../../utils/subjects';
 
 export async function getStaticPaths() {
-	const subjects = ['quant', 'python-pandas'];
+	// Helper function to match paths for both flat and nested subject structures
+	function matchesSubjectPath(path: string, subjectId: string): boolean {
+		// Handle nested subjects (e.g., 'developer-python-pandas' -> '/content/developer/python-pandas/lessons/')
+		if (subjectId.includes('-')) {
+			const parts = subjectId.split('-');
+			const category = parts[0];
+			const subject = parts.slice(1).join('-');
+			const nestedPath = `/content/${category}/${subject}/lessons/`;
+			return path.includes(nestedPath);
+		}
+		// Handle flat subjects (e.g., 'quant' -> '/content/quant/lessons/')
+		return path.includes(`/content/${subjectId}/lessons/`);
+	}
+	// Use unfiltered list so direct URLs work for all subjects (including hidden ones)
+	const subjects = getAllSubjectsUnfiltered().map(s => s.id);
 	const paths: Array<{ params: { subject: string; slug: string }; props: any }> = [];
 	
-	// Use static glob pattern to load all files
-	const allMarkdownFiles = import.meta.glob('/content/*/lessons/**/*.md', { eager: true });
+	// Use static glob pattern to load all files (handles both flat and nested structures)
+	const allMarkdownFiles = import.meta.glob('/content/**/lessons/**/*.md', { eager: true });
 	
 	for (const subjectId of subjects) {
-		// Filter files for this subject
+		// Filter files for this subject (handles both flat and nested structures)
 		const subjectFiles: Record<string, any> = {};
 		for (const path in allMarkdownFiles) {
-			if (path.includes(`/content/${subjectId}/lessons/`)) {
+			if (matchesSubjectPath(path, subjectId)) {
 				subjectFiles[path] = allMarkdownFiles[path];
 			}
 		}

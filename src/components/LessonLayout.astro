@@ -201,6 +201,17 @@ const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatte
 		font-size: 0.9em;
 	}
 
+	/* Shiki dual theme support - light mode (default) */
+	.lesson-content :global(pre.astro-code),
+	.lesson-content :global(pre.shiki) {
+		background-color: var(--shiki-light-bg, #f8f8f8) !important;
+	}
+
+	.lesson-content :global(pre.astro-code span),
+	.lesson-content :global(pre.shiki span) {
+		color: var(--shiki-light, inherit) !important;
+	}
+
 	.lesson-content :global(table) {
 		margin: 1.5rem 0;
 	}
@@ -271,6 +282,17 @@ const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatte
 		background-color: transparent;
 		border: none;
 		color: #ffffff;
+	}
+
+	/* Shiki dual theme support - dark mode */
+	:global(html.dark) .lesson-content :global(pre.astro-code),
+	:global(html.dark) .lesson-content :global(pre.shiki) {
+		background-color: var(--shiki-dark-bg, #24292e) !important;
+	}
+
+	:global(html.dark) .lesson-content :global(pre.astro-code span),
+	:global(html.dark) .lesson-content :global(pre.shiki span) {
+		color: var(--shiki-dark, inherit) !important;
 	}
 
 	:global(html.dark) .lesson-content :global(.katex-display),
