@@ -1,0 +1,762 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { groupLessonsByChapter, sortLessons, type Lesson } from '../../utils/lessons';
+import { getSubjectById, getAllSubjectsUnfiltered } from '../../utils/subjects';
+
+export async function getStaticPaths() {
+	// Use unfiltered list so direct URLs work for all subjects (including hidden ones)
+	const subjects = getAllSubjectsUnfiltered();
+	
+	return subjects.map((subject) => ({
+		params: { subject: subject.id },
+	}));
+}
+
+const { subject: subjectId } = Astro.params;
+const subject = getSubjectById(subjectId || '');
+
+if (!subject) {
+	return Astro.redirect('/');
+}
+
+// Helper function to match paths for both flat and nested subject structures
+function matchesSubjectPath(path: string, subjectId: string): boolean {
+	// Handle nested subjects (e.g., 'developer-python-pandas' -> '/content/developer/python-pandas/lessons/')
+	if (subjectId.includes('-')) {
+		const parts = subjectId.split('-');
+		const category = parts[0];
+		const subject = parts.slice(1).join('-');
+		const nestedPath = `/content/${category}/${subject}/lessons/`;
+		return path.includes(nestedPath);
+	}
+	// Handle flat subjects (e.g., 'quant' -> '/content/quant/lessons/')
+	return path.includes(`/content/${subjectId}/lessons/`);
+}
+
+// Read all markdown files (static glob, then filter by subject - handles both flat and nested structures)
+const allMarkdownFiles = import.meta.glob('/content/**/lessons/**/*.md', { eager: true });
+
+const allLessons: Lesson[] = [];
+for (const path in allMarkdownFiles) {
+	// Filter by subject ID (handles both flat and nested structures)
+	if (!matchesSubjectPath(path, subjectId || '')) {
+		continue;
+	}
+	
+	const file = allMarkdownFiles[path] as any;
+	const frontmatter = file.frontmatter;
+	
+	const slug = frontmatter.lesson === 'x' 
+		? `${frontmatter.chapter}.x`
+		: `${frontmatter.chapter}.${frontmatter.lesson}`;
+	
+	const lesson: Lesson = {
+		subject: subjectId || '',
+		chapter: frontmatter.chapter,
+		lesson: frontmatter.lesson,
+		title: frontmatter.title,
+		slug: slug,
+		author: frontmatter.author,
+		date: frontmatter.date,
+		description: frontmatter.description,
+		isQuiz: frontmatter.lesson === 'x',
+	};
+	
+	allLessons.push(lesson);
+}
+
+// Subject-specific chapter titles. Add new subjects here to extend.
+const CHAPTER_TITLES: Record<string, Record<number, string>> = {
+	"projects-01-backtester": { 0: "Backtesting Engine" },
+	"projects-02-paper-bot": { 0: "Paper Trading Bot" },
+	"projects-03-ml-trader": { 0: "ML Trading Strategy" },
+	"developer-python-pandas": {
+		0: "Introduction and Prerequisites",
+		1: "Data Structures and Time Series",
+	},
+	"mathematics-statistics": {
+		0: "Introduction and Prerequisites",
+		1: "Returns and Volatility",
+		2: "Hypothesis Testing",
+		3: "Regression Analysis",
+		4: "ANOVA and Experimental Design",
+		5: "Sampling Methods",
+		6: "Correlation vs Causation",
+		7: "Practical Statistical Analysis",
+	},
+	quant: {
+		0: "Introduction and Prerequisites",
+		1: "Basic Probability",
+		2: "Conditional Probability",
+		3: "Bayes' Theorem & Law of Total Probability",
+		4: "Random Variables",
+		5: "Bernoulli & Binomial Distributions",
+		6: "Geometric & Poisson Distributions",
+		7: "Continuous Random Variables",
+		8: "Law of Large Numbers",
+		9: "Central Limit Theorem",
+		10: "Markov Chains",
+		11: "Transition Probability Matrices",
+		12: "Stationary Distributions",
+		13: "Absorbing States",
+		14: "Communication Classes and Irreducibility",
+		15: "Periodicity and Aperiodicity",
+		16: "Recurrence and Transience",
+		17: "First Passage Times and Expected Return Times",
+		18: "Hitting Probabilities and Times",
+		19: "CTMC Fundamentals",
+		20: "Generator Matrices and Transition Functions",
+		21: "Kolmogorov Equations",
+		22: "Birth-Death Processes",
+		23: "Queueing Theory Applications",
+		24: "Stationary Distributions and Limiting Behavior (CTMC)",
+		25: "Brownian Motion",
+		26: "Conditional Expectation and Filtrations",
+		27: "Submartingales and Supermartingales",
+		28: "Martingale Convergence Theorems",
+		29: "Stopping Times and Optional Stopping Theorem",
+	},
+	vim: {
+		0: "Introduction and Getting Started",
+		1: "Understanding Vim Modes",
+		2: "Basic Navigation",
+		3: "Operators and Motions",
+		4: "Text Objects",
+		5: "Search and Replace",
+		6: "Registers and Clipboard",
+		7: "Windows, Buffers, and Tabs",
+		8: "Macros and Automation",
+		9: "Configuration and Customization",
+		10: "Plugins and Ecosystem",
+	},
+};
+
+function getChapterTitle(chapterNum: number, subject: string): string {
+	const titles = CHAPTER_TITLES[subject];
+	return titles?.[chapterNum] ?? `Chapter ${chapterNum}`;
+}
+
+// Group lessons by chapter
+const chaptersMap = groupLessonsByChapter(sortLessons(allLessons));
+
+// Convert to array and sort by chapter number
+const chapters = Array.from(chaptersMap.entries())
+	.sort(([a], [b]) => a - b)
+	.map(([chapterNum, lessons]) => {
+		// Extract chapter title from first lesson or use default
+		const chapterTitle = lessons[0]?.title.includes('Chapter') 
+			? lessons[0].title.replace(/^.*Chapter \d+[:\s]+/, '').replace(' summary and quiz', '')
+			: getChapterTitle(chapterNum, subjectId || '');
+		
+		return {
+			number: chapterNum,
+			title: chapterTitle,
+			lessons: lessons.filter(l => !l.isQuiz),
+			hasQuiz: lessons.some(l => l.isQuiz),
+		};
+	});
+
+const SITE_TITLE = `Learn ${subject.name}`;
+---
+
+<BaseLayout title={`${SITE_TITLE} - Table of Contents`} description={subject.description} subject={subjectId}>
+	<main class="toc">
+		<header class="toc-header">
+			<h1>{SITE_TITLE}</h1>
+			<p class="intro">
+				Welcome to {SITE_TITLE}! This tutorial series is designed for {subject.targetAudience} 
+				who want to master {subject.subjectDescription}. Each chapter builds 
+				upon previous concepts, taking you from beginner to intermediate level.
+			</p>
+			<p class="intro">
+				The lessons are organized by chapters, with each chapter containing multiple numbered lessons. 
+				At the end of each chapter, you'll find a summary and quiz to test your understanding.
+			</p>
+			<div class="toc-view-toggle" role="group" aria-label="Table of contents view">
+				<button type="button" class="toc-view-btn active" data-view="list" aria-pressed="true">
+					List
+				</button>
+				<button type="button" class="toc-view-btn" data-view="grid" aria-pressed="false">
+					Grid
+				</button>
+			</div>
+		</header>
+
+		<div class="toc-wrapper" id="toc-chapters" data-view="list">
+			<!-- List view: chapters with lesson lists -->
+			<div class="toc-list-view">
+				{chapters.map((chapter) => (
+					<details class="chapter accordion">
+						<summary class="accordion-trigger">
+							<span class="accordion-heading">
+								<h2 class="chapter-title">
+									Chapter {chapter.number}: {chapter.title}
+								</h2>
+							</span>
+							<span class="accordion-icon" aria-hidden="true"></span>
+						</summary>
+						<ul class="lesson-list">
+							{chapter.lessons.map((lesson) => (
+								<li class="lesson-item">
+									<a href={`${import.meta.env.BASE_URL}${subjectId}/lessons/${lesson.slug}`}>
+										{lesson.chapter}.{lesson.lesson} {lesson.title}
+									</a>
+								</li>
+							))}
+							{chapter.hasQuiz && (
+								<li class="lesson-item quiz-item">
+									<a href={`${import.meta.env.BASE_URL}${subjectId}/quiz/${chapter.number}.x`}>
+										{chapter.number}.x Chapter {chapter.number} summary and quiz
+									</a>
+								</li>
+							)}
+						</ul>
+					</details>
+				))}
+			</div>
+
+			<!-- Grid view: chapter cards only (no section headers) -->
+			<div class="toc-grid-view" aria-hidden="true">
+				<div class="chapters-grid">
+					{chapters.map((chapter) => {
+						const firstLesson = chapter.lessons[0];
+						const chapterHref = firstLesson
+							? `${import.meta.env.BASE_URL}${subjectId}/lessons/${firstLesson.slug}`
+							: `${import.meta.env.BASE_URL}${subjectId}/quiz/${chapter.number}.x`;
+						const lessonCount = chapter.lessons.length + (chapter.hasQuiz ? 1 : 0);
+						return (
+							<a href={chapterHref} class="chapter-card">
+								<div class="chapter-card-content">
+									<h3 class="chapter-card-title">
+										Chapter {chapter.number}: {chapter.title}
+									</h3>
+									<p class="chapter-card-meta">
+										{lessonCount} {lessonCount === 1 ? 'lesson' : 'lessons'}
+										{chapter.hasQuiz ? ' · Quiz' : ''}
+									</p>
+								</div>
+								<div class="chapter-card-arrow">→</div>
+							</a>
+						);
+					})}
+				</div>
+			</div>
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.toc {
+		width: 80%;
+		max-width: 800px;
+		margin: 0 auto;
+		transition: background-color 0.3s;
+		background-color: transparent;
+	}
+
+	.toc-header {
+		margin-bottom: 3.5rem;
+		padding-bottom: 2rem;
+		border-bottom: 2px solid #e8e8e8;
+	}
+
+	.toc-header h1 {
+		margin-bottom: 1.5rem;
+		color: #1a1a1a;
+		font-size: 2.5rem;
+	}
+
+	.intro {
+		margin-bottom: 1.25rem;
+		color: #555;
+		line-height: 1.8;
+		font-size: 1.05rem;
+	}
+
+	.toc-view-toggle {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0;
+		margin-top: 1.5rem;
+		border-radius: 6px;
+		overflow: hidden;
+		border: 1px solid #e0e0e0;
+		width: fit-content;
+	}
+
+	.toc-view-btn {
+		padding: 0.5rem 1.25rem;
+		font-size: 0.95rem;
+		font-weight: 500;
+		background: #fff;
+		color: #555;
+		border: none;
+		cursor: pointer;
+		transition: background-color 0.2s, color 0.2s;
+	}
+
+	.toc-view-btn:first-child {
+		border-right: 1px solid #e0e0e0;
+	}
+
+	.toc-view-btn:hover {
+		background-color: #f0f7ff;
+		color: #2980b9;
+	}
+
+	.toc-view-btn.active {
+		background-color: #3498db;
+		color: #fff;
+	}
+
+	.toc-wrapper {
+		display: block;
+	}
+
+	.toc-list-view {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+	}
+
+	.toc-wrapper[data-view="grid"] .toc-list-view {
+		display: none;
+	}
+
+	.toc-grid-view {
+		display: none;
+	}
+
+	.toc-wrapper[data-view="grid"] .toc-grid-view {
+		display: block;
+	}
+
+	.toc-wrapper[data-view="list"] .toc-grid-view {
+		display: none;
+	}
+
+	.chapters-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2rem;
+	}
+
+	.chapter-card {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		padding: 2rem;
+		background-color: #fff;
+		border: 2px solid #e0e0e0;
+		border-radius: 8px;
+		text-decoration: none;
+		color: inherit;
+		transition: all 0.3s ease;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+		flex: 1 1 18rem;
+		min-width: 0;
+		max-width: 100%;
+	}
+
+	.chapter-card:hover {
+		border-color: #3498db;
+		transform: translateY(-4px);
+		box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+		text-decoration: none;
+	}
+
+	.chapter-card-content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.chapter-card-title {
+		font-size: 1.25rem;
+		margin-bottom: 0.5rem;
+		color: #2c3e50;
+		font-weight: 600;
+	}
+
+	.chapter-card-meta {
+		color: #666;
+		font-size: 0.9rem;
+		margin: 0;
+	}
+
+	.chapter-card-arrow {
+		font-size: 1.5rem;
+		color: #3498db;
+		margin-left: 1rem;
+		flex-shrink: 0;
+		transition: transform 0.3s ease;
+	}
+
+	.chapter-card:hover .chapter-card-arrow {
+		transform: translateX(6px);
+	}
+
+	.chapter {
+		padding-bottom: 2.5rem;
+		border-bottom: 1px solid #e8e8e8;
+		background-color: #fafbfc;
+		padding: 2rem;
+		border-radius: 6px;
+		border: 1px solid #e0e0e0;
+		transition: background-color 0.3s, border-color 0.3s;
+	}
+
+	/* Accordion: list-view chapters (details/summary) */
+	.chapter.accordion {
+		padding: 0;
+		overflow: hidden;
+	}
+
+	.chapter.accordion summary {
+		list-style: none;
+		cursor: pointer;
+	}
+
+	.chapter.accordion summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.chapter.accordion .accordion-trigger {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1.25rem 1.5rem;
+		margin-bottom: 0;
+		transition: background-color 0.2s;
+	}
+
+	.chapter.accordion .accordion-trigger:hover {
+		background-color: #f0f7ff;
+	}
+
+	.chapter.accordion[open] .accordion-trigger {
+		border-bottom: 1px solid #e0e0e0;
+	}
+
+	.chapter.accordion .accordion-heading {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.chapter.accordion .accordion-icon {
+		flex-shrink: 0;
+		width: 0.6rem;
+		height: 0.6rem;
+		margin-top: 0.5rem;
+		border: solid #3498db;
+		border-width: 0 2px 2px 0;
+		transform: rotate(-45deg);
+		transition: transform 0.25s ease;
+	}
+
+	.chapter.accordion[open] .accordion-icon {
+		transform: rotate(135deg);
+		margin-top: 0.6rem;
+	}
+
+	.chapter.accordion .chapter-title {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		border-bottom: none;
+		font-size: 1.75rem;
+		color: #2c3e50;
+		font-weight: 600;
+	}
+
+	.chapter.accordion .lesson-list {
+		padding: 1.5rem;
+		padding-top: 0.5rem;
+	}
+
+	.chapter:last-child {
+		border-bottom: 1px solid #e8e8e8;
+	}
+
+	.chapter-title {
+		font-size: 1.75rem;
+		margin-bottom: 1.5rem;
+		color: #2c3e50;
+		font-weight: 600;
+		border-bottom: 2px solid #3498db;
+		padding-bottom: 0.75rem;
+	}
+
+	.lesson-list {
+		list-style: none;
+		padding-left: 0;
+		margin: 0;
+	}
+
+	.lesson-item {
+		margin-bottom: 0.75rem;
+		padding: 0.75rem 1rem;
+		padding-left: 2.5rem;
+		position: relative;
+		background-color: #fff;
+		border-radius: 4px;
+		border: 1px solid #e8e8e8;
+		transition: all 0.3s;
+	}
+
+	.lesson-item:hover {
+		background-color: #f0f7ff;
+		border-color: #3498db;
+		transform: translateX(4px);
+	}
+
+	.lesson-item::before {
+		content: "→";
+		position: absolute;
+		left: 1rem;
+		color: #3498db;
+		font-weight: 600;
+	}
+
+	.lesson-item a {
+		color: #2980b9;
+		text-decoration: none;
+		transition: color 0.2s;
+		display: block;
+		font-weight: 500;
+	}
+
+	.lesson-item a:hover {
+		color: #1f5f8b;
+		text-decoration: none;
+	}
+
+	.quiz-item {
+		margin-top: 1rem;
+		font-weight: 600;
+		background-color: #fff3cd;
+		border-color: #ffc107;
+	}
+
+	.quiz-item::before {
+		content: "📝";
+	}
+
+	.quiz-item a {
+		color: #856404;
+	}
+
+	.quiz-item:hover {
+		background-color: #ffe69c;
+		border-color: #ffc107;
+	}
+
+	@media (max-width: 768px) {
+		.toc-header {
+			margin-bottom: 2.5rem;
+			padding-bottom: 1.5rem;
+		}
+
+		.toc-header h1 {
+			font-size: 2rem;
+		}
+
+		.toc-list-view {
+			gap: 2rem;
+		}
+
+		.chapter-card {
+			flex: 1 1 100%;
+		}
+
+		.chapter {
+			padding: 1.5rem;
+			padding-bottom: 2rem;
+		}
+
+		.chapter-title {
+			font-size: 1.5rem;
+		}
+
+		.lesson-item {
+			padding-left: 2rem;
+		}
+
+		.lesson-item::before {
+			left: 0.75rem;
+		}
+
+		.toc {
+			width: 90%;
+		}
+	}
+
+	/* Dark mode styles */
+	:global(html.dark) .toc {
+		background-color: transparent !important;
+	}
+
+	:global(html.dark) .toc-header {
+		border-bottom-color: #444;
+	}
+
+	:global(html.dark) .toc-header h1 {
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) .intro {
+		color: #b0b0b0;
+	}
+
+	:global(html.dark) .toc-view-toggle {
+		border-color: #444;
+	}
+
+	:global(html.dark) .toc-view-btn {
+		background: #222;
+		color: #b0b0b0;
+	}
+
+	:global(html.dark) .toc-view-btn:first-child {
+		border-right-color: #444;
+	}
+
+	:global(html.dark) .toc-view-btn:hover {
+		background-color: #2a2a2a;
+		color: #5dade2;
+	}
+
+	:global(html.dark) .toc-view-btn.active {
+		background-color: #3498db;
+		color: #fff;
+	}
+
+	:global(html.dark) .chapter-card {
+		background-color: #1a1a1a;
+		border-color: #444;
+	}
+
+	:global(html.dark) .chapter-card:hover {
+		background-color: #222;
+		border-color: #3498db;
+		box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+	}
+
+	:global(html.dark) .chapter-card-title {
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) .chapter-card-meta {
+		color: #b0b0b0;
+	}
+
+	:global(html.dark) .chapter-card-arrow {
+		color: #3498db;
+	}
+
+	:global(html.dark) .chapter {
+		background-color: #1a1a1a !important;
+		border-color: #444;
+	}
+
+	:global(html.dark) .chapter.accordion .accordion-trigger:hover {
+		background-color: #222;
+	}
+
+	:global(html.dark) .chapter.accordion[open] .accordion-trigger {
+		border-bottom-color: #444;
+	}
+
+	:global(html.dark) .chapter.accordion .accordion-icon {
+		border-color: #3498db;
+	}
+
+	:global(html.dark) .chapter.accordion .chapter-title {
+		color: #d0d0d0;
+	}
+
+	:global(html.dark) .chapter-title {
+		color: #d0d0d0;
+		border-bottom-color: #3498db;
+	}
+
+	:global(html.dark) .lesson-item {
+		background-color: #222 !important;
+		border-color: #444;
+	}
+
+	:global(html.dark) .lesson-item:hover {
+		background-color: #2a2a2a !important;
+		border-color: #3498db;
+	}
+
+	:global(html.dark) .lesson-item::before {
+		color: #3498db;
+	}
+
+	:global(html.dark) .lesson-item a {
+		color: #5dade2;
+	}
+
+	:global(html.dark) .lesson-item a:hover {
+		color: #85c1e9;
+	}
+
+	:global(html.dark) .quiz-item {
+		background-color: #2a2419 !important;
+		border-color: #f39c12;
+	}
+
+	:global(html.dark) .quiz-item:hover {
+		background-color: #3d2f1f !important;
+		border-color: #f39c12;
+	}
+
+	:global(html.dark) .quiz-item a {
+		color: #f39c12;
+	}
+</style>
+
+<script>
+	const STORAGE_KEY = 'learning-library-toc-view';
+	const wrapper = document.getElementById('toc-chapters');
+	const listView = wrapper?.querySelector('.toc-list-view');
+	const gridView = wrapper?.querySelector('.toc-grid-view');
+	const buttons = document.querySelectorAll('.toc-view-btn');
+
+	function setView(view: 'list' | 'grid') {
+		if (!wrapper) return;
+		wrapper.setAttribute('data-view', view);
+		listView?.setAttribute('aria-hidden', String(view !== 'list'));
+		gridView?.setAttribute('aria-hidden', String(view !== 'grid'));
+		try {
+			localStorage.setItem(STORAGE_KEY, view);
+		} catch (_) {}
+		buttons.forEach((btn) => {
+			const isActive = btn.getAttribute('data-view') === view;
+			btn.classList.toggle('active', isActive);
+			btn.setAttribute('aria-pressed', String(isActive));
+		});
+	}
+
+	const saved = typeof localStorage !== 'undefined' && localStorage.getItem(STORAGE_KEY);
+	if (saved === 'grid' && wrapper) {
+		wrapper.setAttribute('data-view', 'grid');
+		listView?.setAttribute('aria-hidden', 'true');
+		gridView?.setAttribute('aria-hidden', 'false');
+		buttons.forEach((btn) => {
+			const isActive = btn.getAttribute('data-view') === 'grid';
+			btn.classList.toggle('active', isActive);
+			btn.setAttribute('aria-pressed', String(isActive));
+		});
+	}
+
+	buttons.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const view = btn.getAttribute('data-view');
+			if (view === 'list' || view === 'grid') setView(view);
+		});
+	});
+</script>
+

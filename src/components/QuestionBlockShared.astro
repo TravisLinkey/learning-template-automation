@@ -1,0 +1,162 @@
+---
+/**
+ * Shared question-block styling and wrap script for both lesson content and chapter quizzes.
+ * - Bordered container (.question-block) around each "Question N" + text + Show Solution
+ * - Unified "Show Solution" / "Show Hint" accordion styling (same in lessons and quizzes)
+ */
+---
+
+<style is:global>
+	/* Bordered container for each question block (used in .lesson-content and .quiz-content) */
+	.question-block {
+		border: 1px solid #e0e0e0;
+		border-radius: 8px;
+		padding: 1.25rem;
+		margin: 1.5rem 0;
+		background-color: #fafbfc;
+		transition: background-color 0.3s, border-color 0.3s;
+	}
+
+	.question-block details {
+		margin-bottom: 0;
+	}
+
+	/* Show Solution / Show Hint: same accordion styling in lessons and quizzes */
+	.lesson-content details,
+	.quiz-content details {
+		margin: 1.25rem 0;
+		border: 1px solid #e8e8e8;
+		border-radius: 6px;
+		overflow: hidden;
+		background-color: #fff;
+		transition: background-color 0.3s, border-color 0.3s;
+	}
+
+	.question-block details {
+		margin-top: 0.5rem;
+	}
+
+	.lesson-content details summary,
+	.quiz-content details summary {
+		list-style: none;
+		cursor: pointer;
+		padding: 0.6rem 1rem;
+		font-weight: 500;
+		color: #2980b9;
+		transition: background-color 0.2s, color 0.2s;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+
+	.lesson-content details summary::-webkit-details-marker,
+	.quiz-content details summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.lesson-content details summary:hover,
+	.quiz-content details summary:hover {
+		background-color: #f0f7ff;
+		color: #1f5f8b;
+	}
+
+	.lesson-content details[open] summary,
+	.quiz-content details[open] summary {
+		border-bottom: 1px solid #e8e8e8;
+	}
+
+	.lesson-content details summary::after,
+	.quiz-content details summary::after {
+		content: '';
+		flex-shrink: 0;
+		width: 0.5rem;
+		height: 0.5rem;
+		border: solid currentColor;
+		border-width: 0 2px 2px 0;
+		transform: rotate(-45deg);
+		transition: transform 0.25s ease;
+	}
+
+	.lesson-content details[open] summary::after,
+	.quiz-content details[open] summary::after {
+		transform: rotate(135deg);
+	}
+
+	.lesson-content details > *:not(summary),
+	.quiz-content details > *:not(summary) {
+		padding: 1rem 1.25rem;
+		margin: 0;
+	}
+
+	/* Dark mode */
+	:global(html.dark) .question-block {
+		background-color: #1a1a1a;
+		border-color: #444;
+	}
+
+	:global(html.dark) .lesson-content details,
+	:global(html.dark) .quiz-content details {
+		background-color: #222;
+		border-color: #444;
+	}
+
+	:global(html.dark) .lesson-content details summary,
+	:global(html.dark) .quiz-content details summary {
+		color: #5dade2;
+	}
+
+	:global(html.dark) .lesson-content details summary:hover,
+	:global(html.dark) .quiz-content details summary:hover {
+		background-color: #2a2a2a;
+		color: #85c1e9;
+	}
+
+	:global(html.dark) .lesson-content details[open] summary,
+	:global(html.dark) .quiz-content details[open] summary {
+		border-bottom-color: #444;
+	}
+</style>
+
+<script>
+	// @ts-ignore - rootId is string (element id)
+	function wrapQuestionBlocks(rootId) {
+		const root = document.getElementById(rootId);
+		if (!root) return;
+
+		root.querySelectorAll('details').forEach((details) => {
+			const summary = details.querySelector('summary');
+			if (!summary) return;
+			const t = summary.textContent?.trim() || '';
+			if (!t.includes('Show Solution') && !t.includes('Show Hint')) return;
+			if (details.closest('.question-block')) return;
+
+			const toWrap = [];
+			let prev = details.previousElementSibling;
+
+			while (prev) {
+				toWrap.unshift(prev);
+				const text = prev.textContent || '';
+				if (/Question\s*#?\s*\d+/i.test(text) || prev.tagName === 'H2' || prev.tagName === 'H3') break;
+				if (prev.tagName === 'DETAILS') break;
+				prev = prev.previousElementSibling;
+			}
+
+			const block = document.createElement('div');
+			block.className = 'question-block';
+			const first = toWrap[0];
+			if (first?.parentNode) {
+				first.parentNode.insertBefore(block, first);
+				toWrap.forEach((el) => block.appendChild(el));
+			} else if (details.parentNode) {
+				details.parentNode.insertBefore(block, details);
+			}
+			block.appendChild(details);
+		});
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		wrapQuestionBlocks('lesson-content-root');
+		wrapQuestionBlocks('quiz-content-root');
+	});
+</script>

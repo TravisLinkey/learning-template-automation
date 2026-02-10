@@ -1,0 +1,626 @@
+---
+import Header from '../components/Header.astro';
+import QuestionBlockShared from '../components/QuestionBlockShared.astro';
+
+const DEFAULT_DESCRIPTION = "Learning Library - A comprehensive collection of educational tutorials and courses";
+
+interface Props {
+	title: string;
+	description?: string;
+	subject?: string;
+}
+
+const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.27/dist/katex.min.css" crossorigin="anonymous" />
+		<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+		<script is:inline>
+			// Dark mode - apply immediately before page renders to prevent flash
+			(function() {
+				try {
+					const theme = localStorage.getItem('theme') || 'light';
+					if (theme === 'dark') {
+						document.documentElement.classList.add('dark');
+					}
+				} catch (e) {
+					// localStorage might not be available in some contexts
+				}
+			})();
+		</script>
+	</head>
+	<body>
+		<Header title={title} subject={subject} />
+		<slot />
+		<QuestionBlockShared />
+		<script>
+			// Dark mode toggle functionality
+			(function() {
+				const html = document.documentElement;
+				
+				// Set up toggle button
+				document.addEventListener('DOMContentLoaded', function() {
+					const toggle = document.getElementById('dark-mode-toggle');
+					if (!toggle) return;
+					
+					// Update icon based on current theme
+					const icon = toggle.querySelector('.dark-mode-icon');
+					if (icon) {
+						icon.textContent = html.classList.contains('dark') ? '☀️' : '🌙';
+					}
+					
+					toggle.addEventListener('click', function() {
+						html.classList.toggle('dark');
+						const isDark = html.classList.contains('dark');
+						localStorage.setItem('theme', isDark ? 'dark' : 'light');
+						
+						// Update icon
+						if (icon) {
+							icon.textContent = isDark ? '☀️' : '🌙';
+						}
+					});
+				});
+			})();
+			
+			// Add copy buttons to all code blocks
+			document.addEventListener('DOMContentLoaded', function() {
+				const codeBlocks = document.querySelectorAll('pre code');
+				
+				codeBlocks.forEach((codeBlock) => {
+					const pre = codeBlock.parentElement;
+					if (!pre || pre.classList.contains('has-copy-button')) return;
+					
+					pre.classList.add('has-copy-button');
+					pre.style.position = 'relative';
+					
+					const copyButton = document.createElement('button');
+					copyButton.className = 'copy-code-button';
+					copyButton.innerHTML = '📋 Copy';
+					copyButton.setAttribute('aria-label', 'Copy code to clipboard');
+					
+					copyButton.addEventListener('click', async function() {
+						const text = codeBlock.textContent || (codeBlock as HTMLElement).innerText || '';
+						
+						try {
+							await navigator.clipboard.writeText(text);
+							copyButton.innerHTML = '✓ Copied!';
+							copyButton.classList.add('copied');
+							
+							setTimeout(() => {
+								copyButton.innerHTML = '📋 Copy';
+								copyButton.classList.remove('copied');
+							}, 2000);
+						} catch (err) {
+							// Fallback for older browsers
+							const textArea = document.createElement('textarea');
+							textArea.value = text;
+							textArea.style.position = 'fixed';
+							textArea.style.opacity = '0';
+							document.body.appendChild(textArea);
+							textArea.select();
+							try {
+								document.execCommand('copy');
+								copyButton.innerHTML = '✓ Copied!';
+								copyButton.classList.add('copied');
+								setTimeout(() => {
+									copyButton.innerHTML = '📋 Copy';
+									copyButton.classList.remove('copied');
+								}, 2000);
+							} catch (err) {
+								copyButton.innerHTML = '❌ Failed';
+								setTimeout(() => {
+									copyButton.innerHTML = '📋 Copy';
+								}, 2000);
+							}
+							document.body.removeChild(textArea);
+						}
+					});
+					
+					pre.appendChild(copyButton);
+				});
+			});
+		</script>
+	</body>
+</html>
+
+<style is:global>
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+	}
+
+	html {
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+		font-size: 20px;
+		line-height: 1.7;
+		color: #2c3e50;
+		background-color: #fafafa;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		transition: background-color 0.3s;
+	}
+
+	body {
+		max-width: 100%;
+		margin: 0;
+		padding: 0;
+		background-color: #fafafa;
+		min-height: 100vh;
+		transition: background-color 0.3s;
+	}
+
+	/* Dark mode body override - must come immediately after body definition */
+	html.dark body {
+		background-color: #121212 !important;
+	}
+
+	body > :global(header) {
+		margin-bottom: 0;
+		max-width: 100%;
+	}
+
+	body > :global(main),
+	body > :global(article) {
+		width: 80% !important;
+		max-width: 800px !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+		padding: 2rem 2.5rem 3rem;
+		background-color: #fff;
+		box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+		transition: background-color 0.3s, box-shadow 0.3s;
+	}
+
+	/* Dark mode override - must come after light mode styles with maximum specificity */
+	html.dark body > :global(main),
+	html.dark body > :global(article),
+	html.dark body main,
+	html.dark body article,
+	html.dark main,
+	html.dark article,
+	html.dark main.homepage,
+	html.dark main.toc,
+	html.dark .homepage,
+	html.dark .toc {
+		background-color: #1a1a1a !important;
+		box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+	}
+
+	@media (min-width: 1200px) {
+		body > :global(main),
+		body > :global(article) {
+			margin: 0 auto;
+			padding-left: 3rem;
+			padding-right: 3rem;
+		}
+	}
+
+	/* Typography */
+	h1 {
+		font-size: 2.25rem;
+		font-weight: 700;
+		margin-bottom: 0.75rem;
+		line-height: 1.2;
+		color: #1a1a1a;
+		letter-spacing: -0.02em;
+	}
+
+	h2 {
+		font-size: 1.75rem;
+		font-weight: 600;
+		margin-top: 2.5rem;
+		margin-bottom: 1rem;
+		line-height: 1.3;
+		color: #2c3e50;
+		border-bottom: 2px solid #e8e8e8;
+		padding-bottom: 0.5rem;
+	}
+
+	h3 {
+		font-size: 1.35rem;
+		font-weight: 600;
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
+		line-height: 1.4;
+		color: #34495e;
+	}
+
+	p {
+		margin-bottom: 1.25rem;
+		color: #2c3e50;
+	}
+
+	/* Links */
+	a {
+		color: #2980b9;
+		text-decoration: none;
+		transition: color 0.2s;
+	}
+
+	a:hover {
+		color: #1f5f8b;
+		text-decoration: underline;
+	}
+
+	/* Code */
+	code {
+		font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', 'Courier New', monospace;
+		font-size: 0.9em;
+		background-color: #f8f8f8;
+		padding: 0.2em 0.5em;
+		border-radius: 3px;
+		border: 1px solid #e8e8e8;
+		color: #c7254e;
+	}
+
+	pre {
+		background-color: #f8f8f8;
+		border: 1px solid #e8e8e8;
+		border-left: 4px solid #3498db;
+		padding: 1.25rem;
+		border-radius: 4px;
+		overflow-x: auto;
+		margin: 1.5rem 0;
+		line-height: 1.6;
+		position: relative;
+	}
+
+	/* Shiki dual theme support - light mode (default) */
+	pre.astro-code,
+	pre.shiki {
+		background-color: var(--shiki-light-bg, #f8f8f8) !important;
+	}
+
+	pre.astro-code span,
+	pre.shiki span {
+		color: var(--shiki-light, inherit) !important;
+	}
+
+	/* Copy button for code blocks */
+	.copy-code-button {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+		background-color: #3498db;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		padding: 0.5rem 0.75rem;
+		font-size: 0.85rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+		z-index: 10;
+		opacity: 0.9;
+	}
+
+	.copy-code-button:hover {
+		background-color: #2980b9;
+		opacity: 1;
+		transform: translateY(-1px);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.copy-code-button:active {
+		transform: translateY(0);
+	}
+
+	.copy-code-button.copied {
+		background-color: #27ae60;
+	}
+
+	.copy-code-button.copied:hover {
+		background-color: #229954;
+	}
+
+	/* Ensure code blocks have enough padding for button */
+	pre.has-copy-button {
+		padding-top: 3rem;
+	}
+
+	pre code {
+		background-color: transparent;
+		padding: 0;
+		border: none;
+		color: #2c3e50;
+		font-size: 0.9em;
+	}
+
+	/* Lists */
+	ul, ol {
+		margin: 1rem 0;
+		padding-left: 2rem;
+	}
+
+	li {
+		margin-bottom: 0.5rem;
+	}
+
+	/* Tables */
+	table {
+		border-collapse: collapse;
+		width: 100%;
+		margin: 1.5rem 0;
+		border: 1px solid #e0e0e0;
+	}
+
+	th, td {
+		border: 1px solid #e0e0e0;
+		padding: 0.875rem 1rem;
+		text-align: left;
+	}
+
+	th {
+		background-color: #f5f7fa;
+		font-weight: 600;
+		color: #2c3e50;
+	}
+
+	tr:nth-child(even) {
+		background-color: #fafbfc;
+	}
+
+	/* Blockquotes */
+	blockquote {
+		border-left: 4px solid #3498db;
+		padding-left: 1.25rem;
+		margin: 1.5rem 0;
+		color: #555;
+		font-style: italic;
+		background-color: #f8f9fa;
+		padding: 1rem 1.25rem;
+		border-radius: 0 4px 4px 0;
+	}
+
+	/* Bold for key terms */
+	strong {
+		font-weight: 600;
+	}
+
+	/* Math equations (KaTeX) */
+	:global(.katex) {
+		font-size: 1.1em;
+		font-family: KaTeX_Main, "Times New Roman", serif;
+	}
+
+	/* Ensure KaTeX displays properly */
+	:global(.katex-display) {
+		display: block;
+		margin: 1em 0;
+		text-align: center;
+	}
+
+	/* Hide MathML to prevent duplicate rendering */
+	:global(.katex mml\:math) {
+		display: none !important;
+	}
+
+	/* Ensure KaTeX symbols render correctly */
+	:global(.katex .mrel),
+	:global(.katex .mop),
+	:global(.katex .mbin),
+	:global(.katex .mord) {
+		font-family: KaTeX_Main, "Times New Roman", serif !important;
+	}
+
+	/* Display math (block equations) - styled as recessed card with label */
+	:global(.katex-display),
+	:global(span.katex-display) {
+		position: relative !important;
+		display: block !important;
+		margin: 2rem 0 1.5rem !important;
+		overflow-x: auto !important;
+		overflow-y: hidden !important;
+		background-color: #f0f2f5 !important;
+		border: 1px solid #d0d4d8 !important;
+		border-radius: 6px !important;
+		padding: 1.5rem !important;
+		text-align: center !important;
+		box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
+	}
+
+	/* Example label above display math */
+	:global(.katex-display::before),
+	:global(span.katex-display::before) {
+		content: "Example" !important;
+		position: absolute !important;
+		top: -0.75rem !important;
+		left: 1rem !important;
+		background-color: #fff !important;
+		color: #6c757d !important;
+		font-size: 0.75rem !important;
+		font-weight: 600 !important;
+		text-transform: uppercase !important;
+		letter-spacing: 0.05em !important;
+		padding: 0.25rem 0.75rem !important;
+		border: 1px solid #d0d4d8 !important;
+		border-radius: 4px !important;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+		z-index: 1 !important;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+	}
+
+	/* Inline math should not break line */
+	:global(.katex:not(.katex-display)) {
+		white-space: nowrap;
+		display: inline;
+	}
+
+	/* Responsive */
+	@media (max-width: 768px) {
+		body > :global(main),
+		body > :global(article) {
+			width: 90% !important;
+			padding: 1.5rem 1.25rem 2rem;
+		}
+
+		h1 {
+			font-size: 1.75rem;
+		}
+
+		h2 {
+			font-size: 1.35rem;
+		}
+
+		/* Dark mode responsive override */
+		html.dark body > :global(main),
+		html.dark body > :global(article) {
+			background-color: #1a1a1a !important;
+			box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+		}
+	}
+
+	/* Dark Mode Styles - HTML and Body backgrounds */
+	html.dark {
+		background-color: #121212 !important;
+		color: #ffffff;
+	}
+
+	html.dark body {
+		background-color: #121212 !important;
+		color: #ffffff;
+	}
+
+
+	:global(html.dark) h1 {
+		color: #ffffff;
+	}
+
+	:global(html.dark) h2 {
+		color: #ffffff;
+		border-bottom-color: #444;
+	}
+
+	:global(html.dark) h3 {
+		color: #ffffff;
+	}
+
+	:global(html.dark) p {
+		color: #ffffff;
+	}
+
+	:global(html.dark) li {
+		color: #ffffff;
+	}
+
+	:global(html.dark) td {
+		color: #ffffff;
+	}
+
+	:global(html.dark) strong {
+		color: #ffffff;
+	}
+
+	:global(html.dark) a {
+		color: #5dade2;
+	}
+
+	:global(html.dark) a:hover {
+		color: #85c1e9;
+	}
+
+	:global(html.dark) code {
+		background-color: #2a2a2a;
+		border-color: #444;
+		color: #f39c12;
+	}
+
+	:global(html.dark) pre {
+		background-color: #2a2a2a;
+		border-color: #444;
+		border-left-color: #3498db;
+	}
+
+	:global(html.dark) pre code {
+		background-color: transparent;
+		border: none;
+		color: #ffffff;
+	}
+
+	/* Shiki dual theme support - dark mode */
+	:global(html.dark) pre.astro-code,
+	:global(html.dark) pre.shiki {
+		background-color: var(--shiki-dark-bg, #24292e) !important;
+	}
+
+	:global(html.dark) pre.astro-code span,
+	:global(html.dark) pre.shiki span {
+		color: var(--shiki-dark, inherit) !important;
+	}
+
+	:global(html.dark) .copy-code-button {
+		background-color: #3498db;
+		color: white;
+	}
+
+	:global(html.dark) .copy-code-button:hover {
+		background-color: #2980b9;
+	}
+
+	:global(html.dark) .copy-code-button.copied {
+		background-color: #27ae60;
+	}
+
+	:global(html.dark) .copy-code-button.copied:hover {
+		background-color: #229954;
+	}
+
+	:global(html.dark) table {
+		background-color: #2a2a2a;
+		border-color: #444;
+	}
+
+	:global(html.dark) th {
+		background-color: #333;
+		color: #ffffff;
+		border-color: #444;
+	}
+
+	:global(html.dark) td {
+		background-color: #2a2a2a;
+		border-color: #444;
+		color: #ffffff;
+	}
+
+	:global(html.dark) tr:nth-child(even) td {
+		background-color: #222;
+	}
+
+	:global(html.dark) blockquote {
+		border-left-color: #3498db;
+		background-color: #222;
+		color: #ffffff;
+	}
+
+	:global(html.dark) .katex-display,
+	:global(html.dark) span.katex-display {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+	}
+
+	:global(html.dark) .katex-display::before,
+	:global(html.dark) span.katex-display::before {
+		background-color: #1a1a1a !important;
+		border-color: #444 !important;
+		color: #ffffff !important;
+	}
+
+	/* Force dark backgrounds on all elements */
+	:global(html.dark) * {
+		transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+	}
+
+</style>
+

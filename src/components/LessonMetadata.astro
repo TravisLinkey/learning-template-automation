@@ -1,0 +1,64 @@
+---
+interface Props {
+	author: string;
+	date: string;
+}
+
+const { date } = Astro.props;
+
+const formatDate = (dateString: string) => {
+	const date = new Date(dateString);
+	return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+};
+---
+
+<div class="metadata">
+	<span class="metadata-item">
+		<span class="metadata-icon">📅</span>
+		<span class="metadata-text">{formatDate(date)}</span>
+	</span>
+</div>
+
+<style>
+	.metadata {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 2rem;
+		padding-bottom: 1.25rem;
+		border-bottom: 1px solid #e8e8e8;
+		font-size: 0.9rem;
+		color: #7f8c8d;
+	}
+
+	.metadata-item {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+	}
+
+	.metadata-icon {
+		font-size: 1rem;
+		opacity: 0.7;
+	}
+
+
+	.metadata-text {
+		color: #7f8c8d;
+	}
+
+	/* Dark mode styles */
+	:global(html.dark) .metadata {
+		border-bottom-color: #444;
+		color: #999;
+	}
+
+	:global(html.dark) .metadata-icon {
+		opacity: 0.8;
+	}
+
+	:global(html.dark) .metadata-text {
+		color: #b0b0b0;
+	}
+</style>
+

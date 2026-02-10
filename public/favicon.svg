@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bookGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3498db;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2980b9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="pageGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ecf0f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#bdc3c7;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#f8f9fa" stroke="#e0e0e0" stroke-width="2"/>
+  
+  <!-- Stack of books -->
+  <!-- Book 1 (back) -->
+  <rect x="30" y="50" width="68" height="48" rx="2" fill="url(#bookGradient)" opacity="0.9"/>
+  <rect x="30" y="50" width="68" height="8" rx="2" fill="#2980b9"/>
+  <line x1="35" y1="70" x2="93" y2="70" stroke="#2980b9" stroke-width="1.5" opacity="0.6"/>
+  <line x1="35" y1="80" x2="93" y2="80" stroke="#2980b9" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Book 2 (middle) -->
+  <rect x="40" y="60" width="68" height="48" rx="2" fill="url(#bookGradient)" opacity="0.95"/>
+  <rect x="40" y="60" width="68" height="8" rx="2" fill="#2980b9"/>
+  <line x1="45" y1="80" x2="103" y2="80" stroke="#2980b9" stroke-width="1.5" opacity="0.6"/>
+  <line x1="45" y1="90" x2="103" y2="90" stroke="#2980b9" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Book 3 (front) -->
+  <rect x="50" y="70" width="68" height="48" rx="2" fill="url(#bookGradient)"/>
+  <rect x="50" y="70" width="68" height="8" rx="2" fill="#2980b9"/>
+  <line x1="55" y1="90" x2="113" y2="90" stroke="#2980b9" stroke-width="1.5" opacity="0.6"/>
+  <line x1="55" y1="100" x2="113" y2="100" stroke="#2980b9" stroke-width="1.5" opacity="0.6"/>
+  
+  <!-- Sparkle/star accent -->
+  <g transform="translate(85, 35)">
+    <path d="M0,-8 L2,-2 L8,-2 L3,1 L5,7 L0,4 L-5,7 L-3,1 L-8,-2 L-2,-2 Z" fill="#f39c12" opacity="0.9"/>
+  </g>
+  
+  <style>
+    @media (prefers-color-scheme: dark) {
+      circle { fill: #2c3e50; stroke: #34495e; }
+      rect { opacity: 1; }
+    }
+  </style>
+</svg>

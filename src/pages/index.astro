@@ -1,0 +1,776 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getAllSubjects } from '../utils/subjects';
+
+const subjects = getAllSubjects();
+const SITE_TITLE = "Learning Library";
+const SITE_DESCRIPTION = "A comprehensive collection of educational tutorials and courses";
+
+// Category definitions
+interface Category {
+	id: string;
+	name: string;
+	description: string;
+}
+
+const CATEGORIES: Category[] = [
+	{
+		id: 'projects',
+		name: 'Quant Development Projects',
+		description: 'Project-based path: backtester, paper trading bot, and ML trading strategy',
+	},
+	{
+		id: 'quant',
+		name: 'Quantitative Finance Theory',
+		description: 'Probability theory and stochastic processes for quantitative finance',
+	},
+	{
+		id: 'mathematics',
+		name: 'Mathematical Foundations',
+		description: 'Applied statistics, numerical methods, and linear algebra',
+	},
+	{
+		id: 'developer',
+		name: 'Developer',
+		description: 'Programming tools, operating systems, concurrency, performance, and networking',
+	},
+	{
+		id: 'tools',
+		name: 'Tools & Editors',
+		description: 'Master the essential tools for efficient software development',
+	},
+];
+
+// Helper function to determine category from subject ID
+function getCategoryFromSubjectId(subjectId: string): string {
+	if (subjectId.startsWith('projects-')) {
+		return 'projects';
+	}
+	if (subjectId === 'quant') {
+		return 'quant';
+	}
+	if (subjectId.startsWith('mathematics-')) {
+		return 'mathematics';
+	}
+	if (subjectId.startsWith('developer-')) {
+		return 'developer';
+	}
+	if (subjectId === 'vim') {
+		return 'tools';
+	}
+	return 'other';
+}
+
+// Group subjects by category
+const subjectsByCategory = new Map<string, typeof subjects>();
+for (const category of CATEGORIES) {
+	subjectsByCategory.set(category.id, []);
+}
+subjectsByCategory.set('other', []);
+
+for (const subject of subjects) {
+	const categoryId = getCategoryFromSubjectId(subject.id);
+	const categorySubjects = subjectsByCategory.get(categoryId) || [];
+	categorySubjects.push(subject);
+	subjectsByCategory.set(categoryId, categorySubjects);
+}
+
+// All subjects sorted A–Z by name (for grid view and consistent list order)
+const subjectsAlphabetical = [...subjects].sort((a, b) =>
+	a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })
+);
+
+// Sort subjects within each category A–Z
+for (const [, categorySubjects] of subjectsByCategory) {
+	categorySubjects.sort((a, b) =>
+		a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })
+	);
+}
+
+// Subjects only (exclude projects) – for filter dropdown
+const SUBJECT_CATEGORIES = CATEGORIES.filter((c) => c.id !== 'projects');
+const subjectsOnlyAlphabetical = subjectsAlphabetical.filter(
+	(s) => getCategoryFromSubjectId(s.id) !== 'projects'
+);
+const projectsOnly = subjectsByCategory.get('projects') || [];
+const projectsAlphabetical = [...projectsOnly].sort((a, b) =>
+	a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })
+);
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<main class="homepage">
+		<header class="homepage-header">
+			<h1>{SITE_TITLE}</h1>
+			<p class="intro">
+				Welcome to {SITE_TITLE}! Explore our collection of educational courses and tutorials.
+				Each subject contains comprehensive lessons organized by chapters, with quizzes to test your understanding.
+			</p>
+			<div class="toc-controls">
+				<div class="toc-view-toggle" role="group" aria-label="Table of contents view">
+					<button type="button" class="toc-view-btn active" data-view="list" aria-pressed="true">
+						List
+					</button>
+					<button type="button" class="toc-view-btn" data-view="grid" aria-pressed="false">
+						Grid
+					</button>
+				</div>
+				<label class="toc-filter-label">
+					<span class="toc-filter-visual-label">Show:</span>
+					<select class="toc-filter-select" id="toc-filter" aria-label="Filter by type">
+						<option value="subjects">Subjects</option>
+						<option value="projects">Projects</option>
+					</select>
+				</label>
+			</div>
+		</header>
+
+		<div class="toc-wrapper" id="home-toc-chapters" data-view="list" data-filter="subjects">
+			<!-- List view: Subjects (categories except projects) -->
+			<div class="toc-list-view toc-list-subjects">
+				{SUBJECT_CATEGORIES.map((category) => {
+					const categorySubjects = subjectsByCategory.get(category.id) || [];
+					if (categorySubjects.length === 0) return null;
+
+					return (
+						<details class="category accordion">
+							<summary class="category-header accordion-trigger">
+								<span class="accordion-heading">
+									<h2 class="category-name">{category.name}</h2>
+									<p class="category-description">{category.description}</p>
+								</span>
+								<span class="accordion-icon" aria-hidden="true"></span>
+							</summary>
+							<div class="subjects">
+								{categorySubjects.map((subject) => (
+									<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card">
+										<div class="subject-content">
+											<h3 class="subject-name">{subject.name}</h3>
+											<p class="subject-description">{subject.description}</p>
+											<div class="subject-meta">
+												<span class="subject-audience">For: {subject.targetAudience}</span>
+											</div>
+										</div>
+										<div class="subject-arrow">→</div>
+									</a>
+								))}
+							</div>
+						</details>
+					);
+				})}
+			</div>
+
+			<!-- List view: Projects only -->
+			<div class="toc-list-view toc-list-projects" aria-hidden="true">
+				{projectsOnly.length > 0 && (
+					<details class="category accordion">
+						<summary class="category-header accordion-trigger">
+							<span class="accordion-heading">
+								<h2 class="category-name">Quant Development Projects</h2>
+								<p class="category-description">Project-based path: backtester, paper trading bot, and ML trading strategy</p>
+							</span>
+							<span class="accordion-icon" aria-hidden="true"></span>
+						</summary>
+						<div class="subjects">
+							{projectsAlphabetical.map((subject) => (
+								<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card">
+									<div class="subject-content">
+										<h3 class="subject-name">{subject.name}</h3>
+										<p class="subject-description">{subject.description}</p>
+										<div class="subject-meta">
+											<span class="subject-audience">For: {subject.targetAudience}</span>
+										</div>
+									</div>
+									<div class="subject-arrow">→</div>
+								</a>
+							))}
+						</div>
+					</details>
+				)}
+			</div>
+
+			<!-- Grid view: Subjects only, A–Z -->
+			<div class="toc-grid-view toc-grid-subjects" aria-hidden="true">
+				<div class="subjects-grid">
+					{subjectsOnlyAlphabetical.map((subject) => (
+						<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card">
+							<div class="subject-content">
+								<h3 class="subject-name">{subject.name}</h3>
+								<p class="subject-description">{subject.description}</p>
+								<div class="subject-meta">
+									<span class="subject-audience">For: {subject.targetAudience}</span>
+								</div>
+							</div>
+							<div class="subject-arrow">→</div>
+						</a>
+					))}
+				</div>
+			</div>
+
+			<!-- Grid view: Projects only, A–Z -->
+			<div class="toc-grid-view toc-grid-projects" aria-hidden="true">
+				<div class="subjects-grid">
+					{projectsAlphabetical.map((subject) => (
+						<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card">
+							<div class="subject-content">
+								<h3 class="subject-name">{subject.name}</h3>
+								<p class="subject-description">{subject.description}</p>
+								<div class="subject-meta">
+									<span class="subject-audience">For: {subject.targetAudience}</span>
+								</div>
+							</div>
+							<div class="subject-arrow">→</div>
+						</a>
+					))}
+				</div>
+			</div>
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.homepage {
+		width: 80%;
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 2rem 0;
+		transition: background-color 0.3s;
+		background-color: transparent;
+	}
+
+	.homepage-header {
+		margin-bottom: 4rem;
+		padding-bottom: 2rem;
+		border-bottom: 2px solid #e8e8e8;
+		text-align: center;
+	}
+
+	.homepage-header h1 {
+		margin-bottom: 1.5rem;
+		color: #1a1a1a;
+		font-size: 3rem;
+		font-weight: 700;
+	}
+
+	.intro {
+		color: #555;
+		line-height: 1.8;
+		font-size: 1.1rem;
+		max-width: 700px;
+		margin: 0 auto;
+	}
+
+	.toc-controls {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 1.25rem;
+		margin-top: 1.5rem;
+	}
+
+	.toc-view-toggle {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0;
+		border-radius: 6px;
+		overflow: hidden;
+		border: 1px solid #e0e0e0;
+		width: fit-content;
+	}
+
+	.toc-filter-label {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.95rem;
+		color: #555;
+	}
+
+	.toc-filter-visual-label {
+		font-weight: 500;
+	}
+
+	.toc-filter-select {
+		padding: 0.5rem 2rem 0.5rem 0.75rem;
+		font-size: 0.95rem;
+		border: 1px solid #e0e0e0;
+		border-radius: 6px;
+		background: #fff;
+		color: #2c3e50;
+		cursor: pointer;
+		appearance: auto;
+	}
+
+	.toc-filter-select:hover {
+		border-color: #3498db;
+	}
+
+	.toc-filter-select:focus {
+		outline: 2px solid #3498db;
+		outline-offset: 2px;
+	}
+
+	.toc-view-btn {
+		padding: 0.5rem 1.25rem;
+		font-size: 0.95rem;
+		font-weight: 500;
+		background: #fff;
+		color: #555;
+		border: none;
+		cursor: pointer;
+		transition: background-color 0.2s, color 0.2s;
+	}
+
+	.toc-view-btn:first-child {
+		border-right: 1px solid #e0e0e0;
+	}
+
+	.toc-view-btn:hover {
+		background-color: #f0f7ff;
+		color: #2980b9;
+	}
+
+	.toc-view-btn.active {
+		background-color: #3498db;
+		color: #fff;
+	}
+
+	.toc-wrapper {
+		margin-top: 3rem;
+	}
+
+	/* List view: show the one that matches current filter */
+	.toc-list-subjects,
+	.toc-list-projects {
+		display: none;
+		flex-direction: column;
+		gap: 4rem;
+	}
+
+	.toc-wrapper[data-view="list"][data-filter="subjects"] .toc-list-subjects {
+		display: flex;
+	}
+
+	.toc-wrapper[data-view="list"][data-filter="projects"] .toc-list-projects {
+		display: flex;
+	}
+
+	.toc-wrapper[data-view="grid"] .toc-list-subjects,
+	.toc-wrapper[data-view="grid"] .toc-list-projects {
+		display: none;
+	}
+
+	/* Grid view: show the one that matches current filter */
+	.toc-grid-subjects,
+	.toc-grid-projects {
+		display: none;
+	}
+
+	.toc-wrapper[data-view="grid"][data-filter="subjects"] .toc-grid-subjects {
+		display: block;
+	}
+
+	.toc-wrapper[data-view="grid"][data-filter="projects"] .toc-grid-projects {
+		display: block;
+	}
+
+	.toc-wrapper[data-view="list"] .toc-grid-subjects,
+	.toc-wrapper[data-view="list"] .toc-grid-projects {
+		display: none;
+	}
+
+	.subjects-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2rem;
+	}
+
+	.subjects-grid .subject-card {
+		flex: 1 1 18rem;
+		min-width: 0;
+		max-width: 100%;
+	}
+
+	.category {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	/* Accordion: list-view sections (details/summary) */
+	.accordion {
+		background-color: #fafbfc;
+		border: 1px solid #e0e0e0;
+		border-radius: 8px;
+		padding: 0;
+		overflow: hidden;
+	}
+
+	.accordion summary {
+		list-style: none;
+		cursor: pointer;
+	}
+
+	.accordion summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.accordion-trigger {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1.25rem 1.5rem;
+		margin-bottom: 0;
+		transition: background-color 0.2s;
+	}
+
+	.accordion-trigger:hover {
+		background-color: #f0f7ff;
+	}
+
+	.accordion[open] .accordion-trigger {
+		border-bottom: 1px solid #e0e0e0;
+	}
+
+	.accordion-heading {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.accordion-icon {
+		flex-shrink: 0;
+		width: 0.6rem;
+		height: 0.6rem;
+		margin-top: 0.5rem;
+		border: solid #3498db;
+		border-width: 0 2px 2px 0;
+		transform: rotate(-45deg);
+		transition: transform 0.25s ease;
+	}
+
+	.accordion[open] .accordion-icon {
+		transform: rotate(135deg);
+		margin-top: 0.6rem;
+	}
+
+	.accordion .subjects {
+		padding: 1.5rem;
+		padding-top: 0.5rem;
+	}
+
+	.category-header {
+		margin-bottom: 1rem;
+		padding-bottom: 1rem;
+		border-bottom: 2px solid #3498db;
+	}
+
+	.category-name {
+		font-size: 2rem;
+		margin-bottom: 0.5rem;
+		color: #2c3e50;
+		font-weight: 700;
+	}
+
+	.category-description {
+		color: #666;
+		font-size: 1.1rem;
+		margin: 0;
+	}
+
+	.subjects {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.subject-card {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		padding: 2.5rem;
+		background-color: #fff;
+		border: 2px solid #e0e0e0;
+		border-radius: 8px;
+		text-decoration: none;
+		color: inherit;
+		transition: all 0.3s ease;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+		transition: all 0.3s ease, background-color 0.3s, border-color 0.3s;
+	}
+
+	.subject-card:hover {
+		border-color: #3498db;
+		transform: translateY(-4px);
+		box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
+		text-decoration: none;
+	}
+
+	.subject-content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.subject-name {
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+		color: #2c3e50;
+		font-weight: 600;
+	}
+
+	.subject-description {
+		color: #666;
+		line-height: 1.6;
+		margin-bottom: 1rem;
+		font-size: 1rem;
+	}
+
+	.subject-meta {
+		margin-top: 1rem;
+	}
+
+	.subject-audience {
+		font-size: 0.9rem;
+		color: #888;
+		font-style: italic;
+	}
+
+	.subject-arrow {
+		font-size: 2rem;
+		color: #3498db;
+		margin-left: 1.5rem;
+		margin-top: 0;
+		transition: transform 0.3s ease;
+		flex-shrink: 0;
+	}
+
+	.subject-card:hover .subject-arrow {
+		transform: translateX(8px);
+	}
+
+	@media (max-width: 768px) {
+		.homepage {
+			width: 90%;
+			padding: 1.5rem 0;
+		}
+
+		.homepage-header h1 {
+			font-size: 2.25rem;
+		}
+
+		.categories {
+			gap: 3rem;
+		}
+
+		.category-name {
+			font-size: 1.75rem;
+		}
+
+		.subjects-grid .subject-card {
+			flex: 1 1 100%;
+		}
+
+		.subject-card {
+			padding: 2rem;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.subject-arrow {
+			margin-left: 0;
+			margin-top: 1rem;
+			align-self: flex-end;
+		}
+	}
+
+	/* Dark mode styles */
+	:global(html.dark) .homepage {
+		background-color: transparent !important;
+	}
+
+	:global(html.dark) .homepage-header {
+		border-bottom-color: #444;
+	}
+
+	:global(html.dark) .homepage-header h1 {
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) .intro {
+		color: #b0b0b0;
+	}
+
+	:global(html.dark) .toc-view-toggle {
+		border-color: #444;
+	}
+
+	:global(html.dark) .toc-view-btn {
+		background: #222;
+		color: #b0b0b0;
+	}
+
+	:global(html.dark) .toc-view-btn:first-child {
+		border-right-color: #444;
+	}
+
+	:global(html.dark) .toc-view-btn:hover {
+		background-color: #2a2a2a;
+		color: #5dade2;
+	}
+
+	:global(html.dark) .toc-view-btn.active {
+		background-color: #3498db;
+		color: #fff;
+	}
+
+	:global(html.dark) .toc-filter-label {
+		color: #b0b0b0;
+	}
+
+	:global(html.dark) .toc-filter-select {
+		background: #222;
+		border-color: #444;
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) .toc-filter-select:hover {
+		border-color: #3498db;
+	}
+
+	:global(html.dark) .subject-card {
+		background-color: #1a1a1a !important;
+		border-color: #444;
+	}
+
+	:global(html.dark) .subject-card:hover {
+		background-color: #222 !important;
+		border-color: #3498db;
+		box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+	}
+
+	:global(html.dark) .subject-name {
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) .subject-description {
+		color: #b0b0b0;
+	}
+
+	:global(html.dark) .subject-audience {
+		color: #888;
+	}
+
+	:global(html.dark) .subject-arrow {
+		color: #3498db;
+	}
+
+	:global(html.dark) .accordion {
+		background-color: #1a1a1a;
+		border-color: #444;
+	}
+
+	:global(html.dark) .accordion-trigger:hover {
+		background-color: #222;
+	}
+
+	:global(html.dark) .accordion[open] .accordion-trigger {
+		border-bottom: 1px solid #444;
+	}
+
+	:global(html.dark) .accordion-icon {
+		border-color: #3498db;
+	}
+
+	:global(html.dark) .category-header {
+		border-bottom-color: #3498db;
+	}
+
+	:global(html.dark) .category-name {
+		color: #e0e0e0;
+	}
+
+	:global(html.dark) .category-description {
+		color: #b0b0b0;
+	}
+</style>
+
+<script>
+	const VIEW_STORAGE_KEY = 'learning-library-home-toc-view';
+	const FILTER_STORAGE_KEY = 'learning-library-home-toc-filter';
+	const wrapper = document.getElementById('home-toc-chapters');
+	const listSubjects = wrapper?.querySelector('.toc-list-subjects');
+	const listProjects = wrapper?.querySelector('.toc-list-projects');
+	const gridSubjects = wrapper?.querySelector('.toc-grid-subjects');
+	const gridProjects = wrapper?.querySelector('.toc-grid-projects');
+	const buttons = document.querySelectorAll('.toc-view-toggle .toc-view-btn');
+	const filterSelect = document.getElementById('toc-filter') as HTMLSelectElement | null;
+
+	function setView(view: 'list' | 'grid') {
+		if (!wrapper) return;
+		wrapper.setAttribute('data-view', view);
+		const isList = view === 'list';
+		listSubjects?.setAttribute('aria-hidden', String(!(isList && wrapper.getAttribute('data-filter') === 'subjects')));
+		listProjects?.setAttribute('aria-hidden', String(!(isList && wrapper.getAttribute('data-filter') === 'projects')));
+		gridSubjects?.setAttribute('aria-hidden', String(!(view === 'grid' && wrapper.getAttribute('data-filter') === 'subjects')));
+		gridProjects?.setAttribute('aria-hidden', String(!(view === 'grid' && wrapper.getAttribute('data-filter') === 'projects')));
+		try {
+			localStorage.setItem(VIEW_STORAGE_KEY, view);
+		} catch (_) {}
+		buttons.forEach((btn) => {
+			const isActive = btn.getAttribute('data-view') === view;
+			btn.classList.toggle('active', isActive);
+			btn.setAttribute('aria-pressed', String(isActive));
+		});
+	}
+
+	function setFilter(filter: 'subjects' | 'projects') {
+		if (!wrapper) return;
+		wrapper.setAttribute('data-filter', filter);
+		const view = wrapper.getAttribute('data-view');
+		listSubjects?.setAttribute('aria-hidden', String(!(view === 'list' && filter === 'subjects')));
+		listProjects?.setAttribute('aria-hidden', String(!(view === 'list' && filter === 'projects')));
+		gridSubjects?.setAttribute('aria-hidden', String(!(view === 'grid' && filter === 'subjects')));
+		gridProjects?.setAttribute('aria-hidden', String(!(view === 'grid' && filter === 'projects')));
+		try {
+			localStorage.setItem(FILTER_STORAGE_KEY, filter);
+		} catch (_) {}
+		if (filterSelect) filterSelect.value = filter;
+	}
+
+	function restoreSaved() {
+		if (!wrapper) return;
+		const savedView = typeof localStorage !== 'undefined' && (localStorage.getItem(VIEW_STORAGE_KEY) as 'list' | 'grid' | null);
+		const savedFilter = typeof localStorage !== 'undefined' && (localStorage.getItem(FILTER_STORAGE_KEY) as 'subjects' | 'projects' | null);
+		if (savedView === 'grid') wrapper.setAttribute('data-view', 'grid');
+		if (savedFilter === 'projects') wrapper.setAttribute('data-filter', 'projects');
+		if (filterSelect && savedFilter === 'projects') filterSelect.value = 'projects';
+		buttons.forEach((btn) => {
+			const view = wrapper.getAttribute('data-view');
+			const isActive = btn.getAttribute('data-view') === view;
+			btn.classList.toggle('active', isActive);
+			btn.setAttribute('aria-pressed', String(isActive));
+		});
+		const filter = wrapper.getAttribute('data-filter') as 'subjects' | 'projects';
+		const view = wrapper.getAttribute('data-view') as 'list' | 'grid';
+		listSubjects?.setAttribute('aria-hidden', String(!(view === 'list' && filter === 'subjects')));
+		listProjects?.setAttribute('aria-hidden', String(!(view === 'list' && filter === 'projects')));
+		gridSubjects?.setAttribute('aria-hidden', String(!(view === 'grid' && filter === 'subjects')));
+		gridProjects?.setAttribute('aria-hidden', String(!(view === 'grid' && filter === 'projects')));
+	}
+
+	restoreSaved();
+
+	buttons.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const view = btn.getAttribute('data-view');
+			if (view === 'list' || view === 'grid') setView(view);
+		});
+	});
+
+	filterSelect?.addEventListener('change', () => {
+		const value = filterSelect.value;
+		if (value === 'subjects' || value === 'projects') setFilter(value);
+	});
+</script>

@@ -1,0 +1,361 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from './Navigation.astro';
+import LessonMetadata from './LessonMetadata.astro';
+
+interface Props {
+	frontmatter: {
+		title: string;
+		chapter: number;
+		lesson: number | string;
+		author: string;
+		date: string;
+		description?: string;
+	};
+	Content: any;
+	prevLesson?: { chapter: number; lesson: number | string; title: string; slug: string; subject?: string };
+	nextLesson?: { chapter: number; lesson: number | string; title: string; slug: string; subject?: string };
+	subject?: string;
+	subjectName?: string;
+}
+
+const { frontmatter, Content, prevLesson, nextLesson, subject, subjectName } = Astro.props;
+const pageTitle = `${frontmatter.chapter}.${frontmatter.lesson} — ${frontmatter.title}`;
+---
+
+<BaseLayout title={pageTitle} description={frontmatter.description} subject={subject}>
+	<article class="lesson">
+		<header class="lesson-header">
+			<h1>{pageTitle}</h1>
+			<LessonMetadata author={frontmatter.author} date={frontmatter.date} />
+		</header>
+
+		<div class="lesson-content" id="lesson-content-root">
+			<Content />
+		</div>
+
+		<Navigation
+			currentChapter={frontmatter.chapter}
+			currentLesson={frontmatter.lesson}
+			prevLesson={prevLesson}
+			nextLesson={nextLesson}
+			subject={subject}
+		/>
+	</article>
+</BaseLayout>
+
+<style>
+	.lesson {
+		width: 80%;
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.lesson-header {
+		margin-bottom: 2rem;
+	}
+
+	.lesson-content {
+		line-height: 1.7;
+	}
+
+	/* Hide the first H1 in markdown content (duplicate of header title) */
+	.lesson-content :global(h1:first-of-type) {
+		display: none;
+	}
+
+	.lesson-content :global(h2),
+	.lesson-content :global(h3),
+	.lesson-content :global(h4),
+	.lesson-content :global(h5),
+	.lesson-content :global(h6) {
+		position: relative;
+	}
+
+	.lesson-content :global(h2) {
+		margin-top: 2.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.lesson-content :global(h3) {
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
+	}
+
+	/* Anchor link styling */
+	.lesson-content :global(.anchor-link) {
+		opacity: 1; /* Visible by default for mobile */
+		margin-left: 0.5rem;
+		text-decoration: none;
+		color: #3498db;
+		transition: opacity 0.2s ease;
+		font-weight: normal;
+		font-size: 0.8em;
+		vertical-align: middle;
+	}
+
+	/* Hide on desktop by default, show on hover */
+	@media (hover: hover) {
+		.lesson-content :global(.anchor-link) {
+			opacity: 0;
+		}
+
+		.lesson-content :global(h2:hover .anchor-link),
+		.lesson-content :global(h3:hover .anchor-link),
+		.lesson-content :global(h4:hover .anchor-link),
+		.lesson-content :global(h5:hover .anchor-link),
+		.lesson-content :global(h6:hover .anchor-link),
+		.lesson-content :global(.anchor-link:focus) {
+			opacity: 1;
+		}
+	}
+
+	.lesson-content :global(.anchor-link:hover) {
+		color: #2980b9;
+		text-decoration: underline;
+	}
+
+	.lesson-content :global(p) {
+		margin-bottom: 1.25rem;
+	}
+
+	.lesson-content :global(ul),
+	.lesson-content :global(ol) {
+		margin: 1.25rem 0;
+	}
+
+	.lesson-content :global(li) {
+		margin-bottom: 0.75rem;
+	}
+
+	.lesson-content :global(code) {
+		background-color: #f8f8f8;
+		padding: 0.2em 0.5em;
+		border-radius: 3px;
+		font-size: 0.9em;
+		border: 1px solid #e8e8e8;
+		color: #c7254e;
+		transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+	}
+
+	.lesson-content :global(pre) {
+		background-color: #f8f8f8;
+		border: 1px solid #e8e8e8;
+		border-left: 4px solid #3498db;
+		padding: 1.25rem;
+		border-radius: 4px;
+		overflow-x: auto;
+		margin: 1.5rem 0;
+		line-height: 1.6;
+		position: relative;
+		transition: background-color 0.3s, border-color 0.3s;
+	}
+
+	/* Copy button for code blocks */
+	.lesson-content :global(.copy-code-button) {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+		background-color: #3498db;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		padding: 0.5rem 0.75rem;
+		font-size: 0.85rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+		z-index: 10;
+		opacity: 0.9;
+	}
+
+	.lesson-content :global(.copy-code-button:hover) {
+		background-color: #2980b9;
+		opacity: 1;
+		transform: translateY(-1px);
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.lesson-content :global(.copy-code-button:active) {
+		transform: translateY(0);
+	}
+
+	.lesson-content :global(.copy-code-button.copied) {
+		background-color: #27ae60;
+	}
+
+	.lesson-content :global(.copy-code-button.copied:hover) {
+		background-color: #229954;
+	}
+
+	/* Ensure code blocks have enough padding for button */
+	.lesson-content :global(pre.has-copy-button) {
+		padding-top: 3rem;
+	}
+
+	.lesson-content :global(pre code) {
+		background-color: transparent;
+		padding: 0;
+		border: none;
+		color: #2c3e50;
+		font-size: 0.9em;
+	}
+
+	/* Shiki dual theme support - light mode (default) */
+	.lesson-content :global(pre.astro-code),
+	.lesson-content :global(pre.shiki) {
+		background-color: var(--shiki-light-bg, #f8f8f8) !important;
+	}
+
+	.lesson-content :global(pre.astro-code span),
+	.lesson-content :global(pre.shiki span) {
+		color: var(--shiki-light, inherit) !important;
+	}
+
+	.lesson-content :global(table) {
+		margin: 1.5rem 0;
+	}
+
+	.lesson-content :global(blockquote) {
+		margin: 1.5rem 0;
+	}
+
+	/* Display math (block equations) - styled as recessed card with label */
+	.lesson-content :global(.katex-display),
+	.lesson-content :global(span.katex-display) {
+		position: relative !important;
+		display: block !important;
+		margin: 2rem 0 1.5rem !important;
+		overflow-x: auto !important;
+		overflow-y: hidden !important;
+		background-color: #f0f2f5 !important;
+		border: 1px solid #d0d4d8 !important;
+		border-radius: 6px !important;
+		padding: 1.5rem !important;
+		text-align: center !important;
+		box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06) !important;
+		width: 100% !important;
+		box-sizing: border-box !important;
+	}
+
+	/* Example label above display math */
+	.lesson-content :global(.katex-display::before),
+	.lesson-content :global(span.katex-display::before) {
+		content: "Example" !important;
+		position: absolute !important;
+		top: -0.75rem !important;
+		left: 1rem !important;
+		background-color: #fff !important;
+		color: #6c757d !important;
+		font-size: 0.75rem !important;
+		font-weight: 600 !important;
+		text-transform: uppercase !important;
+		letter-spacing: 0.05em !important;
+		padding: 0.25rem 0.75rem !important;
+		border: 1px solid #d0d4d8 !important;
+		border-radius: 4px !important;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+		z-index: 1 !important;
+		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+	}
+
+	@media (max-width: 768px) {
+		.lesson {
+			width: 90%;
+		}
+	}
+
+	/* Dark mode styles */
+	:global(html.dark) .lesson-content :global(code) {
+		background-color: #2a2a2a;
+		border-color: #444;
+		color: #f39c12;
+	}
+
+	:global(html.dark) .lesson-content :global(pre) {
+		background-color: #2a2a2a;
+		border-color: #444;
+		border-left-color: #3498db;
+	}
+
+	:global(html.dark) .lesson-content :global(pre code) {
+		background-color: transparent;
+		border: none;
+		color: #ffffff;
+	}
+
+	/* Shiki dual theme support - dark mode */
+	:global(html.dark) .lesson-content :global(pre.astro-code),
+	:global(html.dark) .lesson-content :global(pre.shiki) {
+		background-color: var(--shiki-dark-bg, #24292e) !important;
+	}
+
+	:global(html.dark) .lesson-content :global(pre.astro-code span),
+	:global(html.dark) .lesson-content :global(pre.shiki span) {
+		color: var(--shiki-dark, inherit) !important;
+	}
+
+	:global(html.dark) .lesson-content :global(.katex-display),
+	:global(html.dark) .lesson-content :global(span.katex-display) {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+	}
+
+	:global(html.dark) .lesson-content :global(.katex-display::before),
+	:global(html.dark) .lesson-content :global(span.katex-display::before) {
+		background-color: #1a1a1a !important;
+		border-color: #444 !important;
+		color: #ffffff !important;
+	}
+
+	/* Dark mode heading color overrides */
+	:global(html.dark) .lesson-header :global(h1),
+	:global(html.dark) .lesson-content :global(h1),
+	:global(html.dark) .lesson-content :global(h2),
+	:global(html.dark) .lesson-content :global(h3),
+	:global(html.dark) .lesson-content :global(h4),
+	:global(html.dark) .lesson-content :global(h5),
+	:global(html.dark) .lesson-content :global(h6) {
+		color: #ffffff !important;
+	}
+
+	/* Dark mode table styles */
+	:global(html.dark) .lesson-content :global(table) {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+	}
+
+	:global(html.dark) .lesson-content :global(th) {
+		background-color: #333 !important;
+		color: #ffffff !important;
+		border-color: #444 !important;
+	}
+
+	:global(html.dark) .lesson-content :global(td) {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+		color: #ffffff !important;
+	}
+
+	:global(html.dark) .lesson-content :global(tr:nth-child(even) td) {
+		background-color: #222 !important;
+	}
+
+	/* Dark mode text color overrides */
+	:global(html.dark) .lesson-content :global(p),
+	:global(html.dark) .lesson-content :global(li),
+	:global(html.dark) .lesson-content :global(strong),
+	:global(html.dark) .lesson-content :global(span) {
+		color: #ffffff;
+	}
+
+	/* Dark mode anchor link styling */
+	:global(html.dark) .lesson-content :global(.anchor-link) {
+		color: #5dade2;
+	}
+
+	:global(html.dark) .lesson-content :global(.anchor-link:hover) {
+		color: #3498db;
+	}
+</style>
+

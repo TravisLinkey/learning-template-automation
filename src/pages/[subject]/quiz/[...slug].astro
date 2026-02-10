@@ -1,0 +1,129 @@
+---
+import QuizLayout from '../../../components/QuizLayout.astro';
+import { getPrevNextLesson, sortLessons, type Lesson } from '../../../utils/lessons';
+import { getSubjectById, getAllSubjectsUnfiltered } from '../../../utils/subjects';
+
+export async function getStaticPaths() {
+	// Helper function to match paths for both flat and nested subject structures
+	function matchesSubjectPath(path: string, subjectId: string): boolean {
+		// Handle nested subjects (e.g., 'developer-python-pandas' -> '/content/developer/python-pandas/lessons/')
+		if (subjectId.includes('-')) {
+			const parts = subjectId.split('-');
+			const category = parts[0];
+			const subject = parts.slice(1).join('-');
+			const nestedPath = `/content/${category}/${subject}/lessons/`;
+			return path.includes(nestedPath);
+		}
+		// Handle flat subjects (e.g., 'quant' -> '/content/quant/lessons/')
+		return path.includes(`/content/${subjectId}/lessons/`);
+	}
+	// Use unfiltered list so direct URLs work for all subjects (including hidden ones)
+	const subjects = getAllSubjectsUnfiltered().map(s => s.id);
+	const paths: Array<{ params: { subject: string; slug: string }; props: any }> = [];
+	
+	// Use static glob pattern to load all files (handles both flat and nested structures)
+	const allMarkdownFiles = import.meta.glob('/content/**/lessons/**/*.md', { eager: true });
+	
+	for (const subjectId of subjects) {
+		// Filter files for this subject (handles both flat and nested structures)
+		const subjectFiles: Record<string, any> = {};
+		for (const path in allMarkdownFiles) {
+			if (matchesSubjectPath(path, subjectId)) {
+				subjectFiles[path] = allMarkdownFiles[path];
+			}
+		}
+		
+		// First, collect all lessons (including quizzes for navigation)
+		const allLessons: Lesson[] = [];
+		for (const path in subjectFiles) {
+			const file = subjectFiles[path] as any;
+			const frontmatter = file.frontmatter;
+			
+			const slug = frontmatter.lesson === 'x' 
+				? `${frontmatter.chapter}.x`
+				: `${frontmatter.chapter}.${frontmatter.lesson}`;
+			
+			const lesson: Lesson = {
+				subject: subjectId,
+				chapter: frontmatter.chapter,
+				lesson: frontmatter.lesson,
+				title: frontmatter.title,
+				slug: slug,
+				author: frontmatter.author,
+				date: frontmatter.date,
+				description: frontmatter.description,
+				isQuiz: frontmatter.lesson === 'x',
+			};
+			
+			allLessons.push(lesson);
+		}
+		
+		// Now generate paths for quiz pages only
+		for (const path in subjectFiles) {
+			const file = subjectFiles[path] as any;
+			const frontmatter = file.frontmatter;
+			
+			// Only include quiz pages (they have lesson: 'x')
+			if (frontmatter.lesson !== 'x') {
+				continue;
+			}
+			
+			const slug = `${frontmatter.chapter}.x`;
+			paths.push({
+				params: { subject: subjectId, slug },
+				props: {
+					frontmatter,
+					Content: file.default,
+					allLessons,
+					subject: subjectId,
+				},
+			});
+		}
+	}
+	
+	return paths;
+}
+
+interface Props {
+	params: { subject: string; slug: string };
+	frontmatter: any;
+	Content: any;
+	allLessons: Lesson[];
+	subject: string;
+}
+
+const { params, frontmatter, Content, allLessons, subject: subjectId } = Astro.props;
+const subject = getSubjectById(subjectId);
+const sortedLessons = sortLessons(allLessons);
+const { prev, next } = getPrevNextLesson(
+	sortedLessons,
+	frontmatter.chapter,
+	frontmatter.lesson
+);
+
+const prevLesson = prev ? {
+	chapter: prev.chapter,
+	lesson: prev.lesson,
+	title: prev.title,
+	slug: prev.slug,
+	subject: prev.subject,
+} : undefined;
+
+const nextLesson = next ? {
+	chapter: next.chapter,
+	lesson: next.lesson,
+	title: next.title,
+	slug: next.slug,
+	subject: next.subject,
+} : undefined;
+---
+
+<QuizLayout
+	frontmatter={frontmatter}
+	Content={Content}
+	prevLesson={prevLesson}
+	nextLesson={nextLesson}
+	subject={subjectId}
+	subjectName={subject?.name || ''}
+/>
+
