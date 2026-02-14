@@ -139,6 +139,25 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 		padding: 0;
 	}
 
+	/* Theme: question block (single source of truth; QuestionBlockShared uses these only) */
+	:root {
+		--qb-bg: #fafbfc;
+		--qb-border: #e0e0e0;
+		--qb-color: #2c3e50;
+		--qb-details-bg: #fff;
+		--qb-details-border: #e8e8e8;
+		--qb-details-summary: #2980b9;
+		--qb-details-summary-hover-bg: #f0f7ff;
+		--qb-details-summary-hover: #1f5f8b;
+		--qb-details-content: inherit;
+		--qb-code-bg: #f8f8f8;
+		--qb-code-border: #e8e8e8;
+		--qb-code-color: #c7254e;
+		--qb-pre-bg: #f8f8f8;
+		--qb-pre-border: #e8e8e8;
+		--qb-pre-code: #2c3e50;
+	}
+
 	html {
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 		font-size: 20px;
@@ -615,6 +634,34 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 		background-color: #1a1a1a !important;
 		border-color: #444 !important;
 		color: #ffffff !important;
+	}
+
+	/* Theme: question block (dark) – same variables, different values */
+	:global(html.dark) {
+		--qb-bg: #1e1e1e;
+		--qb-border: #444;
+		--qb-color: #e8e8e8;
+		--qb-details-bg: #252525;
+		--qb-details-border: #444;
+		--qb-details-summary: #5dade2;
+		--qb-details-summary-hover-bg: #2a2a2a;
+		--qb-details-summary-hover: #85c1e9;
+		--qb-details-content: #e8e8e8;
+		--qb-code-bg: #2a2a2a;
+		--qb-code-border: #444;
+		--qb-code-color: #f39c12;
+		--qb-pre-bg: #2a2a2a;
+		--qb-pre-border: #444;
+		--qb-pre-code: #e8e8e8;
+	}
+
+	/* Question block: explicit dark override (wins over any other rule) */
+	html[class="dark"] .question-block,
+	html[class="dark"] .quiz-content .question-block,
+	html[class="dark"] .lesson-content .question-block {
+		background-color: #1e1e1e !important;
+		border-color: #444 !important;
+		color: #e8e8e8 !important;
 	}
 
 	/* Force dark backgrounds on all elements */

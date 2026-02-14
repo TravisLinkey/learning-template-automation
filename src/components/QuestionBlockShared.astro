@@ -1,34 +1,61 @@
 ---
 /**
  * Shared question-block styling and wrap script for both lesson content and chapter quizzes.
- * - Bordered container (.question-block) around each "Question N" + text + Show Solution
- * - Unified "Show Solution" / "Show Hint" accordion styling (same in lessons and quizzes)
+ * Uses CSS variables (--qb-*) defined in BaseLayout.astro as the single source of theme truth.
+ * No dark-mode overrides here – the layout sets the variables for light/dark.
  */
 ---
 
 <style is:global>
-	/* Bordered container for each question block (used in .lesson-content and .quiz-content) */
+	/* Question block: all colors from theme variables (set in BaseLayout) */
 	.question-block {
-		border: 1px solid #e0e0e0;
+		border: 1px solid var(--qb-border);
 		border-radius: 8px;
 		padding: 1.25rem;
 		margin: 1.5rem 0;
-		background-color: #fafbfc;
-		transition: background-color 0.3s, border-color 0.3s;
+		background-color: var(--qb-bg);
+		color: var(--qb-color);
+		transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 	}
 
 	.question-block details {
 		margin-bottom: 0;
 	}
 
-	/* Show Solution / Show Hint: same accordion styling in lessons and quizzes */
+	.question-block p,
+	.question-block li,
+	.question-block strong,
+	.question-block span,
+	.question-block h2,
+	.question-block h3,
+	.question-block h4 {
+		color: var(--qb-color);
+	}
+
+	.question-block code {
+		background-color: var(--qb-code-bg);
+		border: 1px solid var(--qb-code-border);
+		color: var(--qb-code-color);
+	}
+
+	.question-block pre {
+		background-color: var(--qb-pre-bg);
+		border: 1px solid var(--qb-pre-border);
+	}
+
+	.question-block pre code {
+		background-color: transparent;
+		color: var(--qb-pre-code);
+	}
+
+	/* Details (Show Hint / Show Solution): theme variables */
 	.lesson-content details,
 	.quiz-content details {
 		margin: 1.25rem 0;
-		border: 1px solid #e8e8e8;
+		border: 1px solid var(--qb-details-border);
 		border-radius: 6px;
 		overflow: hidden;
-		background-color: #fff;
+		background-color: var(--qb-details-bg);
 		transition: background-color 0.3s, border-color 0.3s;
 	}
 
@@ -42,7 +69,7 @@
 		cursor: pointer;
 		padding: 0.6rem 1rem;
 		font-weight: 500;
-		color: #2980b9;
+		color: var(--qb-details-summary);
 		transition: background-color 0.2s, color 0.2s;
 		display: flex;
 		align-items: center;
@@ -57,13 +84,13 @@
 
 	.lesson-content details summary:hover,
 	.quiz-content details summary:hover {
-		background-color: #f0f7ff;
-		color: #1f5f8b;
+		background-color: var(--qb-details-summary-hover-bg);
+		color: var(--qb-details-summary-hover);
 	}
 
 	.lesson-content details[open] summary,
 	.quiz-content details[open] summary {
-		border-bottom: 1px solid #e8e8e8;
+		border-bottom: 1px solid var(--qb-details-border);
 	}
 
 	.lesson-content details summary::after,
@@ -87,34 +114,7 @@
 	.quiz-content details > *:not(summary) {
 		padding: 1rem 1.25rem;
 		margin: 0;
-	}
-
-	/* Dark mode */
-	:global(html.dark) .question-block {
-		background-color: #1a1a1a;
-		border-color: #444;
-	}
-
-	:global(html.dark) .lesson-content details,
-	:global(html.dark) .quiz-content details {
-		background-color: #222;
-		border-color: #444;
-	}
-
-	:global(html.dark) .lesson-content details summary,
-	:global(html.dark) .quiz-content details summary {
-		color: #5dade2;
-	}
-
-	:global(html.dark) .lesson-content details summary:hover,
-	:global(html.dark) .quiz-content details summary:hover {
-		background-color: #2a2a2a;
-		color: #85c1e9;
-	}
-
-	:global(html.dark) .lesson-content details[open] summary,
-	:global(html.dark) .quiz-content details[open] summary {
-		border-bottom-color: #444;
+		color: var(--qb-details-content);
 	}
 </style>
 
