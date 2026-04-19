@@ -4,6 +4,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeInternalLinksBase from './src/plugins/rehype-internal-links-base.mjs';
 
 // Use production base path only for builds, use root for dev
 // In dev mode, use root path. In build mode (for GitHub Pages), use the repo path
@@ -19,6 +20,7 @@ export default defineConfig({
 		remarkPlugins: [remarkMath],
 		rehypePlugins: [
 			rehypeSlug,
+			rehypeInternalLinksBase,
 			[rehypeAutolinkHeadings, {
 				behavior: 'append',
 				properties: {

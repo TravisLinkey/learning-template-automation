@@ -20,6 +20,11 @@ const CATEGORIES: Category[] = [
 		description: 'Project-based path: backtester, paper trading bot, and ML trading strategy',
 	},
 	{
+		id: 'projects-systems',
+		name: 'Systems Programming Projects',
+		description: 'Project-based path: terminal emulator, JSON parser, and language toolchain',
+	},
+	{
 		id: 'quant',
 		name: 'Quantitative Finance Theory',
 		description: 'Probability theory and stochastic processes for quantitative finance',
@@ -32,7 +37,7 @@ const CATEGORIES: Category[] = [
 	{
 		id: 'developer',
 		name: 'Developer',
-		description: 'Programming tools, operating systems, concurrency, performance, and networking',
+		description: 'Programming tools, operating systems, C programming, concurrency, performance, and networking',
 	},
 	{
 		id: 'tools',
@@ -43,14 +48,25 @@ const CATEGORIES: Category[] = [
 
 // Helper function to determine category from subject ID
 function getCategoryFromSubjectId(subjectId: string): string {
-	if (subjectId.startsWith('projects-')) {
+	// Project categories - check specific project IDs first
+	if (subjectId === 'quant-backtester' || subjectId === 'quant-paper-bot' || subjectId === 'quant-ml-trader') {
 		return 'projects';
+	}
+	// Systems programming projects (terminal emulator, JSON parser, language toolchain)
+	if (subjectId === 'systems-terminal-emulator' || subjectId === 'compilers-json-parser' || subjectId === 'compilers-lang-toolchain') {
+		return 'projects-systems';
+	}
+	if (subjectId.startsWith('quant-')) {
+		return 'projects'; // fallback for any new quant projects
 	}
 	if (subjectId === 'quant') {
 		return 'quant';
 	}
 	if (subjectId.startsWith('mathematics-')) {
 		return 'mathematics';
+	}
+	if (subjectId === 'systems-c-programming') {
+		return 'developer'; // Nest C Programming under Developer
 	}
 	if (subjectId.startsWith('developer-')) {
 		return 'developer';
@@ -87,12 +103,16 @@ for (const [, categorySubjects] of subjectsByCategory) {
 	);
 }
 
+// Project IDs for filtering
+const projectIds = new Set(['quant-backtester', 'quant-paper-bot', 'quant-ml-trader', 'systems-terminal-emulator', 'compilers-json-parser', 'compilers-lang-toolchain']);
+
 // Subjects only (exclude projects) – for filter dropdown
-const SUBJECT_CATEGORIES = CATEGORIES.filter((c) => c.id !== 'projects');
+const projectCategoryIds = new Set(['projects', 'projects-systems']);
+const SUBJECT_CATEGORIES = CATEGORIES.filter((c) => !projectCategoryIds.has(c.id));
 const subjectsOnlyAlphabetical = subjectsAlphabetical.filter(
-	(s) => getCategoryFromSubjectId(s.id) !== 'projects'
+	(s) => !projectIds.has(s.id)
 );
-const projectsOnly = subjectsByCategory.get('projects') || [];
+const projectsOnly = subjectsAlphabetical.filter((s) => projectIds.has(s.id));
 const projectsAlphabetical = [...projectsOnly].sort((a, b) =>
 	a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })
 );
@@ -162,17 +182,22 @@ const projectsAlphabetical = [...projectsOnly].sort((a, b) =>
 
 			<!-- List view: Projects only -->
 			<div class="toc-list-view toc-list-projects" aria-hidden="true">
-				{projectsOnly.length > 0 && (
+				{/* Quant Development */}
+				{projectsOnly.filter(s => s.id.startsWith('quant-')).length > 0 && (
 					<details class="category accordion">
 						<summary class="category-header accordion-trigger">
 							<span class="accordion-heading">
-								<h2 class="category-name">Quant Development Projects</h2>
+								<h2 class="category-name">Quant Development</h2>
 								<p class="category-description">Project-based path: backtester, paper trading bot, and ML trading strategy</p>
 							</span>
 							<span class="accordion-icon" aria-hidden="true"></span>
 						</summary>
 						<div class="subjects">
-							{projectsAlphabetical.map((subject) => (
+							{projectsOnly.filter(s => s.id === 'quant-backtester' || s.id === 'quant-paper-bot' || s.id === 'quant-ml-trader').sort((a, b) => {
+								const order = ['quant-backtester', 'quant-paper-bot', 'quant-ml-trader'];
+								return order.indexOf(a.id) - order.indexOf(b.id);
+							}).map((subject) => {
+								return (
 								<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card">
 									<div class="subject-content">
 										<h3 class="subject-name">{subject.name}</h3>
@@ -183,7 +208,37 @@ const projectsAlphabetical = [...projectsOnly].sort((a, b) =>
 									</div>
 									<div class="subject-arrow">→</div>
 								</a>
-							))}
+							);})}
+						</div>
+					</details>
+				)}
+				{/* Systems Programming Projects */}
+				{projectsOnly.filter(s => s.id === 'systems-terminal-emulator' || s.id === 'compilers-json-parser' || s.id === 'compilers-lang-toolchain').length > 0 && (
+					<details class="category accordion">
+						<summary class="category-header accordion-trigger">
+							<span class="accordion-heading">
+								<h2 class="category-name">Systems Programming</h2>
+								<p class="category-description">Project-based path: terminal emulator, JSON parser, and language toolchain</p>
+							</span>
+							<span class="accordion-icon" aria-hidden="true"></span>
+						</summary>
+						<div class="subjects">
+							{projectsOnly.filter(s => s.id === 'systems-terminal-emulator' || s.id === 'compilers-json-parser' || s.id === 'compilers-lang-toolchain').sort((a, b) => {
+								const order = ['systems-terminal-emulator', 'compilers-json-parser', 'compilers-lang-toolchain'];
+								return order.indexOf(a.id) - order.indexOf(b.id);
+							}).map((subject) => {
+								return (
+								<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card">
+									<div class="subject-content">
+										<h3 class="subject-name">{subject.name}</h3>
+										<p class="subject-description">{subject.description}</p>
+										<div class="subject-meta">
+											<span class="subject-audience">For: {subject.targetAudience}</span>
+										</div>
+									</div>
+									<div class="subject-arrow">→</div>
+								</a>
+							);})}
 						</div>
 					</details>
 				)}
@@ -207,22 +262,68 @@ const projectsAlphabetical = [...projectsOnly].sort((a, b) =>
 				</div>
 			</div>
 
-			<!-- Grid view: Projects only, A–Z -->
+			<!-- Grid view: Projects only, A–Z (grouped by category) -->
 			<div class="toc-grid-view toc-grid-projects" aria-hidden="true">
-				<div class="subjects-grid">
-					{projectsAlphabetical.map((subject) => (
-						<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card">
-							<div class="subject-content">
-								<h3 class="subject-name">{subject.name}</h3>
-								<p class="subject-description">{subject.description}</p>
-								<div class="subject-meta">
-									<span class="subject-audience">For: {subject.targetAudience}</span>
-								</div>
-							</div>
-							<div class="subject-arrow">→</div>
-						</a>
-					))}
-				</div>
+				{/* Quant Development Projects */}
+				{projectsOnly.filter(s => s.id.startsWith('quant-')).length > 0 && (
+					<details class="category accordion" open>
+						<summary class="category-header accordion-trigger">
+							<span class="accordion-heading">
+								<h2 class="category-name">Quant Development</h2>
+								<p class="category-description">Project-based path: backtester, paper trading bot, and ML trading strategy</p>
+							</span>
+							<span class="accordion-icon" aria-hidden="true"></span>
+						</summary>
+						<div class="subjects subjects-grid">
+							{projectsOnly.filter(s => s.id === 'quant-backtester' || s.id === 'quant-paper-bot' || s.id === 'quant-ml-trader').sort((a, b) => {
+								const order = ['quant-backtester', 'quant-paper-bot', 'quant-ml-trader'];
+								return order.indexOf(a.id) - order.indexOf(b.id);
+							}).map((subject) => {
+								return (
+								<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card">
+									<div class="subject-content">
+										<h3 class="subject-name">{subject.name}</h3>
+										<p class="subject-description">{subject.description}</p>
+										<div class="subject-meta">
+											<span class="subject-audience">For: {subject.targetAudience}</span>
+										</div>
+									</div>
+									<div class="subject-arrow">→</div>
+								</a>
+							);})}
+						</div>
+					</details>
+				)}
+				{/* Systems Programming Projects */}
+				{projectsOnly.filter(s => s.id === 'systems-terminal-emulator' || s.id === 'compilers-json-parser' || s.id === 'compilers-lang-toolchain').length > 0 && (
+					<details class="category accordion" open>
+						<summary class="category-header accordion-trigger">
+							<span class="accordion-heading">
+								<h2 class="category-name">Systems Programming</h2>
+								<p class="category-description">Project-based path: terminal emulator, JSON parser, and language toolchain</p>
+							</span>
+							<span class="accordion-icon" aria-hidden="true"></span>
+						</summary>
+						<div class="subjects subjects-grid">
+							{projectsOnly.filter(s => s.id === 'systems-terminal-emulator' || s.id === 'compilers-json-parser' || s.id === 'compilers-lang-toolchain').sort((a, b) => {
+								const order = ['systems-terminal-emulator', 'compilers-json-parser', 'compilers-lang-toolchain'];
+								return order.indexOf(a.id) - order.indexOf(b.id);
+							}).map((subject) => {
+								return (
+								<a href={`${import.meta.env.BASE_URL}${subject.id}/`} class="subject-card">
+									<div class="subject-content">
+										<h3 class="subject-name">{subject.name}</h3>
+										<p class="subject-description">{subject.description}</p>
+										<div class="subject-meta">
+											<span class="subject-audience">For: {subject.targetAudience}</span>
+										</div>
+									</div>
+									<div class="subject-arrow">→</div>
+								</a>
+							);})}
+						</div>
+					</details>
+				)}
 			</div>
 		</div>
 	</main>
@@ -383,7 +484,7 @@ const projectsAlphabetical = [...projectsOnly].sort((a, b) =>
 	.subjects-grid {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 2rem;
+		gap: 2.5rem;
 	}
 
 	.subjects-grid .subject-card {
@@ -458,6 +559,32 @@ const projectsAlphabetical = [...projectsOnly].sort((a, b) =>
 	.accordion .subjects {
 		padding: 1.5rem;
 		padding-top: 0.5rem;
+	}
+
+	/* Grid view: allow flex wrap inside accordion for grid layout */
+	.toc-grid-view .accordion .subjects {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2.5rem;
+		flex-direction: row;
+	}
+
+	.toc-grid-view .subjects {
+		flex-direction: row;
+	}
+
+	/* Ensure subjects-grid works inside grid view accordions */
+	.toc-grid-view .accordion .subjects-grid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2.5rem;
+	}
+
+	/* Grid view: subject cards should be side by side */
+	.toc-grid-view .subjects-grid .subject-card {
+		flex: 1 1 18rem;
+		min-width: 0;
+		max-width: 100%;
 	}
 
 	.category-header {

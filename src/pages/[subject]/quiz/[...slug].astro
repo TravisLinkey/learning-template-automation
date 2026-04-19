@@ -6,6 +6,21 @@ import { getSubjectById, getAllSubjectsUnfiltered } from '../../../utils/subject
 export async function getStaticPaths() {
 	// Helper function to match paths for both flat and nested subject structures
 	function matchesSubjectPath(path: string, subjectId: string): boolean {
+		// Handle known flat subjects with hyphens
+		const flatSubjects = [
+			'systems-c-programming',
+			// Quant projects
+			'quant-backtester',
+			'quant-paper-bot',
+			'quant-ml-trader',
+			// Systems Programming projects
+			'systems-terminal-emulator',
+			'compilers-json-parser',
+			'compilers-lang-toolchain',
+		];
+		if (flatSubjects.includes(subjectId)) {
+			return path.includes(`/content/${subjectId}/lessons/`);
+		}
 		// Handle nested subjects (e.g., 'developer-python-pandas' -> '/content/developer/python-pandas/lessons/')
 		if (subjectId.includes('-')) {
 			const parts = subjectId.split('-');

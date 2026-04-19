@@ -36,10 +36,18 @@ export const VISIBLE_SUBJECTS: string[] = [
   // 'developer-computer-architecture',
   // 'developer-networking',
   
-  // Quant development projects
-  'projects-01-backtester',
-  'projects-02-paper-bot',
-  'projects-03-ml-trader',
+  // Quant development projects (in order)
+  'quant-backtester',
+  'quant-paper-bot',
+  'quant-ml-trader',
+
+  // Systems Programming - foundational subject
+  'systems-c-programming',
+  
+  // Systems Programming projects (in learning order)
+  'systems-terminal-emulator',
+  'compilers-json-parser',
+  'compilers-lang-toolchain',
 ];
 
 /**

@@ -6,7 +6,22 @@ import { getSubjectById, getAllSubjectsUnfiltered } from '../../../utils/subject
 export async function getStaticPaths() {
 	// Helper function to match paths for both flat and nested subject structures
 	function matchesSubjectPath(path: string, subjectId: string): boolean {
-		// Handle nested subjects (e.g., 'developer-python-pandas' -> '/content/developer/python-pandas/lessons/')
+		// Handle known flat subjects with hyphens (e.g., 'systems-c-programming' -> '/content/systems-c-programming/lessons/')
+		const flatSubjects = [
+			'systems-c-programming',
+			// Quant projects
+			'quant-backtester',
+			'quant-paper-bot',
+			'quant-ml-trader',
+			// Systems Programming projects
+			'systems-terminal-emulator',
+			'compilers-json-parser',
+			'compilers-lang-toolchain',
+		];
+		if (flatSubjects.includes(subjectId)) {
+			return path.includes(`/content/${subjectId}/lessons/`);
+		}
+		// Handle nested subjects with single hyphen (e.g., 'developer-python-pandas' -> '/content/developer/python-pandas/lessons/')
 		if (subjectId.includes('-')) {
 			const parts = subjectId.split('-');
 			const category = parts[0];
@@ -14,7 +29,7 @@ export async function getStaticPaths() {
 			const nestedPath = `/content/${category}/${subject}/lessons/`;
 			return path.includes(nestedPath);
 		}
-		// Handle flat subjects (e.g., 'quant' -> '/content/quant/lessons/')
+		// Handle flat subjects without hyphens (e.g., 'quant' -> '/content/quant/lessons/')
 		return path.includes(`/content/${subjectId}/lessons/`);
 	}
 	// Use unfiltered list so direct URLs work for all subjects (including hidden ones)

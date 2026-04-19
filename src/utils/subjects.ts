@@ -79,27 +79,58 @@ export const SUBJECTS: Subject[] = [
 		targetAudience: 'quantitative developers working with networked systems and market infrastructure',
 		subjectDescription: 'TCP vs UDP, latency/throughput tradeoffs, packet lifecycle, and low-latency networking',
 	},
+	// Systems Programming
+	{
+		id: 'systems-c-programming',
+		name: 'C Programming',
+		description: 'Learn C programming for systems development, building toward a terminal emulator project',
+		targetAudience: 'developers wanting to understand systems programming and build low-level projects',
+		subjectDescription: 'C syntax, pointers, memory management, file I/O, process control, and PTY manipulation',
+	},
 	// Quant development projects (roadmap)
 	{
-		id: 'projects-01-backtester',
-		name: 'Project 1: Backtesting Engine',
+		id: 'quant-backtester',
+		name: 'Backtesting Engine',
 		description: 'Build a simple, reliable backtesting system from scratch with Python and Pandas',
 		targetAudience: 'software engineers and quant developers learning algorithmic trading',
 		subjectDescription: 'data ingestion, signal generation, P&L calculation, and performance metrics',
 	},
 	{
-		id: 'projects-02-paper-bot',
-		name: 'Project 2: Paper Trading Bot',
+		id: 'quant-paper-bot',
+		name: 'Paper Trading Bot',
 		description: 'Extend the backtester into a real-time paper trading bot using broker APIs',
-		targetAudience: 'developers who have completed Project 1 and want live paper trading',
+		targetAudience: 'developers who have completed the backtesting engine project and want live paper trading',
 		subjectDescription: 'API integration, order execution, real-time data, and market microstructure',
 	},
 	{
-		id: 'projects-03-ml-trader',
-		name: 'Project 3: ML Trading Strategy',
+		id: 'quant-ml-trader',
+		name: 'ML Trading Strategy',
 		description: 'Add predictive models to the trading workflow and execute via the paper bot',
-		targetAudience: 'developers who have completed Projects 1–2 and want ML-driven signals',
+		targetAudience: 'developers who have completed the paper trading bot project and want ML-driven signals',
 		subjectDescription: 'feature engineering, model training, strategy optimization, and execution',
+	},
+	// Systems Programming Projects
+	{
+		id: 'systems-terminal-emulator',
+		name: 'Terminal Emulator',
+		description: 'Build a simple terminal emulator using PTY (pseudo-terminal) in C',
+		targetAudience: 'developers who have completed C Programming fundamentals',
+		subjectDescription: 'PTY concepts, file descriptors, process forking, terminal control, and signal handling',
+	},
+	// Compilers Projects
+	{
+		id: 'compilers-json-parser',
+		name: 'JSON Parser',
+		description: 'Build a Tree-sitter style AST parser for JSON',
+		targetAudience: 'developers wanting to understand parser implementation',
+		subjectDescription: 'Lexer, tokenizer, recursive descent parsing, AST construction, tree traversal',
+	},
+	{
+		id: 'compilers-lang-toolchain',
+		name: 'Language Toolchain',
+		description: 'Build a complete language toolchain with REPL using your C terminal emulator and JSON parser',
+		targetAudience: 'developers who have completed Terminal Emulator and JSON Parser projects',
+		subjectDescription: 'REPL implementation, AST interpretation, integration, feature-rich CLI toolchain',
 	},
 ];
 

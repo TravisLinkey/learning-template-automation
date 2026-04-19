@@ -21,6 +21,24 @@ if (!subject) {
 
 // Helper function to match paths for both flat and nested subject structures
 function matchesSubjectPath(path: string, subjectId: string): boolean {
+	// Handle subjects that are in flat folders (not nested under category)
+	const flatSubjects = new Set([
+		'quant', 
+		'vim', 
+		'systems-c-programming',
+		// Quant projects
+		'quant-backtester',
+		'quant-paper-bot', 
+		'quant-ml-trader',
+		// Systems Programming projects
+		'systems-terminal-emulator',
+		'compilers-json-parser',
+		'compilers-lang-toolchain',
+	]);
+	if (flatSubjects.has(subjectId)) {
+		return path.includes(`/content/${subjectId}/lessons/`);
+	}
+	
 	// Handle nested subjects (e.g., 'developer-python-pandas' -> '/content/developer/python-pandas/lessons/')
 	if (subjectId.includes('-')) {
 		const parts = subjectId.split('-');
@@ -67,12 +85,18 @@ for (const path in allMarkdownFiles) {
 
 // Subject-specific chapter titles. Add new subjects here to extend.
 const CHAPTER_TITLES: Record<string, Record<number, string>> = {
-	"projects-01-backtester": { 0: "Backtesting Engine" },
-	"projects-02-paper-bot": { 0: "Paper Trading Bot" },
-	"projects-03-ml-trader": { 0: "ML Trading Strategy" },
+	"quant-backtester": { 0: "Backtesting Engine" },
+	"quant-paper-bot": { 0: "Paper Trading Bot" },
+	"quant-ml-trader": { 0: "ML Trading Strategy" },
 	"developer-python-pandas": {
 		0: "Introduction and Prerequisites",
 		1: "Data Structures and Time Series",
+	},
+	"systems-c-programming": {
+		0: "C Fundamentals & Setup",
+		1: "Pointers & Memory",
+		2: "File I/O & Processes",
+		3: "PTY & Terminal Concepts",
 	},
 	"mathematics-statistics": {
 		0: "Introduction and Prerequisites",
