@@ -215,23 +215,37 @@ const pageTitle = `${frontmatter.chapter}.x — Chapter ${frontmatter.chapter} s
 		}
 	}
 
-	/* Dark mode styles */
+	/* Dark mode styles - matching solution dialog styling with !important to ensure they apply */
 	:global(html.dark) .quiz-content :global(code) {
-		background-color: #2a2a2a;
-		border-color: #444;
-		color: #f39c12;
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+		color: #f39c12 !important;
 	}
 
 	:global(html.dark) .quiz-content :global(pre) {
-		background-color: #2a2a2a;
-		border-color: #444;
-		border-left-color: #3498db;
+		background-color: #252525 !important;
+		border-color: #444 !important;
+		border-left-color: #3498db !important;
 	}
 
 	:global(html.dark) .quiz-content :global(pre code) {
-		background-color: transparent;
+		background-color: transparent !important;
 		border: none;
-		color: #ffffff;
+		color: #e8e8e8 !important;
+	}
+
+	/* Dark mode shiki-highlighted code blocks */
+	:global(html.dark) .quiz-content :global(pre.astro-code),
+	:global(html.dark) .quiz-content :global(pre.shiki) {
+		background-color: #252525 !important;
+		border-color: #444 !important;
+		border-left-color: #3498db !important;
+	}
+
+	:global(html.dark) .quiz-content :global(pre.astro-code code),
+	:global(html.dark) .quiz-content :global(pre.shiki code) {
+		background-color: transparent !important;
+		color: #e8e8e8 !important;
 	}
 
 	/* Dark mode heading color overrides */
@@ -272,16 +286,16 @@ const pageTitle = `${frontmatter.chapter}.x — Chapter ${frontmatter.chapter} s
 	:global(html.dark) .quiz-content :global(li),
 	:global(html.dark) .quiz-content :global(strong),
 	:global(html.dark) .quiz-content :global(span) {
-		color: #ffffff;
+		color: #ffffff !important;
 	}
 
 	/* Dark mode anchor link styling */
 	:global(html.dark) .quiz-content :global(.anchor-link) {
-		color: #5dade2;
+		color: #5dade2 !important;
 	}
 
 	:global(html.dark) .quiz-content :global(.anchor-link:hover) {
-		color: #3498db;
+		color: #3498db !important;
 	}
 </style>
 

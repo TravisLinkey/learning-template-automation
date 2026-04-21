@@ -392,13 +392,58 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 	/* Blockquotes */
 	blockquote {
 		border-left: 4px solid #3498db;
-		padding-left: 1.25rem;
 		margin: 1.5rem 0;
 		color: #555;
 		font-style: italic;
-		background-color: #f8f9fa;
+		background-color: #fafbfc;
 		padding: 1rem 1.25rem;
-		border-radius: 0 4px 4px 0;
+		border-radius: 6px;
+	}
+
+	/* Blockquote (used for Review This Lesson) - styled like Navigation */
+	blockquote {
+		border: 1px solid #e8e8e8;
+		border-left: 4px solid #2980b9;
+		background-color: #fafbfc;
+		padding: 0.875rem;
+		margin: 1rem 0;
+		border-radius: 6px;
+		color: #2c3e50;
+	}
+
+	blockquote p {
+		margin: 0;
+	}
+
+	blockquote a {
+		color: #2980b9;
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	blockquote a:hover {
+		color: #1f5f8b;
+		text-decoration: underline;
+	}
+
+	/* Dark mode for blockquote - matches Navigation styling */
+	html.dark blockquote {
+		background-color: #333 !important;
+		border-color: #444 !important;
+		border-left-color: #2980b9 !important;
+		color: #e8e8e8 !important;
+	}
+
+	html.dark blockquote p {
+		color: #e8e8e8 !important;
+	}
+
+	html.dark blockquote a {
+		color: #5dade2 !important;
+	}
+
+	html.dark blockquote a:hover {
+		color: #85c1e9 !important;
 	}
 
 	/* Bold for key terms */
@@ -618,9 +663,19 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 	}
 
 	:global(html.dark) blockquote {
-		border-left-color: #3498db;
-		background-color: #222;
-		color: #ffffff;
+		border: 1px solid #444 !important;
+		border-left: 4px solid #2980b9 !important;
+		background-color: #333 !important;
+		color: #e8e8e8 !important;
+		border-radius: 6px !important;
+	}
+
+	:global(html.dark) blockquote a {
+		color: #5dade2 !important;
+	}
+
+	:global(html.dark) blockquote a:hover {
+		color: #85c1e9 !important;
 	}
 
 	:global(html.dark) .katex-display,
@@ -647,10 +702,10 @@ const { title, description = DEFAULT_DESCRIPTION, subject } = Astro.props;
 		--qb-details-summary-hover-bg: #2a2a2a;
 		--qb-details-summary-hover: #85c1e9;
 		--qb-details-content: #e8e8e8;
-		--qb-code-bg: #2a2a2a;
+		--qb-code-bg: #252525;
 		--qb-code-border: #444;
 		--qb-code-color: #f39c12;
-		--qb-pre-bg: #2a2a2a;
+		--qb-pre-bg: #252525;
 		--qb-pre-border: #444;
 		--qb-pre-code: #e8e8e8;
 	}

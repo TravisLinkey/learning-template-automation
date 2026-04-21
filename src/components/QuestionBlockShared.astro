@@ -59,7 +59,43 @@
 		transition: background-color 0.3s, border-color 0.3s;
 	}
 
-	.question-block details {
+	/* Dark mode explicit overrides for details - must use !important to override */
+	html.dark .lesson-content details,
+	html.dark .quiz-content details {
+		background-color: #333 !important;
+		border-color: #444 !important;
+	}
+
+	html.dark .lesson-content details summary,
+	html.dark .quiz-content details summary {
+		color: #5dade2 !important;
+	}
+
+	html.dark .lesson-content details > *:not(summary),
+	html.dark .quiz-content details > *:not(summary) {
+		color: #e8e8e8 !important;
+	}
+
+	html.dark .lesson-content details code,
+	html.dark .quiz-content details code {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+		color: #f39c12 !important;
+	}
+
+	html.dark .lesson-content details pre,
+	html.dark .quiz-content details pre {
+		background-color: #2a2a2a !important;
+		border-color: #444 !important;
+	}
+
+	html.dark .lesson-content details pre code,
+	html.dark .quiz-content details pre code {
+		background-color: transparent !important;
+		color: #e8e8e8 !important;
+	}
+
+	question-block details {
 		margin-top: 0.5rem;
 	}
 

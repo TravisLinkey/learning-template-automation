@@ -1,6 +1,7 @@
 # build output
 dist/
 
+.codemogger/
 CONTEXT/
 
 # generated types
