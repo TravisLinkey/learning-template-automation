@@ -1,31 +1,23 @@
 ---
-import { readFile } from 'fs/promises';
-import { resolve } from 'path';
+import { getQuiz, loadQuizMetadata } from '../../utils/quiz-json-loader';
 import type { Quiz } from '../../utils/quiz-json-parser';
 
 export async function getStaticPaths() {
-  const QUIZ_DIR = resolve(process.cwd(), 'quizes');
-  const { readdir } = await import('fs/promises');
+  const quizzes = await loadQuizMetadata();
   
-  const files = await readdir(QUIZ_DIR);
-  const jsonFiles = files.filter(f => f.endsWith('.json'));
-  
-  return jsonFiles.map(file => ({
-    params: { id: file.replace('.json', '') },
+  return quizzes.map(quiz => ({
+    params: { id: quiz.id },
   }));
 }
 
 const { id } = Astro.params;
-const QUIZ_DIR = resolve(process.cwd(), 'quizes');
-const filePath = resolve(QUIZ_DIR, `${id}.json`);
 
 let quiz: Quiz | null = null;
 let error: string | null = null;
 let quizData: string = 'null';
 
 try {
-  const content = await readFile(filePath, 'utf-8');
-  quiz = JSON.parse(content);
+  quiz = await getQuiz(id || '');
   // Serialize quiz data for client-side use (without the heavy content)
   if (quiz) {
     const clientQuiz = {

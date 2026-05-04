@@ -31,7 +31,7 @@ export const VISIBLE_SUBJECTS: string[] = [
   
   // Developer (referenced by Project 1)
   'developer-python-pandas',
-  // 'developer-operating-systems',
+  'developer-operating-systems',
   // 'developer-concurrency',
   // 'developer-computer-architecture',
   // 'developer-networking',

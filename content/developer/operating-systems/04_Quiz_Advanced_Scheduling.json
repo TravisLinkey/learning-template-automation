@@ -1,7 +1,7 @@
 {
   "metadata": {
     "id": "Quiz_04_Advanced_Scheduling",
-    "subject": "Operating Systems",
+    "subject": "developer-operating-systems",
     "topic": "Advanced Scheduling: MLFQ, Proportional Share, Multiprocessor (Chapters 8, 9, 10)",
     "chapters": [
       8,

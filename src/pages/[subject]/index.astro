@@ -54,6 +54,14 @@ function matchesSubjectPath(path: string, subjectId: string): boolean {
 // Read all markdown files (static glob, then filter by subject - handles both flat and nested structures)
 const allMarkdownFiles = import.meta.glob('/content/**/lessons/**/*.md', { eager: true });
 
+// Check if this is a quiz-only subject (no lessons)
+const hasLessons = Object.keys(allMarkdownFiles).some(path => matchesSubjectPath(path, subjectId || ''));
+
+// For quiz-only subjects, redirect to the quiz list
+if (!hasLessons) {
+	return Astro.redirect(`${import.meta.env.BASE_URL}${subjectId}/quiz/`);
+}
+
 const allLessons: Lesson[] = [];
 for (const path in allMarkdownFiles) {
 	// Filter by subject ID (handles both flat and nested structures)
