@@ -1,0 +1,558 @@
+{
+  "metadata": {
+    "id": "Quiz_03_Limited_Direct_Execution",
+    "subject": "Operating Systems",
+    "topic": "Limited Direct Execution (Chapter 6)",
+    "chapters": [6],
+    "created": "2026-04-29",
+    "question_count": 20,
+    "difficulty_distribution": {
+      "easy": 7,
+      "medium": 7,
+      "hard": 6
+    },
+    "coverage": {
+      "notes": {
+        "[[Limited Direct Execution]]": {
+          "questions": 8,
+          "concepts": ["Limited Direct Execution", "User Mode", "Kernel Mode", "System Calls", "Cooperative Approach", "NonCooperative Approach", "Timer Interrupt", "OS Control", "Scheduler"]
+        },
+        "[[User Mode]]": {
+          "questions": 3,
+          "concepts": ["User Mode", "Restricted Operations", "I/O", "Memory Allocation", "Exception"]
+        },
+        "[[Kernel Mode]]": {
+          "questions": 2,
+          "concepts": ["Kernel Mode", "Privileged Operations", "File I/O", "Hardware Access", "Memory Allocation"]
+        },
+        "[[System Calls]]": {
+          "questions": 3,
+          "concepts": ["System Calls", "User Mode", "Kernel Mode", "Trap", "Bridge"]
+        },
+        "[[Timer Interrupt]]": {
+          "questions": 2,
+          "concepts": ["Timer Interrupt", "NonCooperative Approach", "OS Control", "Interrupt Handler"]
+        },
+        "[[Context Switch]]": {
+          "questions": 2,
+          "concepts": ["Context Switch", "Process State", "PCB", "Address Space"]
+        },
+        "[[Scheduler]]": {
+          "questions": 2,
+          "concepts": ["Scheduler", "Scheduling Policies", "Ready Queue", "Limited Direct Execution"]
+        },
+        "[[Process Control Block]]": {
+          "questions": 1,
+          "concepts": ["Process Control Block", "PCB", "Process State"]
+        }
+      },
+      "concepts": {
+        "Limited Direct Execution": {"count": 8, "questions": [1, 2, 8, 13, 14, 17, 18, 19]},
+        "User Mode": {"count": 4, "questions": [3, 4, 13, 17]},
+        "Kernel Mode": {"count": 4, "questions": [5, 13, 17, 18]},
+        "System Calls": {"count": 3, "questions": [6, 13, 17]},
+        "Cooperative Approach": {"count": 2, "questions": [8, 9]},
+        "NonCooperative Approach": {"count": 2, "questions": [8, 10]},
+        "Timer Interrupt": {"count": 2, "questions": [10, 16]},
+        "OS Control": {"count": 3, "questions": [1, 10, 16]},
+        "Scheduler": {"count": 2, "questions": [12, 20]},
+        "Restricted Operations": {"count": 2, "questions": [3, 4]},
+        "I/O": {"count": 2, "questions": [4, 7]},
+        "Memory Allocation": {"count": 2, "questions": [4, 5]},
+        "Exception": {"count": 1, "questions": [7]},
+        "Trap": {"count": 1, "questions": [6]},
+        "Bridge": {"count": 1, "questions": [13]},
+        "Privileged Operations": {"count": 1, "questions": [5]},
+        "File I/O": {"count": 1, "questions": [5]},
+        "Hardware Access": {"count": 1, "questions": [5]},
+        "Interrupt Handler": {"count": 2, "questions": [16, 20]},
+        "Context Switch": {"count": 2, "questions": [11, 15]},
+        "Process State": {"count": 1, "questions": [15]},
+        "PCB": {"count": 1, "questions": [15]},
+        "Address Space": {"count": 1, "questions": [15]},
+        "Scheduling Policies": {"count": 1, "questions": [12]},
+        "Ready Queue": {"count": 1, "questions": [12]},
+        "Process Control Block": {"count": 1, "questions": [15]},
+        "Timer Interrupt": {"count": 2, "questions": [10, 16]},
+        "Competitive Approach": {"count": 1, "questions": [8]},
+        "Priority Approach": {"count": 1, "questions": [8]},
+        "Infinite Loop": {"count": 1, "questions": [14]},
+        "Hardware Support": {"count": 1, "questions": [18]},
+        "Mode Bits": {"count": 1, "questions": [18]}
+      },
+      "by_chapter": {
+        "6": {
+          "notes": ["[[Limited Direct Execution]]", "[[User Mode]]", "[[Kernel Mode]]", "[[System Calls]]", "[[Timer Interrupt]]", "[[Context Switch]]", "[[Scheduler]]", "[[Process Control Block]]"],
+          "question_count": 20
+        }
+      },
+      "topic_emphasis": {
+        "Limited Direct Execution": {"current_difficulty": "medium", "recommendation": "maintain", "reason": "Good coverage across difficulties"},
+        "User Mode": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Good coverage"},
+        "Kernel Mode": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Good coverage"},
+        "System Calls": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Good coverage"},
+        "Cooperative Approach": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 2 questions, needs more coverage"},
+        "NonCooperative Approach": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 2 questions, needs more coverage"},
+        "Timer Interrupt": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "OS Control": {"current_difficulty": "medium", "recommendation": "maintain", "reason": "Good coverage"},
+        "Scheduler": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "Restricted Operations": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 2 questions, needs more coverage"},
+        "I/O": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 2 questions, needs more coverage"},
+        "Memory Allocation": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 2 questions, needs more coverage"},
+        "Exception": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Trap": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Bridge": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Privileged Operations": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "File I/O": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Hardware Access": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Interrupt Handler": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "Context Switch": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "Process State": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "PCB": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Address Space": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Scheduling Policies": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Ready Queue": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Process Control Block": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Competitive Approach": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Priority Approach": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Infinite Loop": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Hardware Support": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Mode Bits": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"}
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "What is Limited Direct Execution in operating systems?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "A technique where the OS runs all programs in kernel mode for maximum speed", "concepts": ["Limited Direct Execution", "Kernel Mode"]},
+        {"key": "B", "text": "A technique that allows user programs to run directly on the CPU while the OS retains control for safety", "concepts": ["Limited Direct Execution", "CPU", "User Mode", "OS Control"]},
+        {"key": "C", "text": "A method where programs are interpreted rather than executed directly", "concepts": ["Limited Direct Execution", "Interpretation"]},
+        {"key": "D", "text": "A scheduling algorithm for determining which process runs next", "concepts": ["Limited Direct Execution", "Scheduling"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "Limited Direct Execution is an OS technique that allows user programs to run directly on the CPU for speed, while still allowing the OS to retain control for safety and resource management through mechanisms like user/kernel mode and system calls.",
+        "incorrect": {
+          "A": "User programs run in user mode, not kernel mode, to prevent them from performing dangerous operations.",
+          "C": "Programs run directly on the CPU, not through interpretation.",
+          "D": "This is about execution control, not scheduling."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 2,
+      "text": "What are the two main problems that Limited Direct Execution solves?",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "How to restrict operations (I/O, allocating memory) for user programs", "concepts": ["Limited Direct Execution", "User Mode", "Restricted Operations"]},
+        {"key": "B", "text": "How to compile programs faster", "concepts": ["Limited Direct Execution", "Compilation"]},
+        {"key": "C", "text": "How to effectively context switch when other processes need to run", "concepts": ["Limited Direct Execution", "Context Switch", "OS Control"]},
+        {"key": "D", "text": "How to allocate memory efficiently", "concepts": ["Limited Direct Execution", "Memory Allocation"]}
+      ],
+      "correct_answers": ["A", "C"],
+      "explanation": {
+        "correct": "Limited Direct Execution solves two problems: 1) How to restrict operations for user programs (using user/kernel mode), and 2) How to effectively context switch when the OS needs to run other processes (since a running process means the OS is not running).",
+        "incorrect": {
+          "B": "Compilation speed is not related to Limited Direct Execution.",
+          "D": "Memory allocation is a separate concern handled by memory management."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 3,
+      "text": "What is User Mode in operating systems?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "A privileged mode that can perform any operation", "concepts": ["User Mode", "Kernel Mode"]},
+        {"key": "B", "text": "A restricted mode where code cannot perform I/O, allocate memory, or open files", "concepts": ["User Mode", "Restricted Operations", "I/O", "Memory Allocation"]},
+        {"key": "C", "text": "A mode used only by device drivers", "concepts": ["User Mode", "Device Drivers"]},
+        {"key": "D", "text": "A mode that allows direct hardware access", "concepts": ["User Mode", "Hardware Access"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "User Mode is a restricted processing mode where code cannot issue I/O requests, allocate memory, or open files. Attempting these operations results in an exception, and the OS would likely kill the process.",
+        "incorrect": {
+          "A": "This describes Kernel Mode, not User Mode.",
+          "C": "Device drivers typically run in Kernel Mode.",
+          "D": "Direct hardware access is only allowed in Kernel Mode."
+        }
+      },
+      "source_notes": ["[[User Mode]]"]
+    },
+    {
+      "id": 4,
+      "text": "Which operations are NOT allowed in User Mode? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "Issue I/O requests", "concepts": ["User Mode", "I/O"]},
+        {"key": "B", "text": "Perform arithmetic operations", "concepts": ["User Mode", "Arithmetic Operations"]},
+        {"key": "C", "text": "Allocate memory", "concepts": ["User Mode", "Memory Allocation"]},
+        {"key": "D", "text": "Execute conditional branches", "concepts": ["User Mode", "Conditional Branches"]}
+      ],
+      "correct_answers": ["A", "C"],
+      "explanation": {
+        "correct": "In User Mode, code cannot issue I/O requests, allocate memory, or open files. These restricted operations require Kernel Mode privileges and must go through system calls.",
+        "incorrect": {
+          "B": "Arithmetic operations are basic CPU operations allowed in User Mode.",
+          "D": "Conditional branches are allowed in User Mode."
+        }
+      },
+      "source_notes": ["[[User Mode]]"]
+    },
+    {
+      "id": 5,
+      "text": "What is Kernel Mode responsible for?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "Running user applications at reduced priority", "concepts": ["Kernel Mode", "User Applications"]},
+        {"key": "B", "text": "Handling risky operations like file I/O, hardware access, and memory allocation", "concepts": ["Kernel Mode", "Privileged Operations", "File I/O", "Hardware Access", "Memory Allocation"]},
+        {"key": "C", "text": "Storing user program variables", "concepts": ["Kernel Mode", "User Program Variables"]},
+        {"key": "D", "text": "Managing the stack of user processes", "concepts": ["Kernel Mode", "User Stack"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "Kernel Mode is a privileged processing mode responsible for handling risky operations such as reading/writing files, accessing hardware, creating processes, allocating memory, and performing network I/O.",
+        "incorrect": {
+          "A": "User applications run in User Mode, not Kernel Mode.",
+          "C": "User program variables are stored in the user's address space.",
+          "D": "The user stack is managed by the user process."
+        }
+      },
+      "source_notes": ["[[Kernel Mode]]"]
+    },
+    {
+      "id": 6,
+      "text": "What is a system call?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "A function call within a user program", "concepts": ["System Calls", "Function Call"]},
+        {"key": "B", "text": "A bridge between User Mode and Kernel Mode via a trap into the kernel", "concepts": ["System Calls", "User Mode", "Kernel Mode", "Trap", "Bridge"]},
+        {"key": "C", "text": "A method for processes to call each other", "concepts": ["System Calls", "Inter-process Communication"]},
+        {"key": "D", "text": "A hardware interrupt signal", "concepts": ["System Calls", "Hardware Interrupt"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "A system call is the bridge between User Mode and Kernel Mode - a controlled way for a user program to give up control to the operating system via a trap instruction that transfers execution to the kernel.",
+        "incorrect": {
+          "A": "A system call crosses privilege boundaries; regular function calls do not.",
+          "C": "Processes don't directly call each other;",
+          "D": "Interrupts are hardware signals; system calls are software-initiated."
+        }
+      },
+      "source_notes": ["[[System Calls]]"]
+    },
+    {
+      "id": 7,
+      "text": "What happens when a process in User Mode attempts to perform a restricted operation like I/O?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "The operation is silently ignored", "concepts": ["User Mode", "I/O"]},
+        {"key": "B", "text": "The processor raises an exception and the OS likely kills the process", "concepts": ["User Mode", "Exception", "OS", "I/O"]},
+        {"key": "C", "text": "The operation is automatically promoted to Kernel Mode", "concepts": ["User Mode", "Kernel Mode", "Promotion"]},
+        {"key": "D", "text": "The hardware performs the operation anyway", "concepts": ["User Mode", "Hardware"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "When User Mode code attempts a restricted operation (like I/O), the processor raises an exception. The OS catches this exception and typically kills the process, as it attempted an illegal operation.",
+        "incorrect": {
+          "A": "The operation is not ignored; an exception is raised.",
+          "C": "User code cannot promote itself to Kernel Mode; that would defeat the protection mechanism.",
+          "D": "The hardware prevents unauthorized operations."
+        }
+      },
+      "source_notes": ["[[User Mode]]"]
+    },
+    {
+      "id": 8,
+      "text": "What are the two approaches for regaining control from a running process in Limited Direct Execution?",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "Cooperative Approach: Rely on the process to give up control via a system call", "concepts": ["Limited Direct Execution", "Cooperative Approach", "System Call"]},
+        {"key": "B", "text": "Competitive Approach: Let processes compete for CPU time", "concepts": ["Limited Direct Execution", "Competitive Approach"]},
+        {"key": "C", "text": "NonCooperative Approach: Use timer interrupts", "concepts": ["Limited Direct Execution", "NonCooperative Approach", "Timer Interrupt"]},
+        {"key": "D", "text": "Priority Approach: Use process priority levels", "concepts": ["Limited Direct Execution", "Priority Approach"]}
+      ],
+      "correct_answers": ["A", "C"],
+      "explanation": {
+        "correct": "The two approaches for regaining control are: 1) Cooperative - rely on the process to give up control via a system call, and 2) NonCooperative - use timer interrupts to periodically regain control.",
+        "incorrect": {
+          "B": "There is no 'competitive approach' in this context.",
+          "D": "Priority is a scheduling concept, not a control mechanism for direct execution."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 9,
+      "text": "How does the Cooperative Approach work in Limited Direct Execution?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "The OS forces the process to stop after a timer expires", "concepts": ["Cooperative Approach", "Timer Interrupt"]},
+        {"key": "B", "text": "The process voluntarily gives up control by making a system call", "concepts": ["Cooperative Approach", "System Call", "Voluntary"]},
+        {"key": "C", "text": "The hardware automatically switches to the next process", "concepts": ["Cooperative Approach", "Hardware"]},
+        {"key": "D", "text": "The OS sends a signal to terminate the process", "concepts": ["Cooperative Approach", "Termination"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "In the Cooperative Approach, the OS relies on the process to voluntarily give up control by making a system call (like yield, exit, or requesting I/O). This requires the process to cooperate.",
+        "incorrect": {
+          "A": "This describes the NonCooperative Approach with timer interrupts.",
+          "C": "Hardware doesn't automatically switch processes in cooperative mode.",
+          "D": "Termination signals are not part of the cooperative approach."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 10,
+      "text": "What is the purpose of a timer interrupt in the NonCooperative Approach?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "To speed up the execution of the current process", "concepts": ["Timer Interrupt", "Execution Speed"]},
+        {"key": "B", "text": "To periodically regain control from the running process", "concepts": ["Timer Interrupt", "NonCooperative Approach", "OS Control"]},
+        {"key": "C", "text": "To allocate more memory to the process", "concepts": ["Timer Interrupt", "Memory Allocation"]},
+        {"key": "D", "text": "To handle I/O operations for the process", "concepts": ["Timer Interrupt", "I/O"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "In the NonCooperative Approach, timer interrupts are used to periodically regain control from a running process. When the timer fires, the OS regains control and can decide which process should run next.",
+        "incorrect": {
+          "A": "Timer interrupts don't speed up execution; they actually add overhead.",
+          "C": "Memory allocation is not related to timer interrupts.",
+          "D": "I/O handling is done through separate interrupt mechanisms."
+        }
+      },
+      "source_notes": ["[[Timer Interrupt]]", "[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 11,
+      "text": "What is a context switch?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "Switching from one CPU core to another", "concepts": ["Context Switch", "CPU Core"]},
+        {"key": "B", "text": "A low-level technique to switch from one running process to another", "concepts": ["Context Switch", "Process Switching"]},
+        {"key": "C", "text": "Changing the priority of a running process", "concepts": ["Context Switch", "Priority"]},
+        {"key": "D", "text": "Switching between User Mode and Kernel Mode", "concepts": ["Context Switch", "Mode Switching"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "A context switch is a low-level technique used to switch from one running process to another. It involves saving the current process's state and loading another process's state.",
+        "incorrect": {
+          "A": "This describes CPU migration, not context switching.",
+          "C": "Priority changes are scheduling operations, not context switches.",
+          "D": "Mode switching is different from process context switching."
+        }
+      },
+      "source_notes": ["[[Context Switch]]"]
+    },
+    {
+      "id": 12,
+      "text": "After the OS regains control from a running process, what component decides which process should run next?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "The Process Control Block", "concepts": ["Scheduler", "PCB"]},
+        {"key": "B", "text": "The Scheduler", "concepts": ["Scheduler", "Scheduling Policies", "Ready Queue"]},
+        {"key": "C", "text": "The Memory Management Unit", "concepts": ["Scheduler", "MMU"]},
+        {"key": "D", "text": "The Timer Interrupt Handler", "concepts": ["Scheduler", "Timer Interrupt"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "After the OS regains control (via system call or timer interrupt), the Scheduler decides which process should run next. The scheduler uses scheduling policies to select the next process from the ready queue.",
+        "incorrect": {
+          "A": "The PCB stores process state; it doesn't make scheduling decisions.",
+          "C": "The MMU handles address translation, not scheduling.",
+          "D": "The timer interrupt handler regains control but defers scheduling to the scheduler."
+        }
+      },
+      "source_notes": ["[[Scheduler]]", "[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 13,
+      "text": "What components are involved in the Limited Direct Execution process? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "User Mode for running user programs with restrictions", "concepts": ["Limited Direct Execution", "User Mode"]},
+        {"key": "B", "text": "Kernel Mode for handling privileged operations", "concepts": ["Limited Direct Execution", "Kernel Mode"]},
+        {"key": "C", "text": "System Calls as the bridge between modes", "concepts": ["Limited Direct Execution", "System Calls", "Bridge"]},
+        {"key": "D", "text": "Page Tables for memory translation", "concepts": ["Limited Direct Execution", "Page Tables"]}
+      ],
+      "correct_answers": ["A", "B", "C"],
+      "explanation": {
+        "correct": "Limited Direct Execution involves: 1) User Mode for running user programs with restrictions, 2) Kernel Mode for handling privileged operations, and 3) System Calls as the bridge between the two modes.",
+        "incorrect": {
+          "D": "Page Tables are part of memory virtualization, not Limited Direct Execution."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]", "[[User Mode]]", "[[Kernel Mode]]", "[[System Calls]]"]
+    },
+    {
+      "id": 14,
+      "text": "Why is the Cooperative Approach considered problematic in Limited Direct Execution?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "It is too slow for modern processors", "concepts": ["Cooperative Approach", "Performance"]},
+        {"key": "B", "text": "It relies on processes to cooperate, which may not happen (e.g., infinite loop)", "concepts": ["Cooperative Approach", "Infinite Loop", "Cooperation"]},
+        {"key": "C", "text": "It requires too much memory overhead", "concepts": ["Cooperative Approach", "Memory Overhead"]},
+        {"key": "D", "text": "It cannot handle multiple processes", "concepts": ["Cooperative Approach", "Multiple Processes"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "The Cooperative Approach is problematic because it relies on processes to voluntarily give up control. If a process has an infinite loop or refuses to make system calls, it will never give up the CPU, and the OS cannot regain control.",
+        "incorrect": {
+          "A": "Speed is not the main concern with cooperative approach.",
+          "C": "Memory overhead is not the primary issue.",
+          "D": "Cooperative approach can handle multiple processes as long as they cooperate."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 15,
+      "text": "What happens during a context switch? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "The current process's state is saved (registers, program counter, etc.)", "concepts": ["Context Switch", "Process State", "Registers", "Program Counter"]},
+        {"key": "B", "text": "The next process's state is loaded from its PCB", "concepts": ["Context Switch", "PCB", "Process State"]},
+        {"key": "C", "text": "The timer interrupt is disabled permanently", "concepts": ["Context Switch", "Timer Interrupt"]},
+        {"key": "D", "text": "The memory address space may be switched if using virtual memory", "concepts": ["Context Switch", "Address Space", "Virtual Memory"]}
+      ],
+      "correct_answers": ["A", "B", "D"],
+      "explanation": {
+        "correct": "During a context switch: 1) The current process's state (registers, program counter, etc.) is saved to its PCB, 2) The next process's state is loaded from its PCB, and 3) The memory address space may be switched if using virtual memory.",
+        "incorrect": {
+          "C": "The timer interrupt is not disabled permanently; it continues to fire periodically."
+        }
+      },
+      "source_notes": ["[[Context Switch]]", "[[Process Control Block]]"]
+    },
+    {
+      "id": 16,
+      "text": "How does the timer interrupt handler work in the NonCooperative Approach?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "It directly switches to the next process without OS involvement", "concepts": ["Timer Interrupt", "Process Switching"]},
+        {"key": "B", "text": "It raises a hardware interrupt that transfers control to the OS", "concepts": ["Timer Interrupt", "Interrupt Handler", "OS Control", "Hardware Interrupt"]},
+        {"key": "C", "text": "It modifies the process's memory permissions", "concepts": ["Timer Interrupt", "Memory Permissions"]},
+        {"key": "D", "text": "It allocates additional memory to the running process", "concepts": ["Timer Interrupt", "Memory Allocation"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "The timer interrupt handler works by raising a hardware interrupt when the timer expires. This transfers control from the running process to the OS (specifically to the interrupt handler), allowing the OS to regain control and make scheduling decisions.",
+        "incorrect": {
+          "A": "The timer interrupt doesn't directly switch processes; it notifies the OS to take control.",
+          "C": "Memory permissions are not modified by timer interrupts.",
+          "D": "Memory allocation is not related to timer interrupts."
+        }
+      },
+      "source_notes": ["[[Timer Interrupt]]", "[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 17,
+      "text": "What is the relationship between Limited Direct Execution and system calls?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "System calls are only used in the NonCooperative Approach", "concepts": ["Limited Direct Execution", "System Calls", "NonCooperative Approach"]},
+        {"key": "B", "text": "System calls are the mechanism that allows processes to request OS services while in User Mode", "concepts": ["Limited Direct Execution", "System Calls", "User Mode", "OS Services"]},
+        {"key": "C", "text": "System calls eliminate the need for User/Kernel Mode distinction", "concepts": ["Limited Direct Execution", "System Calls", "User Mode", "Kernel Mode"]},
+        {"key": "D", "text": "System calls are only used for memory allocation", "concepts": ["Limited Direct Execution", "System Calls", "Memory Allocation"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "System calls are the mechanism that allows processes running in User Mode to request OS services (like I/O, memory allocation) that require Kernel Mode privileges. They are a fundamental part of Limited Direct Execution.",
+        "incorrect": {
+          "A": "System calls are used in both Cooperative and NonCooperative approaches.",
+          "C": "System calls actually reinforce the User/Kernel Mode distinction.",
+          "D": "System calls are used for many operations, not just memory allocation."
+        }
+      },
+      "source_notes": ["[[System Calls]]", "[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 18,
+      "text": "Which of the following statements about Limited Direct Execution are true? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "It allows user programs to run directly on the CPU for better performance", "concepts": ["Limited Direct Execution", "CPU Performance"]},
+        {"key": "B", "text": "It completely eliminates the need for an operating system", "concepts": ["Limited Direct Execution", "Operating System"]},
+        {"key": "C", "text": "It uses hardware support (mode bits) to enforce restrictions", "concepts": ["Limited Direct Execution", "Hardware Support", "Mode Bits"]},
+        {"key": "D", "text": "It requires the OS to periodically check if processes need to be switched", "concepts": ["Limited Direct Execution", "OS Control"]}
+      ],
+      "correct_answers": ["A", "C"],
+      "explanation": {
+        "correct": "Limited Direct Execution: 1) Allows user programs to run directly on the CPU for better performance (vs. interpretation), and 2) Uses hardware support (mode bits for User/Kernel mode) to enforce restrictions. The OS is still needed for control and resource management.",
+        "incorrect": {
+          "B": "The OS is still needed for resource management and control.",
+          "D": "The OS doesn't periodically check; it gets control via system calls or timer interrupts."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 19,
+      "text": "What is the main advantage of the NonCooperative Approach over the Cooperative Approach?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "It is simpler to implement", "concepts": ["NonCooperative Approach", "Implementation"]},
+        {"key": "B", "text": "It guarantees the OS can regain control even if a process doesn't cooperate", "concepts": ["NonCooperative Approach", "OS Control", "Cooperation"]},
+        {"key": "C", "text": "It provides better performance for user programs", "concepts": ["NonCooperative Approach", "Performance"]},
+        {"key": "D", "text": "It eliminates the need for timer interrupts", "concepts": ["NonCooperative Approach", "Timer Interrupt"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "The main advantage of the NonCooperative Approach is that it guarantees the OS can regain control even if a process doesn't cooperate (e.g., has an infinite loop). Timer interrupts ensure the OS gets control periodically regardless of process behavior.",
+        "incorrect": {
+          "A": "The NonCooperative Approach is more complex due to timer interrupt handling.",
+          "C": "There's some performance overhead due to timer interrupts and context switching.",
+          "D": "Timer interrupts are essential to the NonCooperative Approach."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 20,
+      "text": "What role does the Scheduler play after the OS regains control in Limited Direct Execution?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "It handles the timer interrupt directly", "concepts": ["Scheduler", "Timer Interrupt"]},
+        {"key": "B", "text": "It decides which process should run next based on scheduling policies", "concepts": ["Scheduler", "Scheduling Policies", "Process Selection"]},
+        {"key": "C", "text": "It performs the context switch between processes", "concepts": ["Scheduler", "Context Switch"]},
+        {"key": "D", "text": "It translates virtual addresses to physical addresses", "concepts": ["Scheduler", "Address Translation"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "After the OS regains control (via system call or timer interrupt), the Scheduler decides which process should run next based on scheduling policies (like FIFO, Round Robin, MLFQ, etc.). The actual context switch is performed by low-level OS code.",
+        "incorrect": {
+          "A": "The timer interrupt handler deals with the interrupt, not the scheduler.",
+          "C": "The context switch is performed by low-level code, not the scheduler itself.",
+          "D": "Address translation is done by the MMU, not the scheduler."
+        }
+      },
+      "source_notes": ["[[Scheduler]]", "[[Limited Direct Execution]]"]
+    }
+  ]
+}

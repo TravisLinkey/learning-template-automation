@@ -1,0 +1,1613 @@
+{
+  "metadata": {
+    "id": "Quiz_04_Advanced_Scheduling",
+    "subject": "Operating Systems",
+    "topic": "Advanced Scheduling: MLFQ, Proportional Share, Multiprocessor (Chapters 8, 9, 10)",
+    "chapters": [
+      8,
+      9,
+      10
+    ],
+    "created": "2026-04-29",
+    "question_count": 20,
+    "difficulty_distribution": {
+      "easy": 7,
+      "medium": 7,
+      "hard": 6
+    },
+    "coverage": {
+      "notes": {
+        "[[Multi-level Feedback Queue]]": {
+          "questions": 4,
+          "concepts": [
+            "MLFQ",
+            "Priority",
+            "Time Allotment",
+            "Starvation",
+            "Priority Boost",
+            "Rules"
+          ]
+        },
+        "[[Proportional Share]]": {
+          "questions": 2,
+          "concepts": [
+            "Proportional Share",
+            "Tickets",
+            "CPU Share",
+            "Lottery Scheduler",
+            "Stride Scheduler",
+            "CFS"
+          ]
+        },
+        "[[Lottery Scheduler]]": {
+          "questions": 2,
+          "concepts": [
+            "Lottery Scheduler",
+            "Randomness",
+            "Tickets",
+            "Proportional Share"
+          ]
+        },
+        "[[Stride Scheduler]]": {
+          "questions": 1,
+          "concepts": [
+            "Stride Scheduler",
+            "Deterministic",
+            "Stride",
+            "Tickets"
+          ]
+        },
+        "[[Completely Fair Scheduler]]": {
+          "questions": 2,
+          "concepts": [
+            "CFS",
+            "Virtual Runtime",
+            "vruntime",
+            "Red-Black Tree",
+            "sched_latency",
+            "min_granularity",
+            "niceness"
+          ]
+        },
+        "[[Single Queue Multiprocessor Scheduling]]": {
+          "questions": 2,
+          "concepts": [
+            "SQMS",
+            "Global Ready Queue",
+            "Locking",
+            "Scalability",
+            "Cache Affinity"
+          ]
+        },
+        "[[Multi Queue Multiprocessor Scheduling]]": {
+          "questions": 3,
+          "concepts": [
+            "MQMS",
+            "Per-Processor Queue",
+            "Cache Affinity",
+            "Load Imbalance",
+            "Work Stealing"
+          ]
+        }
+      },
+      "concepts": {
+        "MLFQ": {
+          "count": 4,
+          "questions": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "Priority": {
+          "count": 2,
+          "questions": [
+            2,
+            3
+          ]
+        },
+        "Rules": {
+          "count": 2,
+          "questions": [
+            2,
+            19
+          ]
+        },
+        "Time Allotment": {
+          "count": 1,
+          "questions": [
+            2
+          ]
+        },
+        "Starvation": {
+          "count": 1,
+          "questions": [
+            4
+          ]
+        },
+        "Priority Boost": {
+          "count": 1,
+          "questions": [
+            3
+          ]
+        },
+        "Proportional Share": {
+          "count": 3,
+          "questions": [
+            5,
+            6,
+            20
+          ]
+        },
+        "Tickets": {
+          "count": 4,
+          "questions": [
+            5,
+            6,
+            7,
+            9
+          ]
+        },
+        "CPU Share": {
+          "count": 1,
+          "questions": [
+            5
+          ]
+        },
+        "Lottery Scheduler": {
+          "count": 2,
+          "questions": [
+            6,
+            7
+          ]
+        },
+        "Stride Scheduler": {
+          "count": 2,
+          "questions": [
+            6,
+            9
+          ]
+        },
+        "CFS": {
+          "count": 3,
+          "questions": [
+            6,
+            10,
+            11
+          ]
+        },
+        "Randomness": {
+          "count": 1,
+          "questions": [
+            7
+          ]
+        },
+        "Deterministic": {
+          "count": 1,
+          "questions": [
+            9
+          ]
+        },
+        "Stride": {
+          "count": 1,
+          "questions": [
+            9
+          ]
+        },
+        "Virtual Runtime": {
+          "count": 1,
+          "questions": [
+            10
+          ]
+        },
+        "vruntime": {
+          "count": 1,
+          "questions": [
+            10
+          ]
+        },
+        "Red-Black Tree": {
+          "count": 2,
+          "questions": [
+            10,
+            12
+          ]
+        },
+        "sched_latency": {
+          "count": 1,
+          "questions": [
+            11
+          ]
+        },
+        "min_granularity": {
+          "count": 1,
+          "questions": [
+            11
+          ]
+        },
+        "niceness": {
+          "count": 1,
+          "questions": [
+            11
+          ]
+        },
+        "SQMS": {
+          "count": 2,
+          "questions": [
+            13,
+            14
+          ]
+        },
+        "Global Ready Queue": {
+          "count": 1,
+          "questions": [
+            13
+          ]
+        },
+        "Locking": {
+          "count": 1,
+          "questions": [
+            14
+          ]
+        },
+        "Scalability": {
+          "count": 1,
+          "questions": [
+            14
+          ]
+        },
+        "Cache Affinity": {
+          "count": 2,
+          "questions": [
+            14,
+            16
+          ]
+        },
+        "MQMS": {
+          "count": 3,
+          "questions": [
+            15,
+            16,
+            17
+          ]
+        },
+        "Per-Processor Queue": {
+          "count": 1,
+          "questions": [
+            15
+          ]
+        },
+        "Load Imbalance": {
+          "count": 1,
+          "questions": [
+            17
+          ]
+        },
+        "Work Stealing": {
+          "count": 1,
+          "questions": [
+            18
+          ]
+        },
+        "Interactive Jobs": {
+          "count": 1,
+          "questions": [
+            4
+          ]
+        },
+        "CPU-bound": {
+          "count": 1,
+          "questions": [
+            4
+          ]
+        }
+      },
+      "by_chapter": {
+        "8": {
+          "notes": [
+            "[[Multi-level Feedback Queue]]"
+          ],
+          "question_count": 4
+        },
+        "9": {
+          "notes": [
+            "[[Proportional Share]]",
+            "[[Lottery Scheduler]]",
+            "[[Stride Scheduler]]",
+            "[[Completely Fair Scheduler]]"
+          ],
+          "question_count": 8
+        },
+        "10": {
+          "notes": [
+            "[[Single Queue Multiprocessor Scheduling]]",
+            "[[Multi Queue Multiprocessor Scheduling]]"
+          ],
+          "question_count": 8
+        }
+      },
+      "topic_emphasis": {
+        "MLFQ": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage across difficulties"
+        },
+        "Priority": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 2 questions, needs more coverage"
+        },
+        "Rules": {
+          "current_difficulty": "hard",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Time Allotment": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Starvation": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Priority Boost": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Proportional Share": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Tickets": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "CPU Share": {
+          "current_difficulty": "easy",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Lottery Scheduler": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Stride Scheduler": {
+          "current_difficulty": "hard",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "CFS": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Randomness": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Deterministic": {
+          "current_difficulty": "hard",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Stride": {
+          "current_difficulty": "hard",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Virtual Runtime": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "vruntime": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Red-Black Tree": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "sched_latency": {
+          "current_difficulty": "hard",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "min_granularity": {
+          "current_difficulty": "hard",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "niceness": {
+          "current_difficulty": "hard",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "SQMS": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Global Ready Queue": {
+          "current_difficulty": "easy",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Locking": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Scalability": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Cache Affinity": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "MQMS": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Per-Processor Queue": {
+          "current_difficulty": "easy",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Load Imbalance": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Work Stealing": {
+          "current_difficulty": "hard",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "Interactive Jobs": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        },
+        "CPU-bound": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 1 question, needs more coverage"
+        }
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "What is the Multi-level Feedback Queue (MLFQ) scheduler?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "A scheduler that uses a single queue with equal priority for all jobs",
+          "concepts": [
+            "MLFQ",
+            "Single Queue"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "A scheduler with multiple queues, each with different priority levels, and rules for job movement",
+          "concepts": [
+            "MLFQ",
+            "Priority",
+            "Rules"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "A scheduler that only uses lottery-based ticket allocation",
+          "concepts": [
+            "MLFQ",
+            "Lottery Scheduler"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "A scheduler that requires knowing job run times in advance",
+          "concepts": [
+            "MLFQ",
+            "Run Time"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "MLFQ is a sophisticated scheduler that has a number of queues, each assigned a different priority level. Rules dictate how processes are handled in the queues, and it learns job behavior over time without needing to know run times in advance.",
+        "incorrect": {
+          "A": "This describes a single-queue approach, not MLFQ.",
+          "C": "This describes lottery scheduling, not MLFQ.",
+          "D": "MLFQ does NOT require knowing job run times in advance - that's the problem it solves."
+        }
+      },
+      "source_notes": [
+        "[[Multi-level Feedback Queue]]"
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Which of the following are rules of MLFQ? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "If Priority(A) > Priority(B), choose A",
+          "concepts": [
+            "MLFQ",
+            "Priority",
+            "Rules"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "If Priority(A) = Priority(B), run both simultaneously",
+          "concepts": [
+            "MLFQ",
+            "Priority",
+            "Rules"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "When a job enters the system, it gets highest priority",
+          "concepts": [
+            "MLFQ",
+            "Priority",
+            "Rules"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Once a job uses up its time allotment, its priority is reduced",
+          "concepts": [
+            "MLFQ",
+            "Time Allotment",
+            "Priority"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "C",
+        "D"
+      ],
+      "explanation": {
+        "correct": "MLFQ Rules: 1) If Priority(A) > Priority(B), choose A. 2) If equal priority, run in Round Robin. 3) New jobs get highest priority. 4) After using time allotment, priority is reduced (move down a queue).",
+        "incorrect": {
+          "B": "Jobs with equal priority run in Round Robin (time-slicing), not simultaneously."
+        }
+      },
+      "source_notes": [
+        "[[Multi-level Feedback Queue]]"
+      ]
+    },
+    {
+      "id": 3,
+      "text": "What problem does the priority boost (Rule 5) solve in MLFQ?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "It speeds up interactive jobs",
+          "concepts": [
+            "MLFQ",
+            "Priority Boost",
+            "Interactive Jobs"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "It prevents starvation by periodically moving all jobs to the topmost queue",
+          "concepts": [
+            "MLFQ",
+            "Priority Boost",
+            "Starvation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "It eliminates the need for multiple queues",
+          "concepts": [
+            "MLFQ",
+            "Priority Boost"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "It reduces context switch overhead",
+          "concepts": [
+            "MLFQ",
+            "Priority Boost",
+            "Context Switch"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Priority boost (Rule 5) periodically moves all jobs in the system to the topmost (highest priority) queue. This prevents starvation by ensuring long-running jobs occasionally get a chance to run at high priority.",
+        "incorrect": {
+          "A": "Priority boost helps all jobs, not just interactive ones.",
+          "C": "Priority boost doesn't eliminate queues; it just resets job positions.",
+          "D": "Priority boost doesn't directly affect context switch overhead."
+        }
+      },
+      "source_notes": [
+        "[[Multi-level Feedback Queue]]"
+      ]
+    },
+    {
+      "id": 4,
+      "text": "What is starvation in the context of MLFQ?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "When a process uses too much CPU time at once",
+          "concepts": [
+            "MLFQ",
+            "CPU-bound"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "When interactive jobs consume all CPU time, leaving long jobs never running",
+          "concepts": [
+            "MLFQ",
+            "Starvation",
+            "Interactive Jobs",
+            "CPU-bound"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "When the priority boost fails to work",
+          "concepts": [
+            "MLFQ",
+            "Starvation",
+            "Priority Boost"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "When context switching overhead becomes too high",
+          "concepts": [
+            "MLFQ",
+            "Context Switch"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Starvation in MLFQ occurs when there are too many interactive jobs (which maintain high priority due to I/O) that consume all CPU time, causing long-running jobs to never receive CPU time as they keep getting demoted.",
+        "incorrect": {
+          "A": "This describes a CPU-bound process, not starvation.",
+          "C": "Priority boost is a solution to starvation, not starvation itself.",
+          "D": "This is context switch overhead, not starvation."
+        }
+      },
+      "source_notes": [
+        "[[Multi-level Feedback Queue]]"
+      ]
+    },
+    {
+      "id": 5,
+      "text": "What is Proportional Share scheduling?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "A technique that gives equal time slices to all processes",
+          "concepts": [
+            "Proportional Share",
+            "Time Slice"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "A technique that prioritizes an equal amount of CPU time for each process based on tickets",
+          "concepts": [
+            "Proportional Share",
+            "Tickets",
+            "CPU Share"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "A technique that always runs the shortest job first",
+          "concepts": [
+            "Proportional Share",
+            "SJF"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "A technique that uses a single queue for all processes",
+          "concepts": [
+            "Proportional Share",
+            "Single Queue"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Proportional Share is a scheduling technique that prioritizes processes based on the number of tickets they hold, which represents their share of system resources (CPU time).",
+        "incorrect": {
+          "A": "Equal time slices describes Round Robin, not Proportional Share.",
+          "C": "This describes Shortest Job First, not Proportional Share.",
+          "D": "Proportional Share can use various queue structures."
+        }
+      },
+      "source_notes": [
+        "[[Proportional Share]]"
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Which of the following are types of Proportional Share schedulers? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "Lottery Scheduler",
+          "concepts": [
+            "Proportional Share",
+            "Lottery Scheduler"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Stride Scheduler",
+          "concepts": [
+            "Proportional Share",
+            "Stride Scheduler"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Multi-level Feedback Queue",
+          "concepts": [
+            "Proportional Share",
+            "MLFQ"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Completely Fair Scheduler (CFS)",
+          "concepts": [
+            "Proportional Share",
+            "CFS"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "explanation": {
+        "correct": "Types of Proportional Share schedulers include: 1) Lottery Scheduler, 2) Stride Scheduler, and 3) Completely Fair Scheduler (CFS). MLFQ is a different type of scheduler.",
+        "incorrect": {
+          "C": "MLFQ is not a Proportional Share scheduler; it's a priority-based scheduler."
+        }
+      },
+      "source_notes": [
+        "[[Proportional Share]]"
+      ]
+    },
+    {
+      "id": 7,
+      "text": "How does the Lottery Scheduler work?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "It uses a deterministic approach to give exact CPU proportions",
+          "concepts": [
+            "Lottery Scheduler",
+            "Deterministic"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "It uses randomness: tickets represent CPU share, and winners are chosen randomly",
+          "concepts": [
+            "Lottery Scheduler",
+            "Randomness",
+            "Tickets"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "It always runs the process with the most tickets first",
+          "concepts": [
+            "Lottery Scheduler",
+            "Tickets"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "It uses a fixed time slice for all processes",
+          "concepts": [
+            "Lottery Scheduler",
+            "Time Slice"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The Lottery Scheduler uses randomness: the number of tickets a process has represents its share of CPU time. Winners are chosen randomly, achieving proportions probabilistically over time.",
+        "incorrect": {
+          "A": "This describes Stride Scheduler, which is deterministic.",
+          "C": "Lottery doesn't always run the highest-ticket process; it's random.",
+          "D": "Lottery doesn't use fixed time slices like Round Robin."
+        }
+      },
+      "source_notes": [
+        "[[Lottery Scheduler]]"
+      ]
+    },
+    {
+      "id": 8,
+      "text": "What is a limitation of the Lottery Scheduler?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "It is too complex to implement",
+          "concepts": [
+            "Lottery Scheduler",
+            "Complexity"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "It occasionally will not deliver the exact desired proportions of CPU time",
+          "concepts": [
+            "Lottery Scheduler",
+            "Proportional Share",
+            "Randomness"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "It requires knowing job run times in advance",
+          "concepts": [
+            "Lottery Scheduler",
+            "Run Time"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "It cannot handle multiple processes",
+          "concepts": [
+            "Lottery Scheduler",
+            "Multiple Processes"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The use of randomness in lottery scheduling leads to probabilistic correctness in meeting desired proportions, but there's no guarantee of exact proportions. For example, a process with 25% tickets might only get 20% CPU time.",
+        "incorrect": {
+          "A": "Lottery Scheduler is actually lightweight and simple to implement.",
+          "C": "It doesn't require knowing run times in advance.",
+          "D": "It handles multiple processes well using tickets."
+        }
+      },
+      "source_notes": [
+        "[[Lottery Scheduler]]"
+      ]
+    },
+    {
+      "id": 9,
+      "text": "How does the Stride Scheduler differ from the Lottery Scheduler?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "Stride is probabilistic, Lottery is deterministic",
+          "concepts": [
+            "Stride Scheduler",
+            "Lottery Scheduler",
+            "Randomness",
+            "Deterministic"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Stride is deterministic and gets proportions exactly right, Lottery is probabilistic",
+          "concepts": [
+            "Stride Scheduler",
+            "Lottery Scheduler",
+            "Deterministic",
+            "Stride"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Stride uses time slices, Lottery does not",
+          "concepts": [
+            "Stride Scheduler",
+            "Lottery Scheduler",
+            "Time Slice"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Stride requires knowing run times, Lottery does not",
+          "concepts": [
+            "Stride Scheduler",
+            "Lottery Scheduler",
+            "Run Time"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Stride Scheduler is deterministic - it gets proportions exactly right at the end of each scheduling cycle. Lottery Scheduler achieves proportions probabilistically over time. Stride uses a 'stride' value (inverse of tickets) to determine scheduling order.",
+        "incorrect": {
+          "A": "This is backwards - Stride is deterministic, Lottery is probabilistic.",
+          "C": "Neither uses traditional time slices like Round Robin.",
+          "D": "Both use tickets; stride calculates stride from tickets."
+        }
+      },
+      "source_notes": [
+        "[[Stride Scheduler]]",
+        "[[Lottery Scheduler]]"
+      ]
+    },
+    {
+      "id": 10,
+      "text": "What is the Completely Fair Scheduler (CFS)?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "A scheduler that uses fixed time slices for all processes",
+          "concepts": [
+            "CFS",
+            "Time Slice"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "A scheduler that uses virtual runtime (vruntime) to fairly divide CPU among processes",
+          "concepts": [
+            "CFS",
+            "Virtual Runtime",
+            "vruntime"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "A scheduler that only runs the shortest jobs",
+          "concepts": [
+            "CFS",
+            "SJF"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "A scheduler that uses lottery tickets",
+          "concepts": [
+            "CFS",
+            "Lottery Scheduler"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "CFS (used in Linux) aims to fairly divide CPU among competing processes using virtual runtime (vruntime). Each process's vruntime increases at the same rate, and CFS picks the process with the lowest vruntime to run next.",
+        "incorrect": {
+          "A": "CFS doesn't use fixed time slices; it uses dynamic scheduling based on vruntime.",
+          "C": "This describes Shortest Job First, not CFS.",
+          "D": "This describes Lottery Scheduler, not CFS."
+        }
+      },
+      "source_notes": [
+        "[[Completely Fair Scheduler]]"
+      ]
+    },
+    {
+      "id": 11,
+      "text": "How does CFS determine when to switch processes?",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "sched_latency: determines how often to switch (like a dynamic time slice)",
+          "concepts": [
+            "CFS",
+            "sched_latency"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "min_granularity: minimum time slice if too many processes exist",
+          "concepts": [
+            "CFS",
+            "min_granularity"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "niceness: weighting to give certain processes higher CPU share",
+          "concepts": [
+            "CFS",
+            "niceness"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "time_slice: fixed time slice for all processes",
+          "concepts": [
+            "CFS",
+            "Time Slice"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "explanation": {
+        "correct": "CFS uses: 1) sched_latency - determines switching frequency (dynamic time slice = sched_latency / number_of_processes), 2) min_granularity - minimum time slice if too many processes, and 3) niceness - weighting for priority.",
+        "incorrect": {
+          "D": "CFS doesn't use a fixed time_slice for all processes."
+        }
+      },
+      "source_notes": [
+        "[[Completely Fair Scheduler]]"
+      ]
+    },
+    {
+      "id": 12,
+      "text": "What data structure does CFS use to organize running processes?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Array",
+          "concepts": [
+            "CFS",
+            "Array"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Linked List",
+          "concepts": [
+            "CFS",
+            "Linked List"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Red-Black Tree (organized by vruntime)",
+          "concepts": [
+            "CFS",
+            "Red-Black Tree",
+            "vruntime"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Hash Table",
+          "concepts": [
+            "CFS",
+            "Hash Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": {
+        "correct": "CFS organizes running processes using a Red-Black Tree data structure, with processes organized by vruntime. This allows quick lookups and operations in logarithmic time.",
+        "incorrect": {
+          "A": "Arrays don't provide efficient lookups for this purpose.",
+          "B": "Linked lists would be too slow for the required operations.",
+          "D": "Hash tables aren't suitable for ordered operations needed by CFS."
+        }
+      },
+      "source_notes": [
+        "[[Completely Fair Scheduler]]"
+      ]
+    },
+    {
+      "id": 13,
+      "text": "What is Single Queue Multiprocessor Scheduling (SQMS)?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "Each processor has its own scheduling queue",
+          "concepts": [
+            "SQMS",
+            "Per-Processor Queue"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "All processors share a single, global ready queue",
+          "concepts": [
+            "SQMS",
+            "Global Ready Queue"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Processes are scheduled using lottery tickets",
+          "concepts": [
+            "SQMS",
+            "Lottery Scheduler"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Processes are scheduled by priority only",
+          "concepts": [
+            "SQMS",
+            "Priority"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Single Queue Multiprocessor Scheduling (SQMS) uses a single, global ready queue that all processors share. It's simple but has scalability issues.",
+        "incorrect": {
+          "A": "This describes Multi-Queue Multiprocessor Scheduling.",
+          "C": "This describes Proportional Share scheduling.",
+          "D": "Priority scheduling is a different concept."
+        }
+      },
+      "source_notes": [
+        "[[Single Queue Multiprocessor Scheduling]]"
+      ]
+    },
+    {
+      "id": 14,
+      "text": "What are shortcomings of Single Queue Multiprocessor Scheduling? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Requires locking (mutex) to prevent collisions",
+          "concepts": [
+            "SQMS",
+            "Locking"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Doesn't scale - locking reduces performance as CPU count increases",
+          "concepts": [
+            "SQMS",
+            "Scalability",
+            "Locking"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Cannot utilize cache efficiently (less cache affinity)",
+          "concepts": [
+            "SQMS",
+            "Cache Affinity"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Cannot handle more than one process at a time",
+          "concepts": [
+            "SQMS",
+            "Multiple Processes"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "explanation": {
+        "correct": "SQMS shortcomings: 1) Requires locking for the shared queue, 2) Doesn't scale - locking overhead increases with CPU count, and 3) Can't utilize cache efficiently because processes move across CPUs (poor cache affinity).",
+        "incorrect": {
+          "D": "SQMS can handle multiple processes; the queue holds many processes."
+        }
+      },
+      "source_notes": [
+        "[[Single Queue Multiprocessor Scheduling]]"
+      ]
+    },
+    {
+      "id": 15,
+      "text": "What is Multi-Queue Multiprocessor Scheduling (MQMS)?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "A single queue shared by all processors",
+          "concepts": [
+            "MQMS",
+            "SQMS"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Each processor has its own queue, jobs are scheduled independently",
+          "concepts": [
+            "MQMS",
+            "Per-Processor Queue"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "A scheduling method that only uses lottery tickets",
+          "concepts": [
+            "MQMS",
+            "Lottery Scheduler"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "A method that requires all jobs to have equal priority",
+          "concepts": [
+            "MQMS",
+            "Priority"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Multi-Queue Multiprocessor Scheduling (MQMS) gives each processor its own scheduling queue. Jobs are placed on one queue (based on heuristic) and scheduled essentially independently, avoiding locking and improving cache affinity.",
+        "incorrect": {
+          "A": "This describes Single Queue Multiprocessor Scheduling.",
+          "C": "This describes Proportional Share scheduling.",
+          "D": "MQMS doesn't require equal priority for all jobs."
+        }
+      },
+      "source_notes": [
+        "[[Multi Queue Multiprocessor Scheduling]]"
+      ]
+    },
+    {
+      "id": 16,
+      "text": "What advantage does MQMS have over SQMS?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "It is simpler to implement",
+          "concepts": [
+            "MQMS",
+            "Implementation"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "It avoids locking and provides better cache affinity",
+          "concepts": [
+            "MQMS",
+            "Locking",
+            "Cache Affinity"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "It guarantees perfect load balancing",
+          "concepts": [
+            "MQMS",
+            "Load Imbalance"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "It requires less memory",
+          "concepts": [
+            "MQMS",
+            "Memory"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "MQMS advantages over SQMS: 1) As CPU count grows, so do queues, so lock/cache contention isn't a central problem, and 2) It intrinsically provides cache affinity since jobs stay on the same CPU.",
+        "incorrect": {
+          "A": "MQMS is more complex due to the need for load balancing.",
+          "C": "MQMS can suffer from load imbalance - it does NOT guarantee perfect balancing.",
+          "D": "MQMS typically uses more memory (multiple queues)."
+        }
+      },
+      "source_notes": [
+        "[[Multi Queue Multiprocessor Scheduling]]"
+      ]
+    },
+    {
+      "id": 17,
+      "text": "What is a disadvantage of Multi-Queue Multiprocessor Scheduling?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "It requires too much locking",
+          "concepts": [
+            "MQMS",
+            "Locking"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "It can suffer from load imbalance between queues",
+          "concepts": [
+            "MQMS",
+            "Load Imbalance"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "It cannot handle multiple processors",
+          "concepts": [
+            "MQMS",
+            "Multiprocessor"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "It has poor cache affinity",
+          "concepts": [
+            "MQMS",
+            "Cache Affinity"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "A disadvantage of MQMS is load imbalance - one queue might have many jobs while another has few, leading to unequal CPU time distribution. This requires job migration (work stealing) to fix.",
+        "incorrect": {
+          "A": "MQMS avoids locking by having separate queues.",
+          "C": "MQMS is designed specifically for multiple processors.",
+          "D": "MQMS actually has good cache affinity."
+        }
+      },
+      "source_notes": [
+        "[[Multi Queue Multiprocessor Scheduling]]"
+      ]
+    },
+    {
+      "id": 18,
+      "text": "What is work stealing in MQMS?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "A technique where jobs are stolen from other processes' memory",
+          "concepts": [
+            "MQMS",
+            "Work Stealing",
+            "Memory"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "A technique where a queue low on jobs steals from a fuller queue to balance load",
+          "concepts": [
+            "MQMS",
+            "Work Stealing",
+            "Load Imbalance"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "A technique that always keeps all queues equal",
+          "concepts": [
+            "MQMS",
+            "Work Stealing"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "A technique that eliminates the need for scheduling",
+          "concepts": [
+            "MQMS",
+            "Work Stealing",
+            "Scheduling"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Work stealing is a solution to load imbalance in MQMS. A queue that is low on jobs will occasionally peek at another queue, and if it is more full, it will steal a job to balance the load.",
+        "incorrect": {
+          "A": "Work stealing is about balancing job queues, not stealing from processes' memory.",
+          "C": "Work stealing doesn't guarantee all queues stay equal; it's periodic rebalancing.",
+          "D": "Work stealing is a scheduling enhancement, not a replacement."
+        }
+      },
+      "source_notes": [
+        "[[Multi Queue Multiprocessor Scheduling]]"
+      ]
+    },
+    {
+      "id": 19,
+      "text": "Which of the following statements about MLFQ and CFS are true? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "MLFQ uses priority queues, CFS uses a Red-Black Tree",
+          "concepts": [
+            "MLFQ",
+            "CFS",
+            "Red-Black Tree"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "MLFQ requires knowing run times in advance, CFS does not",
+          "concepts": [
+            "MLFQ",
+            "CFS",
+            "Run Time"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Both MLFQ and CFS can handle interactive and CPU-bound processes",
+          "concepts": [
+            "MLFQ",
+            "CFS",
+            "Interactive Jobs",
+            "CPU-bound"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "CFS uses vruntime to determine which process runs next",
+          "concepts": [
+            "CFS",
+            "vruntime"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "C",
+        "D"
+      ],
+      "explanation": {
+        "correct": "A) MLFQ uses priority queues, CFS uses Red-Black Tree. C) Both can handle interactive and CPU-bound processes. D) CFS uses vruntime (lowest vruntime runs next). B is false - MLFQ does NOT require knowing run times in advance.",
+        "incorrect": {
+          "B": "MLFQ was specifically designed to NOT require knowing run times in advance."
+        }
+      },
+      "source_notes": [
+        "[[Multi-level Feedback Queue]]",
+        "[[Completely Fair Scheduler]]"
+      ]
+    },
+    {
+      "id": 20,
+      "text": "What is the relationship between Proportional Share scheduling and multiprocessor scheduling?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "Proportional Share is only used in single-processor systems",
+          "concepts": [
+            "Proportional Share",
+            "Single Processor"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Multiprocessor scheduling (SQMS/MQMS) can use Proportional Share algorithms like CFS at each queue",
+          "concepts": [
+            "Proportional Share",
+            "SQMS",
+            "MQMS",
+            "CFS"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Proportional Share replaces the need for multiprocessor scheduling",
+          "concepts": [
+            "Proportional Share",
+            "Multiprocessor Scheduling"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Multiprocessor scheduling only uses priority-based approaches",
+          "concepts": [
+            "Multiprocessor Scheduling",
+            "Priority"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Multiprocessor scheduling (SQMS/MQMS) can use various scheduling algorithms at each queue, including Proportional Share algorithms like CFS. The queue structure and the algorithm used within each queue are separate concerns.",
+        "incorrect": {
+          "A": "Proportional Share can be used in multiprocessor systems.",
+          "C": "Proportional Share is a CPU allocation method, not a replacement for multiprocessor queue management.",
+          "D": "Multiprocessor scheduling can use any algorithm, including Proportional Share."
+        }
+      },
+      "source_notes": [
+        "[[Proportional Share]]",
+        "[[Single Queue Multiprocessor Scheduling]]",
+        "[[Multi Queue Multiprocessor Scheduling]]"
+      ]
+    }
+  ]
+}

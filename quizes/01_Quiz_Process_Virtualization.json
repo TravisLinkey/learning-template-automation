@@ -1,0 +1,590 @@
+{
+  "metadata": {
+    "id": "Quiz_01_Process_Virtualization",
+    "subject": "Operating Systems",
+    "topic": "Process Virtualization (Chapters 3, 4, 5)",
+    "chapters": [3, 4, 5],
+    "created": "2026-04-29",
+    "question_count": 20,
+    "difficulty_distribution": {
+      "easy": 7,
+      "medium": 7,
+      "hard": 6
+    },
+    "coverage": {
+      "notes": {
+        "[[Address Space]]": {
+          "questions": 2,
+          "concepts": ["Address Space", "Code", "Stack", "Heap"]
+        },
+        "[[Limited Direct Execution]]": {
+          "questions": 6,
+          "concepts": ["Limited Direct Execution", "System Calls", "User Mode", "Kernel Mode", "Cooperative Approach", "NonCooperative Approach", "Timer Interrupts", "CPU Virtualization", "Scheduler"]
+        },
+        "[[System Calls]]": {
+          "questions": 3,
+          "concepts": ["System Calls", "User Mode", "Kernel Mode", "Trap", "Kernel"]
+        },
+        "[[User Mode]]": {
+          "questions": 3,
+          "concepts": ["User Mode", "I/O Requests", "Memory Allocation", "Exception", "Kernel Mode"]
+        },
+        "[[Kernel Mode]]": {
+          "questions": 2,
+          "concepts": ["Kernel Mode", "File I/O", "Hardware Access", "Memory Allocation", "User Mode"]
+        },
+        "[[Process Control Block]]": {
+          "questions": 2,
+          "concepts": ["Process Control Block", "Process ID", "Program Counter", "CPU Registers", "Context Switching"]
+        },
+        "[[Context Switch]]": {
+          "questions": 1,
+          "concepts": ["Context Switch", "Process State", "CPU Registers"]
+        },
+        "[[Base and Bounds]]": {
+          "questions": 4,
+          "concepts": ["Base and Bounds", "Dynamic Relocation", "Virtual Address", "Physical Address", "Base Register", "Bounds Register"]
+        },
+        "[[Address Translation]]": {
+          "questions": 5,
+          "concepts": ["Address Translation", "Virtual Address", "Physical Address", "VPN", "Offset", "Page Table", "Base and Bounds", "Dynamic Relocation"]
+        },
+        "[[Virtual Address Translation Process]]": {
+          "questions": 1,
+          "concepts": ["Virtual Address Translation Process", "VPN", "Offset", "Page Table", "Physical Page Number"]
+        },
+        "[[Scheduler]]": {
+          "questions": 1,
+          "concepts": ["Scheduler", "Scheduling Policies", "Ready Queue"]
+        }
+      },
+      "concepts": {
+        "Address Space": {"count": 2, "questions": [1, 2]},
+        "Code": {"count": 1, "questions": [2]},
+        "Stack": {"count": 1, "questions": [2]},
+        "Heap": {"count": 1, "questions": [2]},
+        "Limited Direct Execution": {"count": 6, "questions": [3, 4, 5, 17, 19, 20]},
+        "System Calls": {"count": 3, "questions": [4, 6, 20]},
+        "User Mode": {"count": 3, "questions": [7, 18, 20]},
+        "Kernel Mode": {"count": 2, "questions": [8, 20]},
+        "Cooperative Approach": {"count": 1, "questions": [5]},
+        "NonCooperative Approach": {"count": 1, "questions": [5]},
+        "Timer Interrupts": {"count": 1, "questions": [5]},
+        "CPU Virtualization": {"count": 1, "questions": [17]},
+        "Scheduler": {"count": 1, "questions": [19]},
+        "I/O Requests": {"count": 1, "questions": [7]},
+        "Memory Allocation": {"count": 1, "questions": [7]},
+        "Exception": {"count": 1, "questions": [18]},
+        "File I/O": {"count": 1, "questions": [8]},
+        "Hardware Access": {"count": 1, "questions": [8]},
+        "Process Control Block": {"count": 2, "questions": [9, 10]},
+        "Process ID": {"count": 1, "questions": [10]},
+        "Program Counter": {"count": 1, "questions": [10]},
+        "CPU Registers": {"count": 1, "questions": [10]},
+        "Context Switch": {"count": 1, "questions": [11]},
+        "Process State": {"count": 1, "questions": [11]},
+        "Base and Bounds": {"count": 4, "questions": [12, 13, 14, 15]},
+        "Dynamic Relocation": {"count": 2, "questions": [14, 15]},
+        "Virtual Address": {"count": 3, "questions": [13, 15, 16]},
+        "Physical Address": {"count": 3, "questions": [13, 15, 16]},
+        "Base Register": {"count": 2, "questions": [13, 15]},
+        "Bounds Register": {"count": 1, "questions": [15]},
+        "Address Translation": {"count": 5, "questions": [13, 14, 16, 17, 20]},
+        "VPN": {"count": 2, "questions": [16, 16]},
+        "Offset": {"count": 2, "questions": [16, 16]},
+        "Page Table": {"count": 2, "questions": [16, 20]},
+        "Physical Page Number": {"count": 1, "questions": [16]},
+        "Virtual Address Translation Process": {"count": 1, "questions": [16]},
+        "Trap": {"count": 1, "questions": [6]},
+        "Kernel": {"count": 1, "questions": [6]},
+        "Scheduling Policies": {"count": 1, "questions": [19]},
+        "Ready Queue": {"count": 1, "questions": [19]}
+      },
+      "by_chapter": {
+        "3": {
+          "notes": ["[[Limited Direct Execution]]", "[[System Calls]]", "[[User Mode]]", "[[Kernel Mode]]", "[[Scheduler]]"],
+          "question_count": 7
+        },
+        "4": {
+          "notes": ["[[Process Control Block]]", "[[Context Switch]]"],
+          "question_count": 3
+        },
+        "5": {
+          "notes": ["[[Address Space]]", "[[Base and Bounds]]", "[[Address Translation]]", "[[Virtual Address Translation Process]]"],
+          "question_count": 10
+        }
+      },
+      "topic_emphasis": {
+        "Address Space": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Good coverage with 2 questions at easy difficulty"},
+        "Limited Direct Execution": {"current_difficulty": "easy", "recommendation": "increase_hard", "reason": "6 questions but mostly easy/medium, needs more hard questions"},
+        "System Calls": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Good coverage across difficulties"},
+        "User Mode": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Covers key concepts well"},
+        "Kernel Mode": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Adequate coverage"},
+        "Cooperative Approach": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "NonCooperative Approach": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Timer Interrupts": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "CPU Virtualization": {"current_difficulty": "medium", "recommendation": "maintain", "reason": "Good coverage"},
+        "Scheduler": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage at appropriate difficulty"},
+        "I/O Requests": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Memory Allocation": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Exception": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "File I/O": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Hardware Access": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Process Control Block": {"current_difficulty": "medium", "recommendation": "maintain", "reason": "Good coverage at medium difficulty"},
+        "Process ID": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Program Counter": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "CPU Registers": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Context Switch": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Good coverage"},
+        "Process State": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Base and Bounds": {"current_difficulty": "medium", "recommendation": "maintain", "reason": "Good coverage across difficulties"},
+        "Dynamic Relocation": {"current_difficulty": "medium", "recommendation": "maintain", "reason": "Good coverage"},
+        "Virtual Address": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage at hard difficulty"},
+        "Physical Address": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage at hard difficulty"},
+        "Base Register": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Bounds Register": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Address Translation": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage across difficulties"},
+        "VPN": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Offset": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Page Table": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "Physical Page Number": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Virtual Address Translation Process": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "Trap": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Kernel": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Scheduling Policies": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Ready Queue": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"}
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "What is the main purpose of an address space in operating systems?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "To provide a shared memory space for all processes", "concepts": ["Address Space", "Shared Memory"]},
+        {"key": "B", "text": "To provide each process with a private, potentially large view of memory", "concepts": ["Address Space", "Private Memory", "Process Isolation"]},
+        {"key": "C", "text": "To store the operating system kernel code", "concepts": ["Kernel", "Address Space"]},
+        {"key": "D", "text": "To manage physical hardware devices", "concepts": ["Hardware Devices", "Device Drivers"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "An address space is a running process's private view of memory provided by the operating system, allowing multiple processes to share physical memory while maintaining the illusion of private memory.",
+        "incorrect": {
+          "A": "Address spaces are private to each process, not shared among all processes.",
+          "C": "The kernel has its own separate address space; address spaces here refer to user process memory.",
+          "D": "Hardware device management is handled by device drivers, not address spaces."
+        }
+      },
+      "source_notes": ["[[Address Space]]"]
+    },
+    {
+      "id": 2,
+      "text": "Which of the following are components of an address space? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "Code (instructions)", "concepts": ["Address Space", "Code"]},
+        {"key": "B", "text": "Stack", "concepts": ["Address Space", "Stack"]},
+        {"key": "C", "text": "Heap", "concepts": ["Address Space", "Heap"]},
+        {"key": "D", "text": "Page Table", "concepts": ["Page Table", "Address Translation"]}
+      ],
+      "correct_answers": ["A", "B", "C"],
+      "explanation": {
+        "correct": "An address space consists of three main components: Code (the instructions), Stack (for function calls, variable allocation, parameter passing), and Heap (for dynamically allocated memory).",
+        "incorrect": {
+          "D": "The Page Table is a data structure used by the OS to manage address translation, not a component of the address space itself."
+        }
+      },
+      "source_notes": ["[[Address Space]]"]
+    },
+    {
+      "id": 3,
+      "text": "What is Limited Direct Execution in operating systems?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "A technique where the OS runs all programs in kernel mode for maximum speed", "concepts": ["Limited Direct Execution", "Kernel Mode"]},
+        {"key": "B", "text": "A technique that allows user programs to run directly on the CPU while the OS retains control for safety", "concepts": ["Limited Direct Execution", "CPU", "User Mode", "OS Control"]},
+        {"key": "C", "text": "A method where programs are interpreted rather than executed directly", "concepts": ["Limited Direct Execution", "Interpretation"]},
+        {"key": "D", "text": "A scheduling algorithm for determining which process runs next", "concepts": ["Limited Direct Execution", "Scheduling"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "Limited Direct Execution is an OS technique that allows user programs to run directly on the CPU for speed, while still allowing the OS to retain control for safety and resource management through mechanisms like user/kernel mode and system calls.",
+        "incorrect": {
+          "A": "User programs run in user mode, not kernel mode, to prevent them from performing dangerous operations.",
+          "C": "Programs run directly on the CPU, not through interpretation.",
+          "D": "This is about execution control, not scheduling."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 4,
+      "text": "How does the OS restrict operations in user mode?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "By using a software interpreter that checks each instruction", "concepts": ["User Mode", "Interpreter"]},
+        {"key": "B", "text": "By introducing user mode and requiring system calls to interact with the OS", "concepts": ["User Mode", "System Calls", "OS Interaction"]},
+        {"key": "C", "text": "By running all programs at reduced CPU frequency", "concepts": ["User Mode", "CPU Frequency"]},
+        {"key": "D", "text": "By encrypting all user program instructions", "concepts": ["User Mode", "Encryption"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "The OS introduces a new processor mode called user mode, which restricts what code can do. User programs must use system calls (traps) to request the OS to perform privileged operations like I/O or memory allocation.",
+        "incorrect": {
+          "A": "This would be too slow; hardware mode switching is used instead.",
+          "C": "CPU frequency is not related to privilege levels.",
+          "D": "Encryption is not used for this purpose."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]", "[[System Calls]]"]
+    },
+    {
+      "id": 5,
+      "text": "What are the two approaches for regaining control from a running process in Limited Direct Execution?",
+      "type": "multiple",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "Cooperative Approach: Rely on the process to give up control via a system call", "concepts": ["Limited Direct Execution", "Cooperative Approach", "System Call"]},
+        {"key": "B", "text": "Competitive Approach: Let processes compete for CPU time", "concepts": ["Limited Direct Execution", "Competitive Approach"]},
+        {"key": "C", "text": "NonCooperative Approach: Use timer interrupts", "concepts": ["Limited Direct Execution", "NonCooperative Approach", "Timer Interrupts"]},
+        {"key": "D", "text": "Priority Approach: Use process priority levels", "concepts": ["Limited Direct Execution", "Priority"]}
+      ],
+      "correct_answers": ["A", "C"],
+      "explanation": {
+        "correct": "The two approaches are: 1) Cooperative - rely on the CPU to give up control via a system call, and 2) NonCooperative - use timer interrupts to periodically regain control.",
+        "incorrect": {
+          "B": "There is no 'competitive approach' in this context.",
+          "D": "Priority is a scheduling concept, not a control mechanism for direct execution."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]"]
+    },
+    {
+      "id": 6,
+      "text": "What is a system call?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "A function call within a user program", "concepts": ["System Calls", "Function Call"]},
+        {"key": "B", "text": "A bridge between user mode and kernel mode via a trap into the kernel", "concepts": ["System Calls", "User Mode", "Kernel Mode", "Trap", "Kernel"]},
+        {"key": "C", "text": "A method for processes to call each other", "concepts": ["System Calls", "Process Communication"]},
+        {"key": "D", "text": "A hardware interrupt signal", "concepts": ["System Calls", "Hardware Interrupt"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "A system call is the bridge between user mode and kernel mode - a controlled way for a user program to give up control to the operating system via a trap instruction that transfers execution to the kernel.",
+        "incorrect": {
+          "A": "A system call crosses privilege boundaries; regular function calls do not.",
+          "C": "Processes don't directly call each other;",
+          "D": "Interrupts are hardware signals; system calls are software-initiated."
+        }
+      },
+      "source_notes": ["[[System Calls]]"]
+    },
+    {
+      "id": 7,
+      "text": "Code running in user mode is restricted in what it can do. Which operations are NOT allowed in user mode? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "Issue I/O requests", "concepts": ["User Mode", "I/O Requests"]},
+        {"key": "B", "text": "Perform arithmetic operations", "concepts": ["User Mode", "Arithmetic Operations"]},
+        {"key": "C", "text": "Allocate memory", "concepts": ["User Mode", "Memory Allocation"]},
+        {"key": "D", "text": "Execute conditional branches", "concepts": ["User Mode", "Conditional Branches"]}
+      ],
+      "correct_answers": ["A", "C"],
+      "explanation": {
+        "correct": "In user mode, code cannot issue I/O requests, allocate memory, or open files. Attempting these operations results in an exception, and the OS would likely kill the process.",
+        "incorrect": {
+          "B": "Arithmetic operations are allowed in user mode.",
+          "D": "Conditional branches are basic CPU operations allowed in user mode."
+        }
+      },
+      "source_notes": ["[[User Mode]]"]
+    },
+    {
+      "id": 8,
+      "text": "What is kernel mode responsible for?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "Running user applications at reduced priority", "concepts": ["Kernel Mode", "User Applications"]},
+        {"key": "B", "text": "Handling risky operations like file I/O, hardware access, and memory allocation", "concepts": ["Kernel Mode", "File I/O", "Hardware Access", "Memory Allocation"]},
+        {"key": "C", "text": "Storing user program variables", "concepts": ["Kernel Mode", "User Program Variables"]},
+        {"key": "D", "text": "Managing the stack of user processes", "concepts": ["Kernel Mode", "User Stack"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "Kernel mode is a privileged processing mode responsible for handling risky operations such as reading/writing files, accessing hardware, creating processes, allocating memory, and performing network I/O.",
+        "incorrect": {
+          "A": "User applications run in user mode, not kernel mode.",
+          "C": "User program variables are stored in the user's address space.",
+          "D": "The user stack is managed by the user process, not the kernel."
+        }
+      },
+      "source_notes": ["[[Kernel Mode]]"]
+    },
+    {
+      "id": 9,
+      "text": "What is the purpose of the Process Control Block (PCB)?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "To store the program's source code", "concepts": ["Process Control Block", "Source Code"]},
+        {"key": "B", "text": "To track a process's state, resources, and execution context during context switching", "concepts": ["Process Control Block", "Process State", "Context Switching"]},
+        {"key": "C", "text": "To control access to peripheral devices", "concepts": ["Process Control Block", "Peripheral Devices"]},
+        {"key": "D", "text": "To manage memory allocation for the heap", "concepts": ["Process Control Block", "Heap Allocation"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "The Process Control Block (PCB) is used by the OS to track each process's state, resources, and execution context, especially during context switching. It typically contains process ID, state, program counter, CPU registers, memory info, scheduling info, I/O status, and accounting info.",
+        "incorrect": {
+          "A": "Source code is stored in the address space, not the PCB.",
+          "C": "Device access is managed by device drivers.",
+          "D": "Heap allocation is managed by memory allocation routines, not the PCB."
+        }
+      },
+      "source_notes": ["[[Process Control Block]]"]
+    },
+    {
+      "id": 10,
+      "text": "Which of the following are typically stored in a Process Control Block? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "Process ID", "concepts": ["Process Control Block", "Process ID"]},
+        {"key": "B", "text": "Program Counter", "concepts": ["Process Control Block", "Program Counter"]},
+        {"key": "C", "text": "CPU Registers", "concepts": ["Process Control Block", "CPU Registers"]},
+        {"key": "D", "text": "User Stack Contents", "concepts": ["Process Control Block", "User Stack"]}
+      ],
+      "correct_answers": ["A", "B", "C"],
+      "explanation": {
+        "correct": "A PCB typically contains: Process ID, Process State, Program Counter, CPU Registers, Memory Management Info, Scheduling Info, I/O Status Info, and Accounting Info. The user stack contents are stored in the address space, not the PCB.",
+        "incorrect": {
+          "D": "The actual stack contents are in the process's address space; the PCB tracks where the stack is, not its contents."
+        }
+      },
+      "source_notes": ["[[Process Control Block]]"]
+    },
+    {
+      "id": 11,
+      "text": "What is a context switch?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "Switching from one CPU core to another", "concepts": ["Context Switch", "CPU Core"]},
+        {"key": "B", "text": "A low-level technique to switch from one running process to another", "concepts": ["Context Switch", "Process Switching"]},
+        {"key": "C", "text": "Changing the priority of a running process", "concepts": ["Context Switch", "Process Priority"]},
+        {"key": "D", "text": "Switching between user mode and kernel mode", "concepts": ["Context Switch", "Mode Switching"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "A context switch is a low-level technique used to switch from one running process to another. It involves saving the current process's state and loading another process's state.",
+        "incorrect": {
+          "A": "This describes CPU migration, not context switching.",
+          "C": "Priority changes are scheduling operations, not context switches.",
+          "D": "Mode switching is different from process context switching."
+        }
+      },
+      "source_notes": ["[[Context Switch]]"]
+    },
+    {
+      "id": 12,
+      "text": "What problem does Base and Bounds addressing solve?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "It allows processes to share memory pages efficiently", "concepts": ["Base and Bounds", "Shared Memory"]},
+        {"key": "B", "text": "It ensures a process can only access its own address space and allows placing it anywhere in physical memory", "concepts": ["Base and Bounds", "Address Space", "Physical Memory", "Isolation"]},
+        {"key": "C", "text": "It eliminates the need for virtual memory", "concepts": ["Base and Bounds", "Virtual Memory"]},
+        {"key": "D", "text": "It allows multiple processes to run on a single CPU", "concepts": ["Base and Bounds", "CPU Scheduling"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "Base and Bounds (Dynamic Relocation) uses two registers to ensure a process can only access its own address space and allows the OS to place the address space anywhere in physical memory. The base register translates virtual addresses, and the bounds register ensures addresses stay within limits.",
+        "incorrect": {
+          "A": "Base and Bounds doesn't enable sharing; it enforces isolation.",
+          "C": "It's a form of virtual memory, not a replacement for it.",
+          "D": "This is about memory virtualization, not CPU scheduling."
+        }
+      },
+      "source_notes": ["[[Base and Bounds]]"]
+    },
+    {
+      "id": 13,
+      "text": "How does address translation work with Base and Bounds?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "The hardware multiplies the virtual address by the base value", "concepts": ["Base and Bounds", "Address Translation", "Virtual Address"]},
+        {"key": "B", "text": "The hardware subtracts the base from the virtual address", "concepts": ["Base and Bounds", "Address Translation", "Virtual Address"]},
+        {"key": "C", "text": "The hardware adds the base register contents to the virtual address to get the physical address", "concepts": ["Base and Bounds", "Address Translation", "Virtual Address", "Physical Address", "Base Register"]},
+        {"key": "D", "text": "The hardware uses the virtual address as an index into a page table", "concepts": ["Base and Bounds", "Address Translation", "Page Table"]}
+      ],
+      "correct_answers": ["C"],
+      "explanation": {
+        "correct": "With Base and Bounds, any memory reference generated by the process is a virtual address. The hardware adds the contents of the base register to this virtual address to obtain the physical address: base + virtual address = physical address. The bounds register ensures the address is within the process's address space.",
+        "incorrect": {
+          "A": "The base is added, not multiplied.",
+          "B": "The base is added, not subtracted.",
+          "D": "This describes paging, not Base and Bounds."
+        }
+      },
+      "source_notes": ["[[Base and Bounds]]", "[[Address Translation]]"]
+    },
+    {
+      "id": 14,
+      "text": "What is dynamic relocation?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "The ability to change page table entries at runtime", "concepts": ["Dynamic Relocation", "Page Table"]},
+        {"key": "B", "text": "The ability to move an address space after the process has started running by updating the base register", "concepts": ["Dynamic Relocation", "Address Space", "Base Register"]},
+        {"key": "C", "text": "The ability to relocate code at compile time", "concepts": ["Dynamic Relocation", "Compile Time"]},
+        {"key": "D", "text": "The ability to dynamically allocate memory on the heap", "concepts": ["Dynamic Relocation", "Heap Allocation"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "Dynamic relocation refers to the ability to move an address space even after the process has started running. The OS can deschedule the process, copy the address space to a new location, update the saved base register in the PCB, and when resumed, the process continues unaware its memory moved.",
+        "incorrect": {
+          "A": "This describes page table manipulation, not dynamic relocation.",
+          "C": "This is compile-time relocation, not dynamic.",
+          "D": "This is heap allocation, not address relocation."
+        }
+      },
+      "source_notes": ["[[Base and Bounds]]", "[[Address Translation]]"]
+    },
+    {
+      "id": 15,
+      "text": "What steps does the OS need to perform for hardware-based address translation? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "Find space for the address space in memory using a free list when a process is created", "concepts": ["Address Translation", "Memory Allocation", "Free List"]},
+        {"key": "B", "text": "Put memory back on the free list when a process is terminated", "concepts": ["Address Translation", "Memory Deallocation", "Free List"]},
+        {"key": "C", "text": "Save and restore base/bounds registers during context switches using the PCB", "concepts": ["Address Translation", "Base and Bounds", "Context Switching", "PCB"]},
+        {"key": "D", "text": "Recompile the program for the new memory location", "concepts": ["Address Translation", "Recompilation"]}
+      ],
+      "correct_answers": ["A", "B", "C"],
+      "explanation": {
+        "correct": "For hardware-based address translation with Base and Bounds, the OS must: 1) Find space in memory using a free list when creating a process, 2) Return memory to the free list when terminated, 3) Save and restore base/bounds registers during context switches via the PCB, and 4) Provide exception handlers for errors.",
+        "incorrect": {
+          "D": "Recompilation is not needed; dynamic relocation handles address changes transparently."
+        }
+      },
+      "source_notes": ["[[Address Translation]]"]
+    },
+    {
+      "id": 16,
+      "text": "What are the two components of a virtual address in the address translation process?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "Segment number and offset", "concepts": ["Virtual Address", "Segmentation", "Offset"]},
+        {"key": "B", "text": "Virtual Page Number (VPN) and offset", "concepts": ["Virtual Address", "VPN", "Offset", "Page Table"]},
+        {"key": "C", "text": "Base and bounds", "concepts": ["Virtual Address", "Base and Bounds"]},
+        {"key": "D", "text": "Physical page number and offset", "concepts": ["Virtual Address", "Physical Page Number", "Offset"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "In address translation, a virtual address is split into two components: the Virtual Page Number (VPN) which is used to index into the page table, and the offset which specifies which byte within the page. The page table maps the VPN to a physical page frame, which is combined with the offset to get the physical address.",
+        "incorrect": {
+          "A": "This describes segmentation, not paging-based address translation.",
+          "C": "Base and bounds is a different addressing scheme.",
+          "D": "The physical page number is the result of translation, not part of the virtual address."
+        }
+      },
+      "source_notes": ["[[Virtual Address Translation Process]]", "[[Address Translation]]"]
+    },
+    {
+      "id": 17,
+      "text": "In the context of virtualization dialogues (Chapter3), what is the main goal of CPU virtualization?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "To maximize CPU utilization by running programs as fast as possible", "concepts": ["CPU Virtualization", "CPU Utilization"]},
+        {"key": "B", "text": "To create the illusion of multiple CPUs, allowing multiple processes to run concurrently", "concepts": ["CPU Virtualization", "Illusion", "Concurrency", "Processes"]},
+        {"key": "C", "text": "To eliminate the need for scheduling algorithms", "concepts": ["CPU Virtualization", "Scheduling"]},
+        {"key": "D", "text": "To allow direct hardware access from user programs", "concepts": ["CPU Virtualization", "Hardware Access"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "The main goal of CPU virtualization is to create the illusion that a system has many more CPUs than it actually does, allowing multiple processes to run concurrently. This is achieved through time-sharing and context switching, giving each process the illusion that it has its own private CPU.",
+        "incorrect": {
+          "A": "While utilization is important, the main goal is the illusion of dedicated CPUs.",
+          "C": "Scheduling is still needed to decide which process runs when.",
+          "D": "User programs should not have direct hardware access."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]", "[[Address Translation]]"]
+    },
+    {
+      "id": 18,
+      "text": "What happens when a process in user mode attempts to perform a restricted operation like I/O?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "The operation is silently ignored", "concepts": ["User Mode", "I/O"]},
+        {"key": "B", "text": "The processor raises an exception and the OS likely kills the process", "concepts": ["User Mode", "Exception", "OS"]},
+        {"key": "C", "text": "The operation is automatically promoted to kernel mode", "concepts": ["User Mode", "Kernel Mode"]},
+        {"key": "D", "text": "The hardware performs the operation anyway", "concepts": ["User Mode", "Hardware"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "When user mode code attempts a restricted operation (like I/O), the processor raises an exception. The OS catches this exception and typically kills the process, as it attempted an illegal operation.",
+        "incorrect": {
+          "A": "The operation is not ignored; an exception is raised.",
+          "C": "User code cannot promote itself to kernel mode; that would defeat the protection mechanism.",
+          "D": "The hardware prevents unauthorized operations."
+        }
+      },
+      "source_notes": ["[[User Mode]]"]
+    },
+    {
+      "id": 19,
+      "text": "After the OS regains control from a running process, what component decides which process should run next?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "The Process Control Block", "concepts": ["Scheduler", "PCB"]},
+        {"key": "B", "text": "The Scheduler", "concepts": ["Scheduler", "Scheduling Policies", "Ready Queue"]},
+        {"key": "C", "text": "The Memory Management Unit", "concepts": ["Scheduler", "MMU"]},
+        {"key": "D", "text": "The Timer Interrupt Handler", "concepts": ["Scheduler", "Timer Interrupt"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "After the OS regains control (via system call or timer interrupt), the Scheduler decides which process should run next. The scheduler uses scheduling policies to select the next process from the ready queue.",
+        "incorrect": {
+          "A": "The PCB stores process state; it doesn't make scheduling decisions.",
+          "C": "The MMU handles address translation, not scheduling.",
+          "D": "The timer interrupt handler regains control but defers scheduling to the scheduler."
+        }
+      },
+      "source_notes": ["[[Limited Direct Execution]]", "[[Scheduler]]"]
+    },
+    {
+      "id": 20,
+      "text": "Which of the following statements about the relationship between user mode, kernel mode, and system calls are true? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "System calls are the bridge between user mode and kernel mode", "concepts": ["System Calls", "User Mode", "Kernel Mode"]},
+        {"key": "B", "text": "User programs can directly modify page tables without using system calls", "concepts": ["System Calls", "Page Table", "User Mode"]},
+        {"key": "C", "text": "Kernel mode can perform operations that are forbidden in user mode", "concepts": ["Kernel Mode", "User Mode", "Privileged Operations"]},
+        {"key": "D", "text": "A system call involves a trap instruction that transfers control to the kernel", "concepts": ["System Calls", "Trap", "Kernel"]}
+      ],
+      "correct_answers": ["A", "C", "D"],
+      "explanation": {
+        "correct": "System calls are indeed the bridge between user and kernel mode (A). Kernel mode can perform privileged operations forbidden in user mode (C). A system call uses a trap instruction to transfer control to the kernel (D). User programs cannot directly modify page tables as that requires kernel privileges (B is false).",
+        "incorrect": {
+          "B": "Page table modifications require kernel privileges and must go through system calls."
+        }
+      },
+      "source_notes": ["[[System Calls]]", "[[User Mode]]", "[[Kernel Mode]]", "[[Limited Direct Execution]]"]
+    }
+  ]
+}

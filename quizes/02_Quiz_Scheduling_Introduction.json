@@ -1,0 +1,603 @@
+{
+  "metadata": {
+    "id": "Quiz_02_Scheduling_Introduction",
+    "subject": "Operating Systems",
+    "topic": "Scheduling: Introduction (Chapter 7)",
+    "chapters": [7],
+    "created": "2026-04-29",
+    "question_count": 20,
+    "difficulty_distribution": {
+      "easy": 7,
+      "medium": 7,
+      "hard": 6
+    },
+    "coverage": {
+      "notes": {
+        "[[Turnaround Time]]": {
+          "questions": 1,
+          "concepts": ["Turnaround Time", "Completion Time", "Arrival Time"]
+        },
+        "[[Response Time]]": {
+          "questions": 2,
+          "concepts": ["Response Time", "First Run Time", "Arrival Time", "Round Robin", "Time Slice"]
+        },
+        "[[First In First Out]]": {
+          "questions": 2,
+          "concepts": ["First In First Out", "FIFO", "Arrival Time", "Convoy Effect"]
+        },
+        "[[Convoy Effect]]": {
+          "questions": 1,
+          "concepts": ["Convoy Effect", "FIFO", "Long Job", "Short Job", "Turnaround Time"]
+        },
+        "[[Shortest Job First]]": {
+          "questions": 2,
+          "concepts": ["Shortest Job First", "SJF", "Turnaround Time", "Job Length", "Optimal"]
+        },
+        "[[Shortest Time to Completion First]]": {
+          "questions": 2,
+          "concepts": ["Shortest Time to Completion First", "STCF", "Preemptive", "Remaining Time", "SJF"]
+        },
+        "[[Round Robin]]": {
+          "questions": 5,
+          "concepts": ["Round Robin", "Time Slice", "Quantum", "Response Time", "Context Switch", "Overhead", "Amortization"]
+        },
+        "[[Response Time]]": {
+          "questions": 2,
+          "concepts": ["Response Time", "First Run Time", "Arrival Time", "Round Robin", "Time Slice"]
+        },
+        "[[Amortization]]": {
+          "questions": 1,
+          "concepts": ["Amortization", "Context Switching", "Time Slice", "Overhead"]
+        },
+        "[[Scheduler]]": {
+          "questions": 4,
+          "concepts": ["Scheduler", "Workloads", "Assumptions", "CPU-only", "Run Time", "Multi-level Feedback Queue", "I/O", "Overlapping IO"]
+        },
+        "[[Multi-level Feedback Queue]]": {
+          "questions": 5,
+          "concepts": ["Multi-level Feedback Queue", "MLFQ", "Priority", "Time Allotment", "Starvation", "Priority Boost", "Rules", "Interactive Jobs"]
+        },
+        "[[Overlapping IO]]": {
+          "questions": 1,
+          "concepts": ["Overlapping IO", "I/O", "Blocked Process", "Wait Queue", "Ready Queue"]
+        }
+      },
+      "concepts": {
+        "Turnaround Time": {"count": 2, "questions": [1, 4]},
+        "Completion Time": {"count": 1, "questions": [1]},
+        "Arrival Time": {"count": 2, "questions": [1, 2]},
+        "Response Time": {"count": 3, "questions": [2, 9, 17]},
+        "First Run Time": {"count": 1, "questions": [2]},
+        "First In First Out": {"count": 1, "questions": [3]},
+        "FIFO": {"count": 2, "questions": [3, 4]},
+        "Convoy Effect": {"count": 1, "questions": [4]},
+        "Long Job": {"count": 1, "questions": [4]},
+        "Short Job": {"count": 1, "questions": [4]},
+        "Shortest Job First": {"count": 1, "questions": [5]},
+        "SJF": {"count": 2, "questions": [5, 6]},
+        "Job Length": {"count": 1, "questions": [5]},
+        "Optimal": {"count": 1, "questions": [5]},
+        "Shortest Time to Completion First": {"count": 1, "questions": [6]},
+        "STCF": {"count": 2, "questions": [6, 12]},
+        "Preemptive": {"count": 2, "questions": [6, 12]},
+        "Remaining Time": {"count": 2, "questions": [6, 12]},
+        "Round Robin": {"count": 5, "questions": [7, 8, 9, 10, 17]},
+        "Time Slice": {"count": 3, "questions": [7, 8, 9]},
+        "Quantum": {"count": 1, "questions": [8]},
+        "Context Switch": {"count": 3, "questions": [9, 10, 15]},
+        "Overhead": {"count": 2, "questions": [9, 10]},
+        "Amortization": {"count": 1, "questions": [10]},
+        "Scheduler": {"count": 1, "questions": [11]},
+        "Workloads": {"count": 1, "questions": [11]},
+        "Assumptions": {"count": 1, "questions": [11]},
+        "CPU-only": {"count": 1, "questions": [11]},
+        "Run Time": {"count": 1, "questions": [11]},
+        "Multi-level Feedback Queue": {"count": 3, "questions": [13, 14, 19]},
+        "MLFQ": {"count": 4, "questions": [13, 14, 15, 16]},
+        "Priority": {"count": 2, "questions": [14, 16]},
+        "Time Allotment": {"count": 1, "questions": [14]},
+        "Starvation": {"count": 1, "questions": [15]},
+        "Priority Boost": {"count": 1, "questions": [16]},
+        "Interactive Jobs": {"count": 2, "questions": [17, 19]},
+        "Throughput": {"count": 1, "questions": [17]},
+        "CPU Utilization": {"count": 1, "questions": [17]},
+        "Overlapping IO": {"count": 1, "questions": [18]},
+        "I/O": {"count": 2, "questions": [18, 19]},
+        "Blocked Process": {"count": 1, "questions": [18]},
+        "Wait Queue": {"count": 1, "questions": [18]},
+        "Ready Queue": {"count": 1, "questions": [18]},
+        "Rules": {"count": 1, "questions": [14]},
+        "No More Oracle": {"count": 1, "questions": [20]}
+      },
+      "by_chapter": {
+        "7": {
+          "notes": ["[[Turnaround Time]]", "[[Response Time]]", "[[First In First Out]]", "[[Convoy Effect]]", "[[Shortest Job First]]", "[[Shortest Time to Completion First]]", "[[Round Robin]]", "[[Amortization]]", "[[Scheduler]]", "[[Multi-level Feedback Queue]]", "[[Overlapping IO]]"],
+          "question_count": 20
+        }
+      },
+      "topic_emphasis": {
+        "Turnaround Time": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 2 questions, needs more coverage"},
+        "Completion Time": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Arrival Time": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 2 questions, needs more coverage"},
+        "Response Time": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Good coverage across difficulties"},
+        "First Run Time": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "First In First Out": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "FIFO": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Good coverage"},
+        "Convoy Effect": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Long Job": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Short Job": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Shortest Job First": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "SJF": {"current_difficulty": "medium", "recommendation": "maintain", "reason": "Good coverage"},
+        "Job Length": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Optimal": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Shortest Time to Completion First": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "STCF": {"current_difficulty": "medium", "recommendation": "maintain", "reason": "Good coverage"},
+        "Preemptive": {"current_difficulty": "medium", "recommendation": "maintain", "reason": "Good coverage"},
+        "Remaining Time": {"current_difficulty": "medium", "recommendation": "maintain", "reason": "Good coverage"},
+        "Round Robin": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Good coverage across difficulties"},
+        "Time Slice": {"current_difficulty": "easy", "recommendation": "maintain", "reason": "Good coverage"},
+        "Quantum": {"current_difficulty": "easy", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Context Switch": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "Overhead": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "Amortization": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Scheduler": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Workloads": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Assumptions": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "CPU-only": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Run Time": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Multi-level Feedback Queue": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage across difficulties"},
+        "MLFQ": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage across difficulties"},
+        "Priority": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "Time Allotment": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Starvation": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Priority Boost": {"current_difficulty": "medium", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Interactive Jobs": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "Throughput": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "CPU Utilization": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Overlapping IO": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "I/O": {"current_difficulty": "hard", "recommendation": "maintain", "reason": "Good coverage"},
+        "Blocked Process": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Wait Queue": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Ready Queue": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "Rules": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"},
+        "No More Oracle": {"current_difficulty": "hard", "recommendation": "add_more", "reason": "Only 1 question, needs more coverage"}
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "What is Turnaround Time?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "The time from when a process arrives until it first starts executing", "concepts": ["Turnaround Time", "Response Time", "Arrival Time"]},
+        {"key": "B", "text": "The total time from when a job is submitted until it completes", "concepts": ["Turnaround Time", "Completion Time", "Arrival Time"]},
+        {"key": "C", "text": "The amount of CPU time actually used by the process", "concepts": ["Turnaround Time", "CPU Time"]},
+        {"key": "D", "text": "The time spent waiting in the ready queue", "concepts": ["Turnaround Time", "Ready Queue", "Waiting Time"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "Turnaround Time is defined as the total time from when a job is submitted until it completes: Turnaround Time = Completion Time - Arrival Time.",
+        "incorrect": {
+          "A": "This describes Response Time, not Turnaround Time.",
+          "C": "This is CPU time used, not Turnaround Time.",
+          "D": "This is queue waiting time, which is only a portion of Turnaround Time."
+        }
+      },
+      "source_notes": ["[[Turnaround Time]]"]
+    },
+    {
+      "id": 2,
+      "text": "What is Response Time?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "The total time from submission to completion", "concepts": ["Response Time", "Turnaround Time"]},
+        {"key": "B", "text": "The time from when a process arrives until it first starts executing", "concepts": ["Response Time", "First Run Time", "Arrival Time"]},
+        {"key": "C", "text": "The time the process spends in the running state", "concepts": ["Response Time", "Running State", "CPU Time"]},
+        {"key": "D", "text": "The time from start to completion of one time slice", "concepts": ["Response Time", "Time Slice"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "Response Time is the total amount of time from when a process arrives in the system until it first begins executing on the CPU: Response Time = First Run Time - Arrival Time.",
+        "incorrect": {
+          "A": "This describes Turnaround Time.",
+          "C": "This is just the CPU execution time.",
+          "D": "This describes the length of a time slice, not Response Time."
+        }
+      },
+      "source_notes": ["[[Response Time]]"]
+    },
+    {
+      "id": 3,
+      "text": "Which scheduling algorithm prioritizes jobs based on earliest arrival time?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "Shortest Job First (SJF)", "concepts": ["First In First Out", "SJF", "Job Length"]},
+        {"key": "B", "text": "Round Robin", "concepts": ["First In First Out", "Round Robin"]},
+        {"key": "C", "text": "First In First Out (FIFO)", "concepts": ["First In First Out", "FIFO", "Arrival Time"]},
+        {"key": "D", "text": "Shortest Time to Completion First (STCF)", "concepts": ["First In First Out", "STCF", "Remaining Time"]}
+      ],
+      "correct_answers": ["C"],
+      "explanation": {
+        "correct": "First In First Out (FIFO) schedules jobs based on earliest arrival - whoever arrives first gets to run first.",
+        "incorrect": {
+          "A": "SJF prioritizes based on job length, not arrival time.",
+          "B": "Round Robin uses time slices, not arrival order.",
+          "D": "STCF prioritizes based on remaining time, not arrival time."
+        }
+      },
+      "source_notes": ["[[First In First Out]]"]
+    },
+    {
+      "id": 4,
+      "text": "What is the Convoy Effect in FIFO scheduling?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "When short jobs arrive after a long job and must wait for it to complete", "concepts": ["Convoy Effect", "FIFO", "Long Job", "Short Job", "Turnaround Time"]},
+        {"key": "B", "text": "When the CPU switches between processes too frequently", "concepts": ["Convoy Effect", "Context Switch"]},
+        {"key": "C", "text": "When all processes finish at the same time", "concepts": ["Convoy Effect", "Completion Time"]},
+        {"key": "D", "text": "When the scheduler cannot determine job lengths", "concepts": ["Convoy Effect", "FIFO", "Job Length"]}
+      ],
+      "correct_answers": ["A"],
+      "explanation": {
+        "correct": "The Convoy Effect occurs in FIFO when a long job arrives first, and all subsequent short jobs must wait for it to complete, resulting in poor average turnaround time.",
+        "incorrect": {
+          "B": "This describes the overhead of context switching, not the Convoy Effect.",
+          "C": "Jobs don't finish at the same time in FIFO.",
+          "D": "FIFO doesn't need to know job lengths - it uses arrival order."
+        }
+      },
+      "source_notes": ["[[First In First Out]]", "[[Convoy Effect]]"]
+    },
+    {
+      "id": 5,
+      "text": "Which scheduling algorithm is provably optimal for minimizing turnaround time when all jobs arrive at the same time?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "First In First Out (FIFO)", "concepts": ["Shortest Job First", "FIFO", "Turnaround Time"]},
+        {"key": "B", "text": "Round Robin", "concepts": ["Shortest Job First", "Round Robin"]},
+        {"key": "C", "text": "Shortest Job First (SJF)", "concepts": ["Shortest Job First", "SJF", "Turnaround Time", "Optimal", "Job Length"]},
+        {"key": "D", "text": "Multi-level Feedback Queue", "concepts": ["Shortest Job First", "MLFQ"]}
+      ],
+      "correct_answers": ["C"],
+      "explanation": {
+        "correct": "Shortest Job First (SJF) is optimal for minimizing average turnaround time when all jobs arrive at the same time, because it runs shorter jobs first, reducing wait times for subsequent jobs.",
+        "incorrect": {
+          "A": "FIFO can suffer from the Convoy Effect, giving it the highest average turnaround time.",
+          "B": "Round Robin optimizes for response time, not turnaround time.",
+          "D": "MLFQ is more complex and not optimal for turnaround time."
+        }
+      },
+      "source_notes": ["[[Shortest Job First]]"]
+    },
+    {
+      "id": 6,
+      "text": "What is the key difference between SJF and STCF?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "SJF is preemptive, STCF is non-preemptive", "concepts": ["Shortest Job First", "SJF", "STCF", "Preemptive"]},
+        {"key": "B", "text": "STCF is preemptive, SJF is non-preemptive", "concepts": ["Shortest Job First", "SJF", "STCF", "Preemptive"]},
+        {"key": "C", "text": "SJF uses time slices, STCF does not", "concepts": ["Shortest Job First", "SJF", "STCF", "Time Slice"]},
+        {"key": "D", "text": "STCF requires jobs to arrive at the same time, SJF does not", "concepts": ["Shortest Job First", "SJF", "STCF", "Arrival Time"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "STCF (Shortest Time to Completion First) is the preemptive version of SJF. When a new job enters, STCF can preempt the current job if the new job has less time remaining.",
+        "incorrect": {
+          "A": "This is backwards - SJF is non-preemptive, STCF is preemptive.",
+          "C": "Neither SJF nor STCF uses time slices - that's Round Robin.",
+          "D": "SJF requires jobs to arrive at the same time to be optimal, not STCF."
+        }
+      },
+      "source_notes": ["[[Shortest Job First]]", "[[Shortest Time to Completion First]]"]
+    },
+    {
+      "id": 7,
+      "text": "Which scheduling algorithm is best for optimizing Response Time?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "First In First Out", "concepts": ["Response Time", "FIFO"]},
+        {"key": "B", "text": "Shortest Job First", "concepts": ["Response Time", "SJF"]},
+        {"key": "C", "text": "Round Robin", "concepts": ["Response Time", "Round Robin", "Time Slice"]},
+        {"key": "D", "text": "Shortest Time to Completion First", "concepts": ["Response Time", "STCF"]}
+      ],
+      "correct_answers": ["C"],
+      "explanation": {
+        "correct": "Round Robin is the best choice for optimizing Response Time. By giving each process a small time slice, all processes get to run quickly after arrival.",
+        "incorrect": {
+          "A": "FIFO can have terrible response time if a long job arrives first.",
+          "B": "SJF optimizes for turnaround time, not response time.",
+          "D": "STCF optimizes for turnaround time, not response time."
+        }
+      },
+      "source_notes": ["[[Round Robin]]", "[[Response Time]]"]
+    },
+    {
+      "id": 8,
+      "text": "What is a time slice in Round Robin scheduling?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {"key": "A", "text": "The total time a process takes to complete", "concepts": ["Round Robin", "Time Slice", "Completion Time"]},
+        {"key": "B", "text": "The amount of time each process gets to run before being preempted", "concepts": ["Round Robin", "Time Slice", "Quantum", "Preemption"]},
+        {"key": "C", "text": "The time it takes to perform a context switch", "concepts": ["Round Robin", "Context Switch"]},
+        {"key": "D", "text": "The time from job arrival to first execution", "concepts": ["Round Robin", "Response Time"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "In Round Robin, each process gets a time slice (also called quantum) - a fixed amount of CPU time before being preempted and moved to the back of the queue.",
+        "incorrect": {
+          "A": "This is the total completion time, not a time slice.",
+          "C": "Context switch time is overhead, not the time slice given to the process.",
+          "D": "This is Response Time, not a time slice."
+        }
+      },
+      "source_notes": ["[[Round Robin]]"]
+    },
+    {
+      "id": 9,
+      "text": "What trade-off exists when choosing the length of the time slice in Round Robin?",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "Too short time slice increases response time", "concepts": ["Round Robin", "Time Slice", "Response Time"]},
+        {"key": "B", "text": "Too short time slice increases context switch overhead", "concepts": ["Round Robin", "Time Slice", "Context Switch", "Overhead"]},
+        {"key": "C", "text": "Too long time slice degrades response time", "concepts": ["Round Robin", "Time Slice", "Response Time", "FIFO"]},
+        {"key": "D", "text": "Too long time slice reduces context switch overhead", "concepts": ["Round Robin", "Time Slice", "Context Switch", "Overhead"]}
+      ],
+      "correct_answers": ["B", "C"],
+      "explanation": {
+        "correct": "If the time slice is too short, too much time is wasted on context switching (overhead). If it's too long, Round Robin degrades to FIFO behavior, giving poor response time.",
+        "incorrect": {
+          "A": "Too short time slice actually improves response time but increases overhead.",
+          "D": "Too long time slice does reduce context switch overhead, but this isn't the main trade-off concern."
+        }
+      },
+      "source_notes": ["[[Round Robin]]", "[[Response Time]]"]
+    },
+    {
+      "id": 10,
+      "text": "How can you amortize the cost of context switching in Round Robin?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "By decreasing the time slice", "concepts": ["Round Robin", "Amortization", "Time Slice"]},
+        {"key": "B", "text": "By increasing the time slice", "concepts": ["Round Robin", "Amortization", "Time Slice", "Context Switch", "Overhead"]},
+        {"key": "C", "text": "By using priority queues", "concepts": ["Round Robin", "Priority Queue"]},
+        {"key": "D", "text": "By reducing the number of processes", "concepts": ["Round Robin", "Process Count"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "You can amortize the cost of context switching by increasing the time slice. This spreads the fixed cost of context switching (flushing caches, TLBs, etc.) over a longer period of useful work.",
+        "incorrect": {
+          "A": "Decreasing the time slice would increase the relative overhead of context switching.",
+          "C": "Priority queues don't affect context switch overhead.",
+          "D": "Reducing processes doesn't amortize the cost - it just reduces total switches."
+        }
+      },
+      "source_notes": ["[[Round Robin]]", "[[Amortization]]"]
+    },
+    {
+      "id": 11,
+      "text": "What are the assumptions made about workloads in early scheduling discussions (Chapter 7.1)?",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "Each job runs for the same amount of time", "concepts": ["Scheduler", "Workloads", "Assumptions", "Run Time"]},
+        {"key": "B", "text": "All jobs arrive at the same time", "concepts": ["Scheduler", "Workloads", "Assumptions", "Arrival Time"]},
+        {"key": "C", "text": "All jobs only use the CPU, no I/O", "concepts": ["Scheduler", "Workloads", "Assumptions", "CPU-only", "I/O"]},
+        {"key": "D", "text": "The run time of each job is known in advance", "concepts": ["Scheduler", "Workloads", "Assumptions", "Run Time", "Oracle"]}
+      ],
+      "correct_answers": ["B", "C", "D"],
+      "explanation": {
+        "correct": "Early scheduling discussions assume: 1) All jobs arrive at the same time, 2) All jobs are CPU-only (no I/O), and 3) The run time of each job is known in advance. These are unrealistic but simplify initial analysis.",
+        "incorrect": {
+          "A": "Jobs can have different run times - that's why SJF/STCF exist."
+        }
+      },
+      "source_notes": ["[[Scheduler]]"]
+    },
+    {
+      "id": 12,
+      "text": "In STCF scheduling, what happens when a new job enters the system?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "The new job waits until the current job completes", "concepts": ["STCF", "Non-preemptive"]},
+        {"key": "B", "text": "The scheduler compares remaining times and may preempt the current job", "concepts": ["STCF", "Preemptive", "Remaining Time", "Scheduler"]},
+        {"key": "C", "text": "The new job runs immediately, preempting the current job always", "concepts": ["STCF", "Preemption"]},
+        {"key": "D", "text": "The scheduler switches to Round Robin temporarily", "concepts": ["STCF", "Round Robin"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "In STCF, when a new job enters, the scheduler determines which of the remaining jobs (including the new one) has the least time left and schedules that one. It may preempt the current job if the new job has less remaining time.",
+        "incorrect": {
+          "A": "This would be non-preemptive behavior (like SJF), not STCF.",
+          "C": "Only preempts if the new job has less time remaining, not always.",
+          "D": "STCF doesn't switch to Round Robin."
+        }
+      },
+      "source_notes": ["[[Shortest Time to Completion First]]"]
+    },
+    {
+      "id": 13,
+      "text": "What problem does the Multi-level Feedback Queue (MLFQ) solve that earlier schedulers don't address?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "MLFQ doesn't require knowing job run times in advance", "concepts": ["Multi-level Feedback Queue", "MLFQ", "Run Time", "Oracle"]},
+        {"key": "B", "text": "MLFQ is the only scheduler that handles I/O", "concepts": ["Multi-level Feedback Queue", "MLFQ", "I/O"]},
+        {"key": "C", "text": "MLFQ always gives the best turnaround time", "concepts": ["Multi-level Feedback Queue", "MLFQ", "Turnaround Time"]},
+        {"key": "D", "text": "MLFQ is the simplest scheduler to implement", "concepts": ["Multi-level Feedback Queue", "MLFQ", "Complexity"]}
+      ],
+      "correct_answers": ["A"],
+      "explanation": {
+        "correct": "MLFQ solves a key problem: it doesn't require knowing job run times in advance (unlike SJF/STCF which need this information). It learns job behavior over time using priority queues and demotion rules.",
+        "incorrect": {
+          "B": "Round Robin and STCF can also handle I/O with appropriate mechanisms.",
+          "C": "MLFQ doesn't guarantee optimal turnaround time.",
+          "D": "MLFQ is actually quite complex with many rules and parameters."
+        }
+      },
+      "source_notes": ["[[Multi-level Feedback Queue]]", "[[Scheduler]]"]
+    },
+    {
+      "id": 14,
+      "text": "Which of the following are rules of MLFQ? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "If Priority(A) > Priority(B), choose A", "concepts": ["Multi-level Feedback Queue", "MLFQ", "Priority", "Rules"]},
+        {"key": "B", "text": "If Priority(A) = Priority(B), run both simultaneously", "concepts": ["Multi-level Feedback Queue", "MLFQ", "Priority", "Rules"]},
+        {"key": "C", "text": "When a job enters the system, it gets highest priority", "concepts": ["Multi-level Feedback Queue", "MLFQ", "Priority", "Rules"]},
+        {"key": "D", "text": "Once a job uses its time allotment, its priority is reduced", "concepts": ["Multi-level Feedback Queue", "MLFQ", "Priority", "Time Allotment", "Rules"]}
+      ],
+      "correct_answers": ["A", "C", "D"],
+      "explanation": {
+        "correct": "MLFQ Rules: 1) If Priority(A) > Priority(B), choose A. 2) If equal priority, run in Round Robin. 3) New jobs get highest priority. 4) After using time allotment at a level, priority is reduced (move down a queue).",
+        "incorrect": {
+          "B": "Jobs with equal priority run in Round Robin (time-slicing), not simultaneously."
+        }
+      },
+      "source_notes": ["[[Multi-level Feedback Queue]]"]
+    },
+    {
+      "id": 15,
+      "text": "What is starvation in the context of MLFQ?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "When a process uses too much CPU time at once", "concepts": ["MLFQ", "CPU-bound"]},
+        {"key": "B", "text": "When interactive jobs consume all CPU time, leaving long jobs never running", "concepts": ["MLFQ", "Starvation", "Interactive Jobs", "CPU-bound"]},
+        {"key": "C", "text": "When the priority boost fails to work", "concepts": ["MLFQ", "Starvation", "Priority Boost"]},
+        {"key": "D", "text": "When context switching overhead becomes too high", "concepts": ["MLFQ", "Context Switch", "Overhead"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "Starvation in MLFQ occurs when there are too many interactive jobs (which maintain high priority due to I/O) that consume all CPU time, causing long-running jobs to never receive CPU time as they keep getting demoted.",
+        "incorrect": {
+          "A": "This describes a CPU-bound process, not starvation.",
+          "C": "Priority boost is a solution to starvation, not starvation itself.",
+          "D": "This is context switch overhead, not starvation."
+        }
+      },
+      "source_notes": ["[[Multi-level Feedback Queue]]"]
+    },
+    {
+      "id": 16,
+      "text": "What is the purpose of the priority boost in MLFQ?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {"key": "A", "text": "To permanently increase the priority of interactive jobs", "concepts": ["MLFQ", "Priority Boost", "Interactive Jobs"]},
+        {"key": "B", "text": "To periodically move all jobs to the topmost queue, preventing starvation", "concepts": ["MLFQ", "Priority Boost", "Starvation", "Priority"]},
+        {"key": "C", "text": "To reduce the time slice for high-priority jobs", "concepts": ["MLFQ", "Priority Boost", "Time Slice"]},
+        {"key": "D", "text": "To eliminate the need for multiple queues", "concepts": ["MLFQ", "Priority Boost", "Queues"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "Priority boost (Rule 5 in MLFQ) periodically moves all jobs in the system to the topmost (highest priority) queue. This prevents starvation by ensuring long-running jobs occasionally get a chance to run at high priority.",
+        "incorrect": {
+          "A": "Priority boost is temporary and applies to all jobs, not just interactive ones.",
+          "C": "Time slice adjustment is a separate tuning parameter.",
+          "D": "Priority boost doesn't eliminate queues, it just resets job positions."
+        }
+      },
+      "source_notes": ["[[Multi-level Feedback Queue]]"]
+    },
+    {
+      "id": 17,
+      "text": "Which scheduling metric is MOST important for interactive jobs (like a web server or GUI application)?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "Turnaround Time", "concepts": ["Response Time", "Turnaround Time"]},
+        {"key": "B", "text": "Response Time", "concepts": ["Response Time", "Interactive Jobs", "Round Robin"]},
+        {"key": "C", "text": "Throughput", "concepts": ["Response Time", "Throughput"]},
+        {"key": "D", "text": "CPU Utilization", "concepts": ["Response Time", "CPU Utilization"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "For interactive jobs, Response Time is most important - users want the system to respond quickly to their input. This is why Round Robin is often used for interactive systems.",
+        "incorrect": {
+          "A": "Turnaround Time is more important for batch jobs that care about total completion time.",
+          "C": "Throughput matters for batch systems, not necessarily interactive ones.",
+          "D": "CPU Utilization is a system-level metric, not the primary concern for interactivity."
+        }
+      },
+      "source_notes": ["[[Response Time]]", "[[Round Robin]]"]
+    },
+    {
+      "id": 18,
+      "text": "When I/O operations are incorporated into scheduling (Chapter 7.8), what happens to a process that issues an I/O request?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "It continues running on the CPU while I/O completes", "concepts": ["Overlapping IO", "I/O", "CPU"]},
+        {"key": "B", "text": "It is blocked and moved to a wait queue, allowing another process to run", "concepts": ["Overlapping IO", "I/O", "Blocked Process", "Wait Queue", "Ready Queue"]},
+        {"key": "C", "text": "It immediately gets priority boost in MLFQ", "concepts": ["Overlapping IO", "MLFQ", "Priority Boost"]},
+        {"key": "D", "text": "It terminates and must be restarted after I/O completes", "concepts": ["Overlapping IO", "I/O", "Termination"]}
+      ],
+      "correct_answers": ["B"],
+      "explanation": {
+        "correct": "When a process issues an I/O request, it becomes blocked and is moved to a wait queue. This allows another process to use the CPU while the first process waits for I/O to complete. When I/O finishes, the process moves back to ready queue.",
+        "incorrect": {
+          "A": "A process can't run on CPU while waiting for I/O - it's blocked.",
+          "C": "In MLFQ, I/O can help maintain high priority, but it's not an immediate priority boost.",
+          "D": "The process doesn't terminate - it just waits."
+        }
+      },
+      "source_notes": ["[[Scheduler]]", "[[Overlapping IO]]"]
+    },
+    {
+      "id": 19,
+      "text": "Which of the following are scheduling algorithms that can be used in a Multi-level Feedback Queue? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "Round Robin (for equal priority queues)", "concepts": ["Multi-level Feedback Queue", "MLFQ", "Round Robin", "Priority"]},
+        {"key": "B", "text": "First In First Out (for highest priority queue)", "concepts": ["Multi-level Feedback Queue", "MLFQ", "FIFO", "Priority"]},
+        {"key": "C", "text": "Shortest Job First (for lowest priority queue)", "concepts": ["Multi-level Feedback Queue", "MLFQ", "SJF", "Priority"]},
+        {"key": "D", "text": "Any scheduler can be used at any queue level", "concepts": ["Multi-level Feedback Queue", "MLFQ", "Scheduler", "Priority"]}
+      ],
+      "correct_answers": ["A", "D"],
+      "explanation": {
+        "correct": "MLFQ can use different schedulers at different priority levels. Typically, Round Robin is used for equal-priority queues. The flexibility of MLFQ allows any scheduling algorithm to be used at any queue level.",
+        "incorrect": {
+          "B": "FIFO is typically not used in MLFQ - Round Robin is more common for time-slicing.",
+          "C": "SJF might be used, but it's not a standard choice for MLFQ implementations."
+        }
+      },
+      "source_notes": ["[[Multi-level Feedback Queue]]", "[[Scheduler]]"]
+    },
+    {
+      "id": 20,
+      "text": "What is the 'No More Oracle' concept in Chapter 7.9 referring to?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {"key": "A", "text": "The realization that we can't know job run times in advance in real systems", "concepts": ["Scheduler", "No More Oracle", "Run Time", "Oracle"]},
+        {"key": "B", "text": "The need to eliminate the use of timers in scheduling", "concepts": ["Scheduler", "Timer"]},
+        {"key": "C", "text": "The removal of priority queues from scheduling", "concepts": ["Scheduler", "Priority Queue"]},
+        {"key": "D", "text": "The end of using Round Robin for interactive jobs", "concepts": ["Scheduler", "Round Robin"]}
+      ],
+      "correct_answers": ["A"],
+      "explanation": {
+        "correct": "'No More Oracle' refers to the fact that in real systems, we don't have an oracle that tells us job run times in advance. This is why algorithms like SJF and STCF (which assume known run times) aren't practical, leading to the need for adaptive algorithms like MLFQ.",
+        "incorrect": {
+          "B": "Timers are still needed (especially for Round Robin and MLFQ).",
+          "C": "Priority queues are still used (especially in MLFQ).",
+          "D": "Round Robin is still used for interactive jobs."
+        }
+      },
+      "source_notes": ["[[Scheduler]]", "[[Multi-level Feedback Queue]]", "[[Shortest Job First]]"]
+    }
+  ]
+}

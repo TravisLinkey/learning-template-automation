@@ -1,0 +1,1450 @@
+{
+  "metadata": {
+    "id": "Quiz_07_Free_Space_Management",
+    "subject": "Operating Systems",
+    "topic": "Free-Space Management (Chapter 17)",
+    "chapters": [
+      17
+    ],
+    "created": "2026-04-30",
+    "question_count": 20,
+    "difficulty_distribution": {
+      "easy": 7,
+      "medium": 7,
+      "hard": 6
+    },
+    "coverage": {
+      "notes": {
+        "[[Free Space Management]]": {
+          "questions": 8,
+          "concepts": [
+            "Free Space Management",
+            "malloc",
+            "free",
+            "Splitting",
+            "Coalescing",
+            "Header Block",
+            "Free List"
+          ]
+        },
+        "[[Free List]]": {
+          "questions": 4,
+          "concepts": [
+            "Free List",
+            "Free Space Tracking",
+            "Coalescing"
+          ]
+        },
+        "[[Best Fit]]": {
+          "questions": 3,
+          "concepts": [
+            "Best Fit",
+            "Smallest Suitable",
+            "Exhaustive Search",
+            "Performance Penalty"
+          ]
+        },
+        "[[First Fit]]": {
+          "questions": 2,
+          "concepts": [
+            "First Fit",
+            "First Suitable Block"
+          ]
+        },
+        "[[Worst Fit]]": {
+          "questions": 2,
+          "concepts": [
+            "Worst Fit",
+            "Largest Chunk"
+          ]
+        },
+        "[[Next Fit]]": {
+          "questions": 2,
+          "concepts": [
+            "Next Fit",
+            "Pointer",
+            "Last Position"
+          ]
+        },
+        "[[Segregated Lists]]": {
+          "questions": 3,
+          "concepts": [
+            "Segregated Lists",
+            "Popular Sizes",
+            "Object Cache",
+            "Allocation Speed"
+          ]
+        },
+        "[[Slab Allocator]]": {
+          "questions": 2,
+          "concepts": [
+            "Slab Allocator",
+            "Object Cache",
+            "Kernel Objects",
+            "Initialization"
+          ]
+        },
+        "[[Buddy Allocation]]": {
+          "questions": 2,
+          "concepts": [
+            "Buddy Allocation",
+            "Recursive Splitting",
+            "Power-of-Two",
+            "Internal Fragmentation"
+          ]
+        },
+        "[[Fragmentation]]": {
+          "questions": 2,
+          "concepts": [
+            "Fragmentation",
+            "Internal Fragmentation",
+            "External Fragmentation"
+          ]
+        }
+      },
+      "concepts": {
+        "Free Space Management": {
+          "count": 8,
+          "questions": [
+            1,
+            3,
+            13,
+            14,
+            18
+          ]
+        },
+        "malloc": {
+          "count": 1,
+          "questions": [
+            1
+          ]
+        },
+        "free": {
+          "count": 1,
+          "questions": [
+            1
+          ]
+        },
+        "Free List": {
+          "count": 5,
+          "questions": [
+            2,
+            3,
+            8,
+            9,
+            20
+          ]
+        },
+        "Header Block": {
+          "count": 2,
+          "questions": [
+            3,
+            13
+          ]
+        },
+        "Splitting": {
+          "count": 2,
+          "questions": [
+            3,
+            14
+          ]
+        },
+        "Coalescing": {
+          "count": 3,
+          "questions": [
+            3,
+            14,
+            20
+          ]
+        },
+        "Best Fit": {
+          "count": 4,
+          "questions": [
+            4,
+            5,
+            8,
+            16
+          ]
+        },
+        "First Fit": {
+          "count": 3,
+          "questions": [
+            4,
+            5,
+            7
+          ]
+        },
+        "Worst Fit": {
+          "count": 3,
+          "questions": [
+            6,
+            7,
+            10
+          ]
+        },
+        "Next Fit": {
+          "count": 3,
+          "questions": [
+            7,
+            8
+          ]
+        },
+        "Segregated Lists": {
+          "count": 4,
+          "questions": [
+            8,
+            9,
+            15
+          ]
+        },
+        "Slab Allocator": {
+          "count": 3,
+          "questions": [
+            10,
+            19
+          ]
+        },
+        "Buddy Allocation": {
+          "count": 3,
+          "questions": [
+            11,
+            17
+          ]
+        },
+        "Fragmentation": {
+          "count": 3,
+          "questions": [
+            12,
+            15,
+            17
+          ]
+        },
+        "Internal Fragmentation": {
+          "count": 2,
+          "questions": [
+            12,
+            17
+          ]
+        },
+        "External Fragmentation": {
+          "count": 1,
+          "questions": [
+            12
+          ]
+        },
+        "Object Cache": {
+          "count": 2,
+          "questions": [
+            10,
+            19
+          ]
+        },
+        "Kernel Objects": {
+          "count": 1,
+          "questions": [
+            10
+          ]
+        },
+        "Recursive Splitting": {
+          "count": 1,
+          "questions": [
+            11
+          ]
+        },
+        "Power-of-Two": {
+          "count": 1,
+          "questions": [
+            11
+          ]
+        },
+        "Allocation Speed": {
+          "count": 1,
+          "questions": [
+            15
+          ]
+        },
+        "Performance Penalty": {
+          "count": 1,
+          "questions": [
+            16
+          ]
+        }
+      },
+      "by_chapter": {
+        "17": {
+          "notes": [
+            "[[Free Space Management]]",
+            "[[Free List]]",
+            "[[Best Fit]]",
+            "[[First Fit]]",
+            "[[Worst Fit]]",
+            "[[Next Fit]]",
+            "[[Segregated Lists]]",
+            "[[Slab Allocator]]",
+            "[[Buddy Allocation]]",
+            "[[Fragmentation]]"
+          ],
+          "question_count": 20
+        }
+      },
+      "topic_emphasis": {
+        "Free Space Management": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Free List": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Best Fit": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "First Fit": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Worst Fit": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Next Fit": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Segregated Lists": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Slab Allocator": {
+          "current_difficulty": "hard",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Buddy Allocation": {
+          "current_difficulty": "hard",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Fragmentation": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        }
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "What is the purpose of free-space management in operating systems?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "To translate virtual addresses to physical addresses",
+          "concepts": [
+            "Free Space Management",
+            "Address Translation"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "To allocate and deallocate memory for processes using malloc() and free()",
+          "concepts": [
+            "Free Space Management",
+            "malloc",
+            "free",
+            "Memory Allocation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "To manage page tables",
+          "concepts": [
+            "Free Space Management",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "To handle context switching",
+          "concepts": [
+            "Free Space Management",
+            "Context Switching"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Free-space management provides the ability to allocate and deallocate memory by a user-defined process, using an interface like malloc() and free() that figures out how big a chunk of memory is, given only a pointer to it.",
+        "incorrect": {
+          "A": "Address translation is done by the page table and hardware, not free-space management.",
+          "C": "Page table management is separate from free-space management.",
+          "D": "Context switching is handled by the scheduler and process control block."
+        }
+      },
+      "source_notes": [
+        "[[Free Space Management]]"
+      ]
+    },
+    {
+      "id": 2,
+      "text": "What is a free list?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "A list of all allocated memory regions",
+          "concepts": [
+            "Free List",
+            "Allocated Memory"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "A data structure to track physical memory that is not in use",
+          "concepts": [
+            "Free List",
+            "Free Space Tracking",
+            "Physical Memory"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "A list of page table entries",
+          "concepts": [
+            "Free List",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "A queue of processes waiting for memory",
+          "concepts": [
+            "Free List",
+            "Process Queue"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "A free list is a data structure used to track physical memory that is not in use. It's used by allocators to find free space when memory is requested.",
+        "incorrect": {
+          "A": "The free list tracks free (unused) memory, not allocated memory.",
+          "C": "Page table entries are stored in the page table, not a free list.",
+          "D": "Process queues are separate scheduling structures, not related to free lists."
+        }
+      },
+      "source_notes": [
+        "[[Free List]]",
+        "[[Free Space Management]]"
+      ]
+    },
+    {
+      "id": 3,
+      "text": "Which of the following are low-level mechanisms used in free-space management? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Splitting & Coalescing",
+          "concepts": [
+            "Free Space Management",
+            "Splitting",
+            "Coalescing"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Header Block",
+          "concepts": [
+            "Free Space Management",
+            "Header Block",
+            "Memory Tracking"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Free List",
+          "concepts": [
+            "Free Space Management",
+            "Free List"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Page Table",
+          "concepts": [
+            "Free Space Management",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "explanation": {
+        "correct": "Low-level mechanisms for free-space management include: 1) Splitting & Coalescing (resizing memory), 2) Header Block (tracking size of allocated regions), 3) Free List (free space tracking).",
+        "incorrect": {
+          "D": "The page table is used for virtual-to-physical address translation, not free-space management."
+        }
+      },
+      "source_notes": [
+        "[[Free Space Management]]",
+        "[[Free List]]"
+      ]
+    },
+    {
+      "id": 4,
+      "text": "What is the 'best fit' memory allocation strategy?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Return the first block that is big enough",
+          "concepts": [
+            "Best Fit",
+            "First Fit"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Return the largest chunk from the free list",
+          "concepts": [
+            "Worst Fit",
+            "Largest Chunk"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Return the smallest chunk that is big enough",
+          "concepts": [
+            "Best Fit",
+            "Smallest Suitable"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Always split the largest available block",
+          "concepts": [
+            "Best Fit",
+            "Splitting"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": {
+        "correct": "Best fit returns the smallest chunk from the free list that is as big or bigger than the requested size. It searches for chunks that fit and returns the smallest suitable one.",
+        "incorrect": {
+          "A": "This describes first fit, not best fit.",
+          "B": "This describes worst fit, not best fit.",
+          "D": "This is not a standard allocation strategy description."
+        }
+      },
+      "source_notes": [
+        "[[Best Fit]]"
+      ]
+    },
+    {
+      "id": 5,
+      "text": "What is the 'first fit' memory allocation strategy?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "Return the first block that is big enough",
+          "concepts": [
+            "First Fit",
+            "First Suitable Block"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Return the smallest block that fits",
+          "concepts": [
+            "Best Fit",
+            "Smallest Suitable"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Return the largest block available",
+          "concepts": [
+            "Worst Fit",
+            "Largest Chunk"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Always split the block in half",
+          "concepts": [
+            "First Fit",
+            "Splitting"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": {
+        "correct": "First fit simply iterates through the free list and returns the first free space that is large enough to fulfill the request.",
+        "incorrect": {
+          "B": "This describes best fit, not first fit.",
+          "C": "This describes worst fit, not first fit.",
+          "D": "This describes buddy allocation splitting, not first fit."
+        }
+      },
+      "source_notes": [
+        "[[First Fit]]"
+      ]
+    },
+    {
+      "id": 6,
+      "text": "What is the 'worst fit' memory allocation strategy?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Return the first block that is big enough",
+          "concepts": [
+            "Worst Fit",
+            "First Fit"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Return the smallest block that fits",
+          "concepts": [
+            "Best Fit",
+            "Smallest Suitable"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Return the largest chunk from the free list",
+          "concepts": [
+            "Worst Fit",
+            "Largest Chunk"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Return a random block from the free list",
+          "concepts": [
+            "Worst Fit",
+            "Random"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "C"
+      ],
+      "explanation": {
+        "correct": "Worst fit returns the largest chunk from the free list that is as big or bigger than the requested size. The idea is to leave the largest free chunks alone.",
+        "incorrect": {
+          "A": "This describes first fit, not worst fit.",
+          "B": "This describes best fit, not worst fit.",
+          "D": "Random selection is not how worst fit operates."
+        }
+      },
+      "source_notes": [
+        "[[Worst Fit]]"
+      ]
+    },
+    {
+      "id": 7,
+      "text": "What is the 'next fit' memory allocation strategy?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Always starts searching from the beginning of the list",
+          "concepts": [
+            "Next Fit",
+            "Exhaustive Search"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Keeps an extra pointer to where it last looked",
+          "concepts": [
+            "Next Fit",
+            "Pointer",
+            "Last Position"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Returns the smallest suitable block",
+          "concepts": [
+            "Next Fit",
+            "Smallest Suitable"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Uses a separate list for each size",
+          "concepts": [
+            "Next Fit",
+            "Segregated Lists"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Next fit keeps an extra pointer to the location within the list where one was looking last. The idea is to spread searches more uniformly throughout the list, avoiding splintering of the beginning.",
+        "incorrect": {
+          "A": "This describes first fit, not next fit.",
+          "C": "This describes best fit, not next fit.",
+          "D": "This describes segregated lists, not next fit."
+        }
+      },
+      "source_notes": [
+        "[[Next Fit]]"
+      ]
+    },
+    {
+      "id": 8,
+      "text": "Which allocation strategies avoid an exhaustive search of the free list? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "First Fit",
+          "concepts": [
+            "First Fit",
+            "Exhaustive Search"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Next Fit",
+          "concepts": [
+            "Next Fit",
+            "Pointer"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Best Fit",
+          "concepts": [
+            "Best Fit",
+            "Exhaustive Search"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Segregated Lists",
+          "concepts": [
+            "Segregated Lists",
+            "Separate Lists"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "explanation": {
+        "correct": "First fit and Next fit avoid exhaustive search (first fit stops at first suitable block, next fit continues from last position). Segregated lists avoid searching by maintaining separate lists for each size.",
+        "incorrect": {
+          "C": "Best fit requires an exhaustive search to find the smallest suitable block, which is a drawback."
+        }
+      },
+      "source_notes": [
+        "[[First Fit]]",
+        "[[Next Fit]]",
+        "[[Segregated Lists]]"
+      ]
+    },
+    {
+      "id": 9,
+      "text": "What are segregated lists in memory allocation?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "A single list of all free memory chunks",
+          "concepts": [
+            "Segregated Lists",
+            "Free List"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Separate lists for objects of specific popular sizes",
+          "concepts": [
+            "Segregated Lists",
+            "Popular Sizes",
+            "Object Cache"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "A list sorted by memory address",
+          "concepts": [
+            "Segregated Lists",
+            "Memory Address"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Multiple page tables for different processes",
+          "concepts": [
+            "Segregated Lists",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Segregated lists keep a separate list just to manage objects of a particular popular size. All other requests are forwarded to a more general memory allocator. This reduces fragmentation and speeds up allocation for common sizes.",
+        "incorrect": {
+          "A": "This describes a simple free list, not segregated lists.",
+          "C": "Sorting by address is not what defines segregated lists.",
+          "D": "Page tables are for address translation, not memory allocation."
+        }
+      },
+      "source_notes": [
+        "[[Segregated Lists]]"
+      ]
+    },
+    {
+      "id": 10,
+      "text": "What is the slab allocator?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "A simple free list for all memory sizes",
+          "concepts": [
+            "Slab Allocator",
+            "Free List"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "A dedicated object cache for frequently used kernel objects",
+          "concepts": [
+            "Slab Allocator",
+            "Object Cache",
+            "Kernel Objects"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "An algorithm that splits memory in half recursively",
+          "concepts": [
+            "Slab Allocator",
+            "Buddy Allocation"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "A strategy that returns the largest available block",
+          "concepts": [
+            "Slab Allocator",
+            "Worst Fit"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The slab allocator is a dedicated object cache for frequently used kernel objects (like locks, inodes). It allocates object caches at boot, serves requests quickly, and requests slabs from a general allocator when running low.",
+        "incorrect": {
+          "A": "This describes a simple free list, not slab allocation.",
+          "C": "This describes buddy allocation, not slab allocation.",
+          "D": "This describes worst fit, not slab allocation."
+        }
+      },
+      "source_notes": [
+        "[[Slab Allocator]]"
+      ]
+    },
+    {
+      "id": 11,
+      "text": "What is buddy allocation?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "Allocating memory from separate lists based on size",
+          "concepts": [
+            "Buddy Allocation",
+            "Segregated Lists"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "A recursive algorithm that splits free space by two until block fits",
+          "concepts": [
+            "Buddy Allocation",
+            "Recursive Splitting",
+            "Power-of-Two"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Always returning the first suitable block",
+          "concepts": [
+            "Buddy Allocation",
+            "First Fit"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Caching objects of frequently used sizes",
+          "concepts": [
+            "Buddy Allocation",
+            "Slab Allocator"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Buddy allocation is a recursive algorithm where free memory is conceptually a big space of size 2^N. When allocating, it recursively divides free space by two until a block big enough is found. When freeing, it checks if the 'buddy' is free and coalesces.",
+        "incorrect": {
+          "A": "This describes segregated lists, not buddy allocation.",
+          "C": "This describes first fit, not buddy allocation.",
+          "D": "This describes slab allocation, not buddy allocation."
+        }
+      },
+      "source_notes": [
+        "[[Buddy Allocation]]"
+      ]
+    },
+    {
+      "id": 12,
+      "text": "What is fragmentation in the context of memory management? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Internal fragmentation",
+          "concepts": [
+            "Fragmentation",
+            "Internal Fragmentation"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "External fragmentation",
+          "concepts": [
+            "Fragmentation",
+            "External Fragmentation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Virtual fragmentation",
+          "concepts": [
+            "Fragmentation",
+            "Virtual"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Page fragmentation",
+          "concepts": [
+            "Fragmentation",
+            "Page"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B"
+      ],
+      "explanation": {
+        "correct": "Fragmentation in memory management includes: 1) Internal fragmentation (wasted space within allocated blocks), 2) External fragmentation (free space split into small unusable chunks).",
+        "incorrect": {
+          "C": "Virtual fragmentation is not a standard term in memory management.",
+          "D": "Page fragmentation is not a standard term; paging actually avoids external fragmentation."
+        }
+      },
+      "source_notes": [
+        "[[Fragmentation]]",
+        "[[Free Space Management]]"
+      ]
+    },
+    {
+      "id": 13,
+      "text": "What is the purpose of a header block in memory allocation?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "To track the size of allocated regions",
+          "concepts": [
+            "Free Space Management",
+            "Header Block",
+            "Allocated Regions"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "To store the free list",
+          "concepts": [
+            "Free Space Management",
+            "Free List"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "To translate virtual addresses",
+          "concepts": [
+            "Free Space Management",
+            "Address Translation"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "To manage page tables",
+          "concepts": [
+            "Free Space Management",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": {
+        "correct": "A header block is used to track the size of allocated regions, allowing the memory library to figure out how big of a chunk of memory is, given only a pointer to it.",
+        "incorrect": {
+          "B": "The free list (not header block) tracks free memory.",
+          "C": "Address translation is done by page tables and hardware.",
+          "D": "Page table management is separate from header blocks."
+        }
+      },
+      "source_notes": [
+        "[[Free Space Management]]",
+        "[[Free List]]"
+      ]
+    },
+    {
+      "id": 14,
+      "text": "What is coalescing in memory management?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Splitting a large block into smaller ones",
+          "concepts": [
+            "Free Space Management",
+            "Splitting"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Combining adjacent free blocks into a larger block",
+          "concepts": [
+            "Free Space Management",
+            "Coalescing",
+            "Free List"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Allocating memory from the heap",
+          "concepts": [
+            "Free Space Management",
+            "Heap Allocation"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Translating virtual to physical addresses",
+          "concepts": [
+            "Free Space Management",
+            "Address Translation"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Coalescing is combining adjacent free blocks into a larger block when memory is freed. This helps reduce external fragmentation by creating larger contiguous free regions.",
+        "incorrect": {
+          "A": "Splitting is the opposite of coalescing.",
+          "C": "Heap allocation is a separate operation from coalescing.",
+          "D": "Address translation is done by hardware and page tables."
+        }
+      },
+      "source_notes": [
+        "[[Free List]]",
+        "[[Free Space Management]]"
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Which of the following are benefits of segregated lists? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Fragmentation is much less a concern",
+          "concepts": [
+            "Segregated Lists",
+            "Fragmentation"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Allocation and free requests are served quickly for right sizes",
+          "concepts": [
+            "Segregated Lists",
+            "Allocation Speed"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "No complicated search of a list is required",
+          "concepts": [
+            "Segregated Lists",
+            "Search"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "It eliminates all internal fragmentation",
+          "concepts": [
+            "Segregated Lists",
+            "Internal Fragmentation"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "explanation": {
+        "correct": "Benefits of segregated lists: 1) Fragmentation is much less a concern, 2) Allocation/free requests served quickly for right sizes, 3) No complicated search required for common sizes.",
+        "incorrect": {
+          "D": "Segregated lists reduce but don't eliminate internal fragmentation."
+        }
+      },
+      "source_notes": [
+        "[[Segregated Lists]]"
+      ]
+    },
+    {
+      "id": 16,
+      "text": "What is the main drawback of the 'best fit' strategy?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "It's too simple and doesn't optimize memory usage",
+          "concepts": [
+            "Best Fit",
+            "Simple"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "It requires an exhaustive search of the free list, causing performance penalty",
+          "concepts": [
+            "Best Fit",
+            "Exhaustive Search",
+            "Performance Penalty"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "It always leaves the largest chunks unused",
+          "concepts": [
+            "Best Fit",
+            "Worst Fit"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "It cannot handle variable-sized requests",
+          "concepts": [
+            "Best Fit",
+            "Fixed-sized"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The main drawback of best fit is that naive implementations pay a heavy performance penalty when performing an exhaustive search for the correct free block (smallest suitable one).",
+        "incorrect": {
+          "A": "Best fit actually tries to optimize memory usage, but at a performance cost.",
+          "C": "This describes worst fit, not best fit.",
+          "D": "Best fit handles variable-sized requests; that's what it's designed for."
+        }
+      },
+      "source_notes": [
+        "[[Best Fit]]"
+      ]
+    },
+    {
+      "id": 17,
+      "text": "What is a downside of buddy allocation?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "It requires searching the entire free list",
+          "concepts": [
+            "Buddy Allocation",
+            "Search"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "It can suffer from internal fragmentation due to power-of-two sized blocks",
+          "concepts": [
+            "Buddy Allocation",
+            "Internal Fragmentation",
+            "Power-of-Two"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "It cannot coalesce freed blocks",
+          "concepts": [
+            "Buddy Allocation",
+            "Coalescing"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "It only works with fixed-sized pages",
+          "concepts": [
+            "Buddy Allocation",
+            "Fixed-sized Pages"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "A downside of buddy allocation is that it can suffer from internal fragmentation, as you are only allowed to give out power-of-two sized blocks. If a request doesn't match a power-of-two size, the remainder is wasted.",
+        "incorrect": {
+          "A": "Buddy allocation doesn't search the entire free list; it uses recursive splitting.",
+          "C": "Buddy allocation explicitly supports coalescing (checking if the 'buddy' is free).",
+          "D": "Buddy allocation works with variable-sized blocks (powers of two), not just fixed-sized pages."
+        }
+      },
+      "source_notes": [
+        "[[Buddy Allocation]]"
+      ]
+    },
+    {
+      "id": 18,
+      "text": "What is the goal of an ideal memory allocator? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Be fast (low overhead)",
+          "concepts": [
+            "Free Space Management",
+            "Speed",
+            "Overhead"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Minimize fragmentation",
+          "concepts": [
+            "Free Space Management",
+            "Fragmentation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Maximize context switching",
+          "concepts": [
+            "Free Space Management",
+            "Context Switching"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Support arbitrary allocation and free request streams",
+          "concepts": [
+            "Free Space Management",
+            "Multiple Requests"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "explanation": {
+        "correct": "An ideal allocator: 1) Is fast (low overhead), 2) Minimizes fragmentation (both internal and external), 3) Supports arbitrary streams of allocation and free requests from programmers.",
+        "incorrect": {
+          "C": "Context switching is unrelated to memory allocation goals."
+        }
+      },
+      "source_notes": [
+        "[[Free Space Management]]"
+      ]
+    },
+    {
+      "id": 19,
+      "text": "How does the slab allocator avoid frequent initialization and destruction cycles?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "By using a single free list for all objects",
+          "concepts": [
+            "Slab Allocator",
+            "Free List"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "By maintaining dedicated object caches that persist between allocations",
+          "concepts": [
+            "Slab Allocator",
+            "Object Cache",
+            "Initialization"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "By always allocating the largest available block",
+          "concepts": [
+            "Slab Allocator",
+            "Worst Fit"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "By splitting memory recursively",
+          "concepts": [
+            "Slab Allocator",
+            "Recursive Splitting"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The slab allocator avoids frequent initialization/destruction cycles by maintaining dedicated object caches for frequently used kernel objects. When objects are freed, they return to the cache and can be reused without reinitialization.",
+        "incorrect": {
+          "A": "A single free list doesn't avoid init/destruction cycles.",
+          "C": "This describes worst fit, not slab allocation.",
+          "D": "This describes buddy allocation, not slab allocation."
+        }
+      },
+      "source_notes": [
+        "[[Slab Allocator]]"
+      ]
+    },
+    {
+      "id": 20,
+      "text": "What happens during memory deallocation with a free list?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "The memory library frees the pointer, calculates size, adds to free list, and coalesces adjacent free blocks",
+          "concepts": [
+            "Free List",
+            "Coalescing",
+            "Free Space Tracking"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "The memory is immediately returned to the operating system",
+          "concepts": [
+            "Free List",
+            "OS"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "The page table entry is updated to invalid",
+          "concepts": [
+            "Free List",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "The base and bounds registers are updated",
+          "concepts": [
+            "Free List",
+            "Base and Bounds"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": {
+        "correct": "During deallocation with a free list: 1) The memory library frees the pointer, 2) Calculates the size of the free region, 3) Adds it to the free list, 4) Coalesces adjacent free blocks to reduce fragmentation.",
+        "incorrect": {
+          "B": "Memory is typically returned to the free list, not directly to the OS.",
+          "C": "Page table updates happen during address translation, not deallocation.",
+          "D": "Base and bounds registers are used in segmentation, not free-space management."
+        }
+      },
+      "source_notes": [
+        "[[Free List]]",
+        "[[Free Space Management]]"
+      ]
+    }
+  ]
+}

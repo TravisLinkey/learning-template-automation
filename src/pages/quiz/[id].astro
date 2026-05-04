@@ -1,0 +1,384 @@
+---
+import { readFile } from 'fs/promises';
+import { resolve } from 'path';
+import type { Quiz } from '../../utils/quiz-json-parser';
+
+export async function getStaticPaths() {
+  const QUIZ_DIR = resolve(process.cwd(), 'quizes');
+  const { readdir } = await import('fs/promises');
+  
+  const files = await readdir(QUIZ_DIR);
+  const jsonFiles = files.filter(f => f.endsWith('.json'));
+  
+  return jsonFiles.map(file => ({
+    params: { id: file.replace('.json', '') },
+  }));
+}
+
+const { id } = Astro.params;
+const QUIZ_DIR = resolve(process.cwd(), 'quizes');
+const filePath = resolve(QUIZ_DIR, `${id}.json`);
+
+let quiz: Quiz | null = null;
+let error: string | null = null;
+let quizData: string = 'null';
+
+try {
+  const content = await readFile(filePath, 'utf-8');
+  quiz = JSON.parse(content);
+  // Serialize quiz data for client-side use (without the heavy content)
+  if (quiz) {
+    const clientQuiz = {
+      metadata: quiz.metadata,
+      questions: quiz.questions.map(q => {
+        // Shuffle options and reassign keys (A, B, C, D)
+        const shuffledOptions = [...q.options]
+          .map((opt, idx) => ({ ...opt, originalKey: opt.key }))
+          .sort(() => Math.random() - 0.5)
+          .map((opt, idx) => ({ 
+            key: String.fromCharCode(65 + idx), // Reassign A, B, C, D
+            text: opt.text,
+            originalKey: opt.originalKey
+          }));
+        
+        // Map correct_answers to new keys
+        const keyMapping = {};
+        shuffledOptions.forEach(opt => {
+          keyMapping[opt.originalKey] = opt.key;
+        });
+        
+        const newCorrectAnswers = q.correct_answers.map(origKey => keyMapping[origKey]).filter(Boolean);
+        
+        return {
+          id: q.id,
+          text: q.text,
+          type: q.type,
+          options: shuffledOptions.map(({ key, text }) => ({ key, text })),
+          correct_answers: newCorrectAnswers,
+          explanation: q.explanation
+        };
+      })
+    };
+    quizData = JSON.stringify(clientQuiz);
+  }
+} catch (err) {
+  error = `Failed to load quiz: ${err instanceof Error ? err.message : 'Unknown error'}`;
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{quiz?.metadata?.topic || 'Quiz'} - Quiz Collection</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: #f5f5f5;
+        line-height: 1.6;
+      }
+      .back-link {
+        display: inline-block;
+        margin-bottom: 2rem;
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .back-link:hover { text-decoration: underline; }
+      
+      .quiz-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        border: 2px solid #e0e0e0;
+        margin-bottom: 2rem;
+      }
+      h1 { color: #2c3e50; margin-bottom: 1rem; }
+      
+      .quiz-meta {
+        display: flex; gap: 1rem; flex-wrap: wrap;
+        color: #666; font-size: 0.9rem;
+      }
+      .quiz-meta span {
+        background: #f0f0f0; padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+      }
+      .subject-badge {
+        background: #3498db !important; color: white !important;
+      }
+      .question-count {
+        background: #2ecc71 !important; color: white !important;
+      }
+      
+      .question-card {
+        background: white; padding: 2rem; border-radius: 8px;
+        border: 2px solid #e0e0e0; margin-bottom: 2rem;
+      }
+      .question-text {
+        font-size: 1.2rem; font-weight: 500;
+        color: #2c3e50; margin-bottom: 1.5rem;
+      }
+      .question-number {
+        display: inline-block; background: #3498db; color: white;
+        padding: 0.25rem 0.75rem; border-radius: 4px;
+        font-size: 0.9rem; margin-right: 0.5rem;
+      }
+      
+      .options { display: flex; flex-direction: column; gap: 0.75rem; }
+      .option-label {
+        display: flex; align-items: flex-start; gap: 1rem;
+        padding: 1rem; border: 2px solid #e0e0e0;
+        border-radius: 6px; cursor: pointer; transition: all 0.2s;
+      }
+      .option-label:hover {
+        background: #f0f7ff; border-color: #3498db;
+      }
+      .option-label.selected {
+        background: #e8f4f8; border-color: #3498db;
+      }
+      .option-label.correct {
+        background: #d4edda; border-color: #28a745;
+      }
+      .option-label.incorrect {
+        background: #f8d7da; border-color: #dc3545;
+      }
+      .option-input { margin-top: 0.25rem; }
+      .option-key {
+        font-weight: 600; color: #3498db;
+        min-width: 2rem;
+      }
+      .option-text { flex: 1; }
+      
+      .submit-section {
+        text-align: center; margin: 3rem 0;
+      }
+      .submit-btn {
+        background: #3498db; color: white; border: none;
+        padding: 1rem 3rem; font-size: 1.1rem;
+        border-radius: 6px; cursor: pointer; font-weight: 600;
+        transition: background 0.2s;
+      }
+      .submit-btn:hover { background: #2980b9; }
+      .submit-btn:disabled {
+        background: #95a5a6; cursor: not-allowed;
+      }
+      
+      .results {
+        background: white; padding: 2rem; border-radius: 8px;
+        border: 2px solid #e0e0e0; margin-top: 2rem;
+        display: none;
+      }
+      .results.show { display: block; }
+      .score {
+        text-align: center; font-size: 2rem; font-weight: 700;
+        margin-bottom: 1rem;
+      }
+      .score.excellent { color: #27ae60; }
+      .score.good { color: #f39c12; }
+      .score.poor { color: #e74c3c; }
+      
+      .explanation {
+        background: #f8f9fa; padding: 1rem; border-radius: 4px;
+        margin-top: 1rem; border-left: 3px solid #3498db;
+      }
+      
+      .error {
+        background: #fee; border: 2px solid #e74c3c;
+        padding: 2rem; border-radius: 8px; color: #c0392b;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="/quiz" class="back-link">← Back to Quiz Collection</a>
+    
+    {error ? (
+      <div class="error">
+        <h2>Error Loading Quiz</h2>
+        <p>{error}</p>
+      </div>
+    ) : quiz ? (
+      <>
+        <div class="quiz-header">
+          <h1>{quiz.metadata.topic}</h1>
+          <div class="quiz-meta">
+            <span class="subject-badge">{quiz.metadata.subject}</span>
+            <span class="question-count">{quiz.metadata.question_count} questions</span>
+            {quiz.metadata.estimated_time_minutes && (
+              <span>{quiz.metadata.estimated_time_minutes} min</span>
+            )}
+            {quiz.metadata.chapters && (
+              <span>Chapters: {quiz.metadata.chapters.join(', ')}</span>
+            )}
+          </div>
+        </div>
+        
+        <form id="quiz-form" data-quiz={quizData}>
+          {quiz.questions.map((question, qIndex) => {
+            // Shuffle options and reassign keys (A, B, C, D) based on new order
+            const shuffledOptions = [...question.options]
+              .map((opt, idx) => ({ ...opt, originalKey: opt.key }))
+              .sort(() => Math.random() - 0.5)
+              .map((opt, idx) => ({ ...opt, key: String.fromCharCode(65 + idx) })); // Reassign A, B, C, D
+            return (
+              <div class="question-card" data-question-id={question.id}>
+                <div class="question-text">
+                  <span class="question-number">Q{qIndex + 1}</span>
+                  {question.text}
+                </div>
+                <div class="options">
+                  {shuffledOptions.map((option) => (
+                    <label class="option-label" data-option-key={option.key}>
+                      <input 
+                        type={question.type === 'multiple' ? 'checkbox' : 'radio'}
+                        name={question.id}
+                        value={option.key}
+                        class="option-input"
+                      />
+                      <span class="option-key">{option.key}</span>
+                      <span class="option-text">{option.text}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+          
+          <div class="submit-section">
+            <button type="submit" class="submit-btn" id="submit-btn">
+              Submit Quiz
+            </button>
+          </div>
+        </form>
+        
+        <div class="results" id="results">
+          <div class="score" id="score-display"></div>
+          <div id="results-details"></div>
+        </div>
+      </>
+    ) : (
+      <div class="error">
+        <p>Quiz not found.</p>
+      </div>
+    )}
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('quiz-form');
+        const resultsDiv = document.getElementById('results');
+        const scoreDisplay = document.getElementById('score-display');
+        const submitBtn = document.getElementById('submit-btn');
+        
+        // Get quiz data from form data attribute
+        const quizData = JSON.parse(form?.dataset.quiz || 'null');
+        
+        if (!quizData || !quizData.questions) {
+          console.error('No quiz data found');
+          return;
+        }
+        
+      // Build correct answers map
+      const correctAnswers = {};
+      const explanations = {};
+      quizData.questions.forEach(q => {
+        correctAnswers[q.id] = q.correct_answers;
+        explanations[q.id] = q.explanation;
+      });
+      
+      // Handle option selection styling
+      document.querySelectorAll('.option-label input').forEach(input => {
+        input.addEventListener('change', (e) => {
+          const label = e.target.closest('.option-label');
+          const questionCard = label.closest('.question-card');
+          
+          // For radio buttons, remove selected from siblings
+          if (e.target.type === 'radio') {
+            questionCard.querySelectorAll('.option-label').forEach(l => {
+              l.classList.remove('selected');
+            });
+          }
+          
+          label.classList.toggle('selected', e.target.checked);
+        });
+      });
+        
+        form?.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          if (!confirm('Are you sure you want to submit the quiz?')) return;
+          
+          let correctCount = 0;
+          const totalQuestions = Object.keys(correctAnswers).length;
+          
+          // Clear previous results
+          document.querySelectorAll('.option-label').forEach(el => {
+            el.classList.remove('correct', 'incorrect', 'selected');
+          });
+          
+          // Check each question
+          for (const [questionId, correctAns] of Object.entries(correctAnswers)) {
+            const questionCard = document.querySelector(`[data-question-id="${questionId}"]`);
+            const selectedInputs = questionCard?.querySelectorAll(`input[name="${questionId}"]:checked`);
+            const selectedValues = Array.from(selectedInputs || []).map(input => input.value);
+            
+            const isCorrect = JSON.stringify(selectedValues.sort()) === JSON.stringify([...correctAns].sort());
+            
+            if (isCorrect) {
+              correctCount++;
+              // Show correct answers
+              correctAns.forEach((key) => {
+                const optionLabel = questionCard?.querySelector(`[data-option-key="${key}"]`);
+                optionLabel?.classList.add('correct');
+              });
+            } else {
+              // Show correct and incorrect
+              correctAns.forEach((key) => {
+                const optionLabel = questionCard?.querySelector(`[data-option-key="${key}"]`);
+                optionLabel?.classList.add('correct');
+              });
+              selectedValues.forEach((key) => {
+                if (!correctAns.includes(key)) {
+                  const optionLabel = questionCard?.querySelector(`[data-option-key="${key}"]`);
+                  optionLabel?.classList.add('incorrect');
+                }
+              });
+            }
+            
+            // Show explanation
+            const explanation = explanations[questionId];
+            if (explanation) {
+              const existing = questionCard?.querySelector('.explanation');
+              if (existing) existing.remove();
+              
+              const expDiv = document.createElement('div');
+              expDiv.className = 'explanation';
+              const expText = isCorrect ? explanation.correct : (explanation.incorrect[selectedValues[0]] || explanation.correct);
+              expDiv.innerHTML = `<strong>Explanation:</strong> ${expText}`;
+              questionCard?.appendChild(expDiv);
+            }
+          }
+          
+          // Disable form
+          form.querySelectorAll('input').forEach(input => input.disabled = true);
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Quiz Submitted';
+          }
+          
+          // Show results
+          const score = Math.round((correctCount / totalQuestions) * 100);
+          if (scoreDisplay) {
+            scoreDisplay.textContent = `${score}% (${correctCount}/${totalQuestions})`;
+            scoreDisplay.className = `score ${score >= 80 ? 'excellent' : score >= 60 ? 'good' : 'poor'}`;
+          }
+          if (resultsDiv) resultsDiv.classList.add('show');
+          
+          // Scroll to results
+          resultsDiv?.scrollIntoView({ behavior: 'smooth' });
+        });
+      }); // end DOMContentLoaded
+    </script>
+  </body>
+</html>

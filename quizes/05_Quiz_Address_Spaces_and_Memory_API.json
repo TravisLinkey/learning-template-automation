@@ -1,0 +1,1591 @@
+{
+  "metadata": {
+    "id": "Quiz_05_Address_Spaces_and_Memory_API",
+    "subject": "Operating Systems",
+    "topic": "Address Spaces and Memory API (Chapters 13-14)",
+    "chapters": [
+      13,
+      14
+    ],
+    "created": "2026-04-30",
+    "question_count": 20,
+    "difficulty_distribution": {
+      "easy": 7,
+      "medium": 7,
+      "hard": 6
+    },
+    "coverage": {
+      "notes": {
+        "[[Address Space]]": {
+          "questions": 4,
+          "concepts": [
+            "Address Space",
+            "Code",
+            "Stack",
+            "Heap",
+            "Private Memory"
+          ]
+        },
+        "[[Virtualizing Memory]]": {
+          "questions": 3,
+          "concepts": [
+            "Virtualizing Memory",
+            "Transparency",
+            "Efficiency",
+            "Protection"
+          ]
+        },
+        "[[Address Translation]]": {
+          "questions": 5,
+          "concepts": [
+            "Address Translation",
+            "Virtual Address",
+            "Physical Address",
+            "Base and Bounds",
+            "Free List",
+            "Context Switch"
+          ]
+        },
+        "[[Base and Bounds]]": {
+          "questions": 5,
+          "concepts": [
+            "Base and Bounds",
+            "Dynamic Relocation",
+            "Physical Address",
+            "Bounds Register",
+            "Memory Virtualization"
+          ]
+        },
+        "[[Page Table]]": {
+          "questions": 3,
+          "concepts": [
+            "Page Table",
+            "VPN",
+            "PFN",
+            "Valid Bit",
+            "Protection Bits"
+          ]
+        },
+        "[[Virtual Address Translation Process]]": {
+          "questions": 3,
+          "concepts": [
+            "Virtual Address Translation",
+            "VPN",
+            "Offset",
+            "PFN"
+          ]
+        },
+        "[[VAX Page Table Entry]]": {
+          "questions": 1,
+          "concepts": [
+            "Page Table",
+            "PTE",
+            "PFN",
+            "Valid Bit"
+          ]
+        }
+      },
+      "concepts": {
+        "Address Space": {
+          "count": 5,
+          "questions": [
+            1,
+            2,
+            9,
+            14,
+            15
+          ]
+        },
+        "Private Memory": {
+          "count": 1,
+          "questions": [
+            1
+          ]
+        },
+        "Process Isolation": {
+          "count": 1,
+          "questions": [
+            1
+          ]
+        },
+        "Shared Memory": {
+          "count": 1,
+          "questions": [
+            1
+          ]
+        },
+        "Kernel": {
+          "count": 1,
+          "questions": [
+            1
+          ]
+        },
+        "Hardware Devices": {
+          "count": 1,
+          "questions": [
+            1
+          ]
+        },
+        "Code": {
+          "count": 1,
+          "questions": [
+            2
+          ]
+        },
+        "Stack": {
+          "count": 2,
+          "questions": [
+            2,
+            9
+          ]
+        },
+        "Heap": {
+          "count": 2,
+          "questions": [
+            2,
+            15
+          ]
+        },
+        "Page Table": {
+          "count": 1,
+          "questions": [
+            2
+          ]
+        },
+        "Virtualizing Memory": {
+          "count": 3,
+          "questions": [
+            3,
+            14
+          ]
+        },
+        "Transparency": {
+          "count": 1,
+          "questions": [
+            3
+          ]
+        },
+        "Efficiency": {
+          "count": 1,
+          "questions": [
+            3
+          ]
+        },
+        "Protection": {
+          "count": 1,
+          "questions": [
+            3
+          ]
+        },
+        "Isolation": {
+          "count": 1,
+          "questions": [
+            3
+          ]
+        },
+        "Flexibility": {
+          "count": 1,
+          "questions": [
+            3
+          ]
+        },
+        "Performance": {
+          "count": 1,
+          "questions": [
+            3
+          ]
+        },
+        "Address Translation": {
+          "count": 5,
+          "questions": [
+            4,
+            5,
+            10,
+            17
+          ]
+        },
+        "Virtual Address": {
+          "count": 3,
+          "questions": [
+            4,
+            7,
+            12
+          ]
+        },
+        "Physical Address": {
+          "count": 4,
+          "questions": [
+            4,
+            7,
+            13,
+            17
+          ]
+        },
+        "Memory Allocation": {
+          "count": 1,
+          "questions": [
+            4
+          ]
+        },
+        "Process Switching": {
+          "count": 1,
+          "questions": [
+            4
+          ]
+        },
+        "Free List": {
+          "count": 1,
+          "questions": [
+            5
+          ]
+        },
+        "Memory Deallocation": {
+          "count": 1,
+          "questions": [
+            5
+          ]
+        },
+        "Context Switch": {
+          "count": 2,
+          "questions": [
+            5,
+            10
+          ]
+        },
+        "Exception Handlers": {
+          "count": 1,
+          "questions": [
+            5
+          ]
+        },
+        "Base and Bounds": {
+          "count": 6,
+          "questions": [
+            6,
+            7,
+            8,
+            10,
+            13,
+            17
+          ]
+        },
+        "Memory Virtualization": {
+          "count": 1,
+          "questions": [
+            6
+          ]
+        },
+        "TLB": {
+          "count": 2,
+          "questions": [
+            6,
+            11
+          ]
+        },
+        "Dynamic Relocation": {
+          "count": 2,
+          "questions": [
+            8,
+            17
+          ]
+        },
+        "Physical Memory": {
+          "count": 2,
+          "questions": [
+            8,
+            14
+          ]
+        },
+        "Function Call Chain": {
+          "count": 1,
+          "questions": [
+            9
+          ]
+        },
+        "Variable Allocation": {
+          "count": 1,
+          "questions": [
+            9
+          ]
+        },
+        "Parameter Passing": {
+          "count": 1,
+          "questions": [
+            9
+          ]
+        },
+        "PCB": {
+          "count": 1,
+          "questions": [
+            10
+          ]
+        },
+        "VPN": {
+          "count": 3,
+          "questions": [
+            12,
+            16,
+            20
+          ]
+        },
+        "Offset": {
+          "count": 3,
+          "questions": [
+            12,
+            19,
+            20
+          ]
+        },
+        "PFN": {
+          "count": 3,
+          "questions": [
+            12,
+            16,
+            20
+          ]
+        },
+        "Bounds Register": {
+          "count": 1,
+          "questions": [
+            13
+          ]
+        },
+        "Valid Bit": {
+          "count": 1,
+          "questions": [
+            18
+          ]
+        },
+        "Protection Bits": {
+          "count": 1,
+          "questions": [
+            18
+          ]
+        },
+        "Virtual Address Translation": {
+          "count": 4,
+          "questions": [
+            12,
+            16,
+            19,
+            20
+          ]
+        },
+        "Page Size": {
+          "count": 1,
+          "questions": [
+            16
+          ]
+        },
+        "Access Permissions": {
+          "count": 1,
+          "questions": [
+            19
+          ]
+        },
+        "Binary": {
+          "count": 1,
+          "questions": [
+            20
+          ]
+        },
+        "Decimal": {
+          "count": 1,
+          "questions": [
+            20
+          ]
+        }
+      },
+      "by_chapter": {
+        "13": {
+          "notes": [
+            "[[Address Space]]",
+            "[[Virtualizing Memory]]"
+          ],
+          "question_count": 5
+        },
+        "14": {
+          "notes": [
+            "[[Address Translation]]",
+            "[[Base and Bounds]]",
+            "[[Page Table]]",
+            "[[Virtual Address Translation Process]]",
+            "[[VAX Page Table Entry]]"
+          ],
+          "question_count": 15
+        }
+      },
+      "topic_emphasis": {
+        "Address Space": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Private Memory": {
+          "current_difficulty": "easy",
+          "recommendation": "add_more",
+          "reason": "Only 1 question"
+        },
+        "Process Isolation": {
+          "current_difficulty": "easy",
+          "recommendation": "add_more",
+          "reason": "Only 1 question"
+        },
+        "Virtualizing Memory": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Address Translation": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Base and Bounds": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Page Table": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Virtual Address Translation": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        }
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "What is the main purpose of an address space in operating systems?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "To provide a shared memory space for all processes",
+          "concepts": [
+            "Address Space",
+            "Shared Memory"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "To provide each process with a private, potentially large view of memory",
+          "concepts": [
+            "Address Space",
+            "Private Memory",
+            "Process Isolation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "To store the operating system kernel code",
+          "concepts": [
+            "Address Space",
+            "Kernel"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "To manage physical hardware devices",
+          "concepts": [
+            "Address Space",
+            "Hardware Devices"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "An address space is a running process's private view of memory provided by the operating system, allowing multiple processes to share physical memory while maintaining the illusion of private memory.",
+        "incorrect": {
+          "A": "Address spaces are private to each process, not shared among all processes.",
+          "C": "The kernel has its own protected memory space, but the address space abstraction is for user processes.",
+          "D": "Hardware device management is handled separately through device drivers and I/O systems."
+        }
+      },
+      "source_notes": [
+        "[[Address Space]]",
+        "[[Virtualizing Memory]]"
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Which of the following are components of an address space? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "Code (instructions)",
+          "concepts": [
+            "Address Space",
+            "Code"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Stack",
+          "concepts": [
+            "Address Space",
+            "Stack"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Heap",
+          "concepts": [
+            "Address Space",
+            "Heap"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Page Table",
+          "concepts": [
+            "Address Space",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "explanation": {
+        "correct": "An address space consists of three main components: Code (the instructions), Stack (for function calls, variable allocation, parameter passing), and Heap (for dynamic memory allocation).",
+        "incorrect": {
+          "D": "The page table is a data structure used by the OS to map virtual to physical addresses, but it is not part of the address space itself."
+        }
+      },
+      "source_notes": [
+        "[[Address Space]]"
+      ]
+    },
+    {
+      "id": 3,
+      "text": "What are the three goals of virtualizing memory?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Speed, Efficiency, Security",
+          "concepts": [
+            "Virtualizing Memory",
+            "Speed",
+            "Security"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Transparency, Efficiency, Protection",
+          "concepts": [
+            "Virtualizing Memory",
+            "Transparency",
+            "Efficiency",
+            "Protection"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Isolation, Speed, Flexibility",
+          "concepts": [
+            "Virtualizing Memory",
+            "Isolation",
+            "Flexibility"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Transparency, Performance, Sharing",
+          "concepts": [
+            "Virtualizing Memory",
+            "Transparency",
+            "Performance"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The three goals of virtualizing memory are: 1) Transparency (invisible to the running program), 2) Efficiency (program should not run slowly and uses space efficiently), 3) Protection (processes should be isolated from one another).",
+        "incorrect": {
+          "A": "While speed and security are important, these are not the three formal goals defined for virtualizing memory.",
+          "C": "Isolation is part of protection, but speed and flexibility are not the formal goals.",
+          "D": "Transparency is correct, but performance is too vague and sharing contradicts the isolation goal."
+        }
+      },
+      "source_notes": [
+        "[[Virtualizing Memory]]"
+      ]
+    },
+    {
+      "id": 4,
+      "text": "What is address translation?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "Converting physical addresses to virtual addresses",
+          "concepts": [
+            "Address Translation",
+            "Physical Address",
+            "Virtual Address"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Converting virtual addresses to physical addresses",
+          "concepts": [
+            "Address Translation",
+            "Virtual Address",
+            "Physical Address"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Allocating memory for new processes",
+          "concepts": [
+            "Address Translation",
+            "Memory Allocation"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Switching between different processes",
+          "concepts": [
+            "Address Translation",
+            "Process Switching"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Address translation is the process where the hardware transforms the virtual address provided by the instruction to a physical address where the desired information is actually located.",
+        "incorrect": {
+          "A": "Address translation goes from virtual to physical, not the reverse direction.",
+          "C": "Memory allocation is a separate OS function managed through malloc()/free().",
+          "D": "Process switching is context switching, which is a different mechanism."
+        }
+      },
+      "source_notes": [
+        "[[Address Translation]]"
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Which steps are involved in hardware-based address translation? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Finding space for address space in memory using a free list",
+          "concepts": [
+            "Address Translation",
+            "Free List",
+            "Memory Allocation"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Putting memory back on the free list when process terminates",
+          "concepts": [
+            "Address Translation",
+            "Free List",
+            "Memory Deallocation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Saving and restoring base/bounds registers during context switches",
+          "concepts": [
+            "Address Translation",
+            "Context Switch",
+            "Base and Bounds"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Providing exception handlers for unexpected occurrences",
+          "concepts": [
+            "Address Translation",
+            "Exception Handlers"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "explanation": {
+        "correct": "All four steps are required for hardware-based address translation: 1) Finding space using free list when process created, 2) Returning memory to free list when terminated, 3) Saving/restoring base & bounds during context switches, 4) Providing exception handlers for errors."
+      },
+      "source_notes": [
+        "[[Address Translation]]"
+      ]
+    },
+    {
+      "id": 6,
+      "text": "What is the purpose of the base and bounds registers?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "To store the page table entries",
+          "concepts": [
+            "Base and Bounds",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "To provide simple and efficient virtualization of memory",
+          "concepts": [
+            "Base and Bounds",
+            "Memory Virtualization",
+            "Efficiency"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "To track which pages are in physical memory",
+          "concepts": [
+            "Base and Bounds",
+            "Physical Memory",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "To manage the translation lookaside buffer",
+          "concepts": [
+            "Base and Bounds",
+            "TLB"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The base and bounds registers provide a simple and efficient virtualization of memory. The base register transforms virtual addresses to physical addresses (base + virtual address = physical address), and the bounds/limit register ensures addresses are within the address space.",
+        "incorrect": {
+          "A": "Page table entries are stored in the page table data structure, not in base/bounds registers.",
+          "C": "Tracking which pages are in physical memory is done by the page table.",
+          "D": "The TLB is a separate hardware cache for recent address translations."
+        }
+      },
+      "source_notes": [
+        "[[Base and Bounds]]"
+      ]
+    },
+    {
+      "id": 7,
+      "text": "How is the physical address calculated using base and bounds?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "physical address = virtual address - base",
+          "concepts": [
+            "Base and Bounds",
+            "Physical Address",
+            "Virtual Address"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "physical address = base + virtual address",
+          "concepts": [
+            "Base and Bounds",
+            "Physical Address",
+            "Base Register"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "physical address = base * virtual address",
+          "concepts": [
+            "Base and Bounds",
+            "Multiplication"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "physical address = virtual address / base",
+          "concepts": [
+            "Base and Bounds",
+            "Division"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The physical address is calculated by adding the contents of the base register to the virtual address: base + virtual address = physical address.",
+        "incorrect": {
+          "A": "Subtracting the base would give an incorrect lower address.",
+          "C": "Multiplication is not used in base and bounds address calculation.",
+          "D": "Division is not used in base and bounds address calculation."
+        }
+      },
+      "source_notes": [
+        "[[Base and Bounds]]"
+      ]
+    },
+    {
+      "id": 8,
+      "text": "What is dynamic relocation?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Moving the address space while the process is running",
+          "concepts": [
+            "Base and Bounds",
+            "Dynamic Relocation",
+            "Process Running"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "The technique of base and bounds where address spaces can be placed anywhere in physical memory",
+          "concepts": [
+            "Base and Bounds",
+            "Dynamic Relocation",
+            "Physical Memory"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Allocating memory dynamically on the heap",
+          "concepts": [
+            "Base and Bounds",
+            "Heap Allocation"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Changing page table entries during execution",
+          "concepts": [
+            "Base and Bounds",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Dynamic relocation refers to the base and bounds technique where address spaces can be placed anywhere in physical memory and can even be moved after the process has started running, because the hardware adds the base register at runtime.",
+        "incorrect": {
+          "A": "While you can move an address space, the process is stopped first, not moved while actively running.",
+          "C": "Heap allocation is a different concept related to dynamic memory management.",
+          "D": "Changing page table entries is part of paging, not base and bounds relocation."
+        }
+      },
+      "source_notes": [
+        "[[Base and Bounds]]"
+      ]
+    },
+    {
+      "id": 9,
+      "text": "Which of the following are true about the stack in an address space? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Keeps track of the function call chain",
+          "concepts": [
+            "Address Space",
+            "Stack",
+            "Function Call Chain"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Allocates variables",
+          "concepts": [
+            "Address Space",
+            "Stack",
+            "Variable Allocation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Passes parameters and return values to and from routines",
+          "concepts": [
+            "Address Space",
+            "Stack",
+            "Parameter Passing"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Stores the heap allocation metadata",
+          "concepts": [
+            "Address Space",
+            "Heap",
+            "Metadata"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "explanation": {
+        "correct": "The stack in an address space: 1) Keeps track of the function call chain, 2) Allocates variables, 3) Passes parameters and return values to and from routines.",
+        "incorrect": {
+          "D": "Heap allocation metadata is typically stored in a separate data structure (like a free list or header blocks), not in the stack."
+        }
+      },
+      "source_notes": [
+        "[[Address Space]]"
+      ]
+    },
+    {
+      "id": 10,
+      "text": "What happens during a context switch with base and bounds registers?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "The OS saves and restores the base/bounds pair using the process control block",
+          "concepts": [
+            "Address Translation",
+            "Context Switch",
+            "Base and Bounds",
+            "PCB"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "The hardware automatically switches the base/bounds registers",
+          "concepts": [
+            "Address Translation",
+            "Context Switch",
+            "Hardware"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "The page table is switched instead",
+          "concepts": [
+            "Address Translation",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Nothing needs to be done for base/bounds",
+          "concepts": [
+            "Address Translation",
+            "Base and Bounds"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": {
+        "correct": "During a context switch, the OS must save and restore the base/bounds pair using a per-process structure such as a Process Control Block (PCB).",
+        "incorrect": {
+          "B": "The hardware does not automatically switch base/bounds - the OS must do this explicitly.",
+          "C": "Page tables are used in paging, not in base and bounds addressing.",
+          "D": "Base/bounds must be switched per-process, otherwise processes would access the wrong memory."
+        }
+      },
+      "source_notes": [
+        "[[Address Translation]]"
+      ]
+    },
+    {
+      "id": 11,
+      "text": "What is the role of the page table in virtualizing memory?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "To store the base and bounds registers",
+          "concepts": [
+            "Page Table",
+            "Base and Bounds"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "To map virtual addresses to physical addresses",
+          "concepts": [
+            "Page Table",
+            "Virtual Address",
+            "Physical Address"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "To allocate memory on the heap",
+          "concepts": [
+            "Page Table",
+            "Heap Allocation"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "To manage the translation lookaside buffer",
+          "concepts": [
+            "Page Table",
+            "TLB"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The page table is a per-process data structure used to map virtual addresses to physical addresses. It stores address translations for each of the virtual pages of the address space.",
+        "incorrect": {
+          "A": "Base and bounds registers are separate from the page table.",
+          "C": "Heap allocation is done through malloc()/free(), not the page table.",
+          "D": "The TLB caches recent page table lookups, but the page table itself is the mapping structure."
+        }
+      },
+      "source_notes": [
+        "[[Page Table]]"
+      ]
+    },
+    {
+      "id": 12,
+      "text": "How does the virtual address translation process work? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "Split virtual address into Virtual Page Number (VPN) and offset",
+          "concepts": [
+            "Virtual Address Translation",
+            "VPN",
+            "Offset"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Use VPN to index into the page table",
+          "concepts": [
+            "Virtual Address Translation",
+            "VPN",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Page table returns the corresponding physical frame number (PFN)",
+          "concepts": [
+            "Virtual Address Translation",
+            "Page Table",
+            "PFN"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Combine PFN with the offset to get the final physical address",
+          "concepts": [
+            "Virtual Address Translation",
+            "Offset",
+            "Physical Address"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "explanation": {
+        "correct": "The virtual address translation process: 1) Split virtual address into VPN and offset, 2) Use VPN to index into page table, 3) Page table returns PFN (physical frame number), 4) Combine PFN with offset to produce final physical address."
+      },
+      "source_notes": [
+        "[[Virtual Address Translation Process]]",
+        "[[Page Table]]"
+      ]
+    },
+    {
+      "id": 13,
+      "text": "What is the purpose of the bound (limit) register in base and bounds?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "To store the physical address",
+          "concepts": [
+            "Base and Bounds",
+            "Physical Address"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "To ensure addresses are within the confines of the address space",
+          "concepts": [
+            "Base and Bounds",
+            "Bounds Register",
+            "Protection"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "To track free memory",
+          "concepts": [
+            "Base and Bounds",
+            "Free Memory"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "To cache recent translations",
+          "concepts": [
+            "Base and Bounds",
+            "TLB"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The bound (or limit) register ensures that addresses generated by the process are within the confines of its address space, providing protection against accessing memory outside the allocated region.",
+        "incorrect": {
+          "A": "The base register (not bound) is used to calculate the physical address.",
+          "C": "Free memory tracking is done through a free list or similar structure.",
+          "D": "Caching translations is done by the TLB in paged systems."
+        }
+      },
+      "source_notes": [
+        "[[Base and Bounds]]"
+      ]
+    },
+    {
+      "id": 14,
+      "text": "What problem does virtualizing memory solve using paging?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "How to share memory between multiple processes",
+          "concepts": [
+            "Virtualizing Memory",
+            "Shared Memory"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "How to create the illusion of private, large address spaces on top of single physical memory",
+          "concepts": [
+            "Virtualizing Memory",
+            "Private Address Space",
+            "Physical Memory"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "How to speed up memory access",
+          "concepts": [
+            "Virtualizing Memory",
+            "Speed"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "How to allocate memory efficiently",
+          "concepts": [
+            "Virtualizing Memory",
+            "Memory Allocation"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Virtualizing memory solves the problem: 'How can the OS build the abstraction of a private, potentially large address space for multiple running processes (all sharing memory) on top of a single, physical memory?' This is achieved through paging, hardware address translation, and protection.",
+        "incorrect": {
+          "A": "While sharing is possible, the primary goal is creating private address spaces.",
+          "C": "Speed is a goal (efficiency), but not the main problem being solved.",
+          "D": "Efficient allocation is important but is a separate concern from the virtualization abstraction."
+        }
+      },
+      "source_notes": [
+        "[[Virtualizing Memory]]",
+        "[[Address Space]]"
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Which of the following are true about the heap in an address space? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Used to dynamically allocate user-managed memory",
+          "concepts": [
+            "Address Space",
+            "Heap",
+            "Dynamic Allocation"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Keeps track of function calls",
+          "concepts": [
+            "Address Space",
+            "Stack",
+            "Function Calls"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Grows dynamically during program execution",
+          "concepts": [
+            "Address Space",
+            "Heap",
+            "Growth"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Stores the program's instructions",
+          "concepts": [
+            "Address Space",
+            "Code"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "explanation": {
+        "correct": "The heap is used to dynamically allocate user-managed memory and grows during program execution as needed.",
+        "incorrect": {
+          "B": "The stack (not heap) keeps track of function calls.",
+          "D": "The code section (not heap) stores the program's instructions."
+        }
+      },
+      "source_notes": [
+        "[[Address Space]]"
+      ]
+    },
+    {
+      "id": 16,
+      "text": "What is the Virtual Page Number (VPN) used for in address translation?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "To calculate the offset within a page",
+          "concepts": [
+            "Virtual Address Translation",
+            "Offset"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "To index into the page table and find the physical frame number",
+          "concepts": [
+            "Virtual Address Translation",
+            "VPN",
+            "Page Table",
+            "PFN"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "To determine the size of the page",
+          "concepts": [
+            "Virtual Address Translation",
+            "Page Size"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "To validate the memory access permissions",
+          "concepts": [
+            "Virtual Address Translation",
+            "Access Permissions"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The Virtual Page Number (VPN) is used to index into the page table. The page table then returns the corresponding physical frame number (PFN) for that VPN.",
+        "incorrect": {
+          "A": "The offset (not VPN) specifies the location within the page.",
+          "C": "Page size is fixed and known by the hardware, not determined by VPN.",
+          "D": "Access permissions are stored in page table entry bits (like protection bits), not determined by VPN alone."
+        }
+      },
+      "source_notes": [
+        "[[Virtual Address Translation Process]]",
+        "[[Page Table]]"
+      ]
+    },
+    {
+      "id": 17,
+      "text": "Why can the OS move an address space from one location to another in memory?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "Because the hardware uses physical addresses directly",
+          "concepts": [
+            "Address Translation",
+            "Physical Address"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Because the base register is added at runtime, so the process is oblivious to the actual physical location",
+          "concepts": [
+            "Address Translation",
+            "Base Register",
+            "Dynamic Relocation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Because paging handles the translation automatically",
+          "concepts": [
+            "Address Translation",
+            "Paging"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Because the address space is copied to the new location",
+          "concepts": [
+            "Address Translation",
+            "Copy"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The OS can move an address space because with base and bounds (dynamic relocation), the base register is added to the virtual address at runtime. The process is oblivious to its actual physical location - the OS just updates the saved base register in the PCB to point to the new location.",
+        "incorrect": {
+          "A": "The hardware uses virtual addresses (with base added), not physical addresses directly.",
+          "C": "This explanation is about base and bounds, not paging.",
+          "D": "While the address space is copied, the key reason it works is because of dynamic relocation via the base register."
+        }
+      },
+      "source_notes": [
+        "[[Address Translation]]",
+        "[[Base and Bounds]]"
+      ]
+    },
+    {
+      "id": 18,
+      "text": "What information does a page table entry (PTE) typically contain? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "Virtual Page Number (VPN)",
+          "concepts": [
+            "Page Table",
+            "VPN"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Physical Frame Number (PFN)",
+          "concepts": [
+            "Page Table",
+            "PFN"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Valid bit",
+          "concepts": [
+            "Page Table",
+            "Valid Bit"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Protection bits",
+          "concepts": [
+            "Page Table",
+            "Protection Bits"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B",
+        "C",
+        "D"
+      ],
+      "explanation": {
+        "correct": "A page table entry (PTE) typically contains: 1) Physical Frame Number (PFN) - where the page is in physical memory, 2) Valid bit - whether the page is valid/accessible, 3) Protection bits - read/write/execute permissions.",
+        "incorrect": {
+          "A": "The VPN is used as the index to look up the PTE, but is not stored in the PTE itself."
+        }
+      },
+      "source_notes": [
+        "[[Page Table]]",
+        "[[VAX Page Table Entry]]"
+      ]
+    },
+    {
+      "id": 19,
+      "text": "What is the offset in a virtual address used for?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "To determine which page table to use",
+          "concepts": [
+            "Virtual Address Translation",
+            "Offset",
+            "Page Size"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "To specify the location within a page",
+          "concepts": [
+            "Virtual Address Translation",
+            "Offset",
+            "Location Within Page"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "To calculate the physical frame number",
+          "concepts": [
+            "Virtual Address Translation",
+            "PFN"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "To check access permissions",
+          "concepts": [
+            "Virtual Address Translation",
+            "Access Permissions"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The offset specifies the location within a page. After the VPN is translated to a PFN, the offset is combined with the PFN to get the final physical address.",
+        "incorrect": {
+          "A": "The VPN (not offset) determines which page table entry to use.",
+          "C": "The PFN comes from the page table lookup (using VPN), not from the offset.",
+          "D": "Access permissions are checked via protection bits in the page table entry."
+        }
+      },
+      "source_notes": [
+        "[[Virtual Address Translation Process]]"
+      ]
+    },
+    {
+      "id": 20,
+      "text": "Given a virtual address with binary representation where the top bits represent VPN=01 and offset=0101, if the page table maps VPN 01 to PFN 07, what is the physical address in binary?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "010101",
+          "concepts": [
+            "Virtual Address Translation",
+            "Binary",
+            "VPN"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "1110101",
+          "concepts": [
+            "Virtual Address Translation",
+            "Binary",
+            "PFN",
+            "Offset"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "010111",
+          "concepts": [
+            "Virtual Address Translation",
+            "Binary",
+            "VPN"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "07101",
+          "concepts": [
+            "Virtual Address Translation",
+            "Decimal",
+            "Binary"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The physical address is formed by combining PFN 07 (which is 111 in binary) with the offset 0101, resulting in 1110101 in binary (or 117 in decimal).",
+        "incorrect": {
+          "A": "This would be just concatenating VPN and offset without translation.",
+          "C": "This incorrectly uses VPN 01 instead of translated PFN 07.",
+          "D": "This mixes decimal (07) and binary (01) incorrectly."
+        }
+      },
+      "source_notes": [
+        "[[Virtual Address Translation Process]]",
+        "[[Page Table]]"
+      ]
+    }
+  ]
+}

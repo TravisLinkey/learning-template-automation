@@ -1,0 +1,1410 @@
+{
+  "metadata": {
+    "id": "Quiz_06_Address_Translation_and_Segmentation",
+    "subject": "Operating Systems",
+    "topic": "Address Translation and Segmentation (Chapters 15-16)",
+    "chapters": [
+      15,
+      16
+    ],
+    "created": "2026-04-30",
+    "question_count": 20,
+    "difficulty_distribution": {
+      "easy": 7,
+      "medium": 7,
+      "hard": 6
+    },
+    "coverage": {
+      "notes": {
+        "[[Paging]]": {
+          "questions": 8,
+          "concepts": [
+            "Paging",
+            "Fixed-sized Pages",
+            "Page Frames",
+            "External Fragmentation",
+            "Page Table",
+            "TLB",
+            "Multi-Level Page Table"
+          ]
+        },
+        "[[Explicit Segmentation]]": {
+          "questions": 6,
+          "concepts": [
+            "Explicit Segmentation",
+            "Segment Selector",
+            "Base Register",
+            "Offset",
+            "Virtual Address"
+          ]
+        },
+        "[[Implicit Segmentation]]": {
+          "questions": 4,
+          "concepts": [
+            "Implicit Segmentation",
+            "Hardware",
+            "Program Counter",
+            "Stack Pointer",
+            "Heap Segment"
+          ]
+        },
+        "[[Translation Lookaside Buffer]]": {
+          "questions": 1,
+          "concepts": [
+            "TLB",
+            "Hardware Cache",
+            "Address Translation"
+          ]
+        },
+        "[[Segmentation]]": {
+          "questions": 3,
+          "concepts": [
+            "Segmentation",
+            "Base and Bounds",
+            "Multiple Segments"
+          ]
+        },
+        "[[Base and Bounds]]": {
+          "questions": 2,
+          "concepts": [
+            "Base and Bounds",
+            "Base Register",
+            "Offset"
+          ]
+        },
+        "[[Fragmentation]]": {
+          "questions": 1,
+          "concepts": [
+            "Fragmentation",
+            "External Fragmentation"
+          ]
+        }
+      },
+      "concepts": {
+        "Paging": {
+          "count": 9,
+          "questions": [
+            1,
+            2,
+            3,
+            6,
+            7,
+            12,
+            13,
+            14,
+            16
+          ]
+        },
+        "Fixed-sized Pages": {
+          "count": 3,
+          "questions": [
+            1,
+            7,
+            16
+          ]
+        },
+        "Page Frame": {
+          "count": 2,
+          "questions": [
+            3,
+            14
+          ]
+        },
+        "Physical Memory": {
+          "count": 1,
+          "questions": [
+            3
+          ]
+        },
+        "Virtual Page": {
+          "count": 1,
+          "questions": [
+            3
+          ]
+        },
+        "Page Table Entry": {
+          "count": 1,
+          "questions": [
+            3
+          ]
+        },
+        "Segmentation": {
+          "count": 4,
+          "questions": [
+            9,
+            15,
+            17,
+            19
+          ]
+        },
+        "Explicit Segmentation": {
+          "count": 6,
+          "questions": [
+            4,
+            8,
+            15,
+            18,
+            19,
+            20
+          ]
+        },
+        "Segment Selector": {
+          "count": 3,
+          "questions": [
+            4,
+            18,
+            20
+          ]
+        },
+        "Implicit Segmentation": {
+          "count": 4,
+          "questions": [
+            5,
+            10,
+            17,
+            19
+          ]
+        },
+        "TLB": {
+          "count": 2,
+          "questions": [
+            11,
+            13
+          ]
+        },
+        "Address Translation": {
+          "count": 2,
+          "questions": [
+            11,
+            12
+          ]
+        },
+        "External Fragmentation": {
+          "count": 2,
+          "questions": [
+            2,
+            12
+          ]
+        },
+        "Offset": {
+          "count": 3,
+          "questions": [
+            6,
+            15,
+            18
+          ]
+        },
+        "Base Register": {
+          "count": 2,
+          "questions": [
+            6,
+            15
+          ]
+        },
+        "Virtual Address": {
+          "count": 3,
+          "questions": [
+            4,
+            8,
+            20
+          ]
+        },
+        "Hardware": {
+          "count": 2,
+          "questions": [
+            5,
+            17
+          ]
+        },
+        "Fragmentation": {
+          "count": 1,
+          "questions": [
+            12
+          ]
+        },
+        "Multi-Level Page Table": {
+          "count": 1,
+          "questions": [
+            13
+          ]
+        },
+        "Many-to-Many": {
+          "count": 1,
+          "questions": [
+            16
+          ]
+        },
+        "Base and Bounds": {
+          "count": 2,
+          "questions": [
+            15,
+            17
+          ]
+        }
+      },
+      "by_chapter": {
+        "15": {
+          "notes": [
+            "[[Paging]]",
+            "[[Translation Lookaside Buffer]]"
+          ],
+          "question_count": 10
+        },
+        "16": {
+          "notes": [
+            "[[Explicit Segmentation]]",
+            "[[Implicit Segmentation]]",
+            "[[Segmentation]]",
+            "[[Base and Bounds]]",
+            "[[Fragmentation]]"
+          ],
+          "question_count": 10
+        }
+      },
+      "topic_emphasis": {
+        "Paging": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage across difficulties"
+        },
+        "Explicit Segmentation": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "Implicit Segmentation": {
+          "current_difficulty": "medium",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        },
+        "TLB": {
+          "current_difficulty": "medium",
+          "recommendation": "add_more",
+          "reason": "Only 2 questions"
+        },
+        "Segmentation": {
+          "current_difficulty": "easy",
+          "recommendation": "maintain",
+          "reason": "Good coverage"
+        }
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "What is paging in operating systems?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "Dividing up process space into variable-sized segments",
+          "concepts": [
+            "Segmentation",
+            "Variable-sized Segments"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Dividing up process space into fixed-sized pages",
+          "concepts": [
+            "Paging",
+            "Fixed-sized Pages"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Allocating memory dynamically on the heap",
+          "concepts": [
+            "Paging",
+            "Heap Allocation"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Switching between different processes",
+          "concepts": [
+            "Context Switching"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Paging is the idea of dividing up process space into fixed-sized pieces called pages. Physical memory is viewed as an array of fixed-size slots called page frames.",
+        "incorrect": {
+          "A": "Variable-sized segments describe segmentation, not paging.",
+          "C": "Dynamic heap allocation is a separate memory management function.",
+          "D": "Process switching is context switching, not paging."
+        }
+      },
+      "source_notes": [
+        "[[Paging]]"
+      ]
+    },
+    {
+      "id": 2,
+      "text": "What are the advantages of paging over segmentation? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "No external fragmentation",
+          "concepts": [
+            "Paging",
+            "External Fragmentation"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Greater flexibility for sparse address spaces",
+          "concepts": [
+            "Paging",
+            "Sparse Address Space"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Simpler free-space management",
+          "concepts": [
+            "Paging",
+            "Free Space Management"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Better support for sharing memory between processes",
+          "concepts": [
+            "Paging",
+            "Memory Sharing"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "explanation": {
+        "correct": "Paging advantages: 1) No external fragmentation (fixed-sized pages), 2) Flexible - supports sparse address spaces effectively, 3) Simple free-space management (just maintain a free list of pages).",
+        "incorrect": {
+          "D": "Both paging and segmentation can support sharing; this is not a unique advantage of paging."
+        }
+      },
+      "source_notes": [
+        "[[Paging]]"
+      ]
+    },
+    {
+      "id": 3,
+      "text": "What is a page frame?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "A fixed-size slot in physical memory that can hold a page",
+          "concepts": [
+            "Paging",
+            "Page Frame",
+            "Physical Memory"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "A virtual memory page in the address space",
+          "concepts": [
+            "Paging",
+            "Virtual Page",
+            "Address Space"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "An entry in the page table",
+          "concepts": [
+            "Paging",
+            "Page Table Entry"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "A type of segmentation register",
+          "concepts": [
+            "Segmentation",
+            "Segment Registers"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": {
+        "correct": "A page frame is a fixed-size slot in physical memory. Each frame can contain a single virtual memory page.",
+        "incorrect": {
+          "B": "A virtual page lives in the process address space, not in physical memory.",
+          "C": "A page table entry (PTE) maps a virtual page to a physical frame.",
+          "D": "Page frames are not related to segmentation registers."
+        }
+      },
+      "source_notes": [
+        "[[Paging]]"
+      ]
+    },
+    {
+      "id": 4,
+      "text": "How does explicit segmentation determine which segment a virtual address refers to?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "By checking the program counter value",
+          "concepts": [
+            "Explicit Segmentation",
+            "Program Counter"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "By using the top few bits of the virtual address as segment selector",
+          "concepts": [
+            "Explicit Segmentation",
+            "Segment Selector",
+            "Virtual Address"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "By using the stack or base pointer",
+          "concepts": [
+            "Implicit Segmentation",
+            "Stack Pointer"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "By looking up the page table",
+          "concepts": [
+            "Paging",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "In explicit segmentation, the address space is split into segments based on the top few bits of the virtual address. For example, top 2 bits '01' might indicate the code segment, and the bottom bits are the offset into that segment.",
+        "incorrect": {
+          "A": "The program counter helps with implicit segmentation, not explicit.",
+          "C": "Stack/base pointer is used in implicit segmentation.",
+          "D": "Page tables are used in paging, not segmentation."
+        }
+      },
+      "source_notes": [
+        "[[Explicit Segmentation]]"
+      ]
+    },
+    {
+      "id": 5,
+      "text": "What is implicit segmentation?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Hardware determines the segment by how the address was formed",
+          "concepts": [
+            "Implicit Segmentation",
+            "Hardware",
+            "Address Formation"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Top bits of the address specify the segment",
+          "concepts": [
+            "Explicit Segmentation",
+            "Virtual Address"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Page table entries determine the segment",
+          "concepts": [
+            "Paging",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "The OS explicitly sets segment registers",
+          "concepts": [
+            "Implicit Segmentation",
+            "OS",
+            "Segment Registers"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": {
+        "correct": "In implicit segmentation, the hardware determines the segment register by noticing how the address was formed: if from program counter -> code segment; if based on stack/base pointer -> stack segment; otherwise -> heap.",
+        "incorrect": {
+          "B": "This describes explicit segmentation, not implicit.",
+          "C": "Page tables are for paging, not segmentation.",
+          "D": "Implicit segmentation is determined by hardware automatically, not explicitly set by OS."
+        }
+      },
+      "source_notes": [
+        "[[Implicit Segmentation]]"
+      ]
+    },
+    {
+      "id": 6,
+      "text": "What is the physical address calculation in segmentation?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "page table entry + offset",
+          "concepts": [
+            "Paging",
+            "Page Table",
+            "PFN"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "base register + offset",
+          "concepts": [
+            "Segmentation",
+            "Base Register",
+            "Offset"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "VPN + PFN",
+          "concepts": [
+            "Paging",
+            "VPN",
+            "PFN"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "stack pointer + heap size",
+          "concepts": [
+            "Segmentation",
+            "Stack Pointer",
+            "Heap"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "In segmentation, the physical address is calculated as: base register + offset. The base register specifies where the segment starts in physical memory, and the offset is the location within that segment.",
+        "incorrect": {
+          "A": "This describes paging translation (PTE contains PFN, plus offset).",
+          "C": "VPN to PFN translation is part of paging, not segmentation.",
+          "D": "This is not a valid address calculation method."
+        }
+      },
+      "source_notes": [
+        "[[Explicit Segmentation]]",
+        "[[Base and Bounds]]"
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Which of the following are true about paging? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Uses fixed-sized pages",
+          "concepts": [
+            "Paging",
+            "Fixed-sized Pages"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Can lead to external fragmentation",
+          "concepts": [
+            "Paging",
+            "External Fragmentation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Physical memory uses page frames",
+          "concepts": [
+            "Paging",
+            "Physical Memory",
+            "Page Frames"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Requires knowing segment boundaries",
+          "concepts": [
+            "Segmentation",
+            "Segment Boundaries"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "C"
+      ],
+      "explanation": {
+        "correct": "Paging: 1) Uses fixed-sized pages (no external fragmentation), 2) Physical memory is divided into page frames that hold pages.",
+        "incorrect": {
+          "B": "Paging does NOT lead to external fragmentation - this is one of its main advantages.",
+          "D": "Segment boundaries are relevant to segmentation, not paging."
+        }
+      },
+      "source_notes": [
+        "[[Paging]]"
+      ]
+    },
+    {
+      "id": 8,
+      "text": "In explicit segmentation with virtual address 4200 (binary: 0100000100000), what do the top two bits represent?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "The offset into the segment",
+          "concepts": [
+            "Explicit Segmentation",
+            "Segment Register",
+            "Virtual Address"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "The segment register to use",
+          "concepts": [
+            "Explicit Segmentation",
+            "Segment",
+            "Virtual Address"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "The physical frame number",
+          "concepts": [
+            "Explicit Segmentation",
+            "Physical Frame"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "The page table index",
+          "concepts": [
+            "Explicit Segmentation",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "In explicit segmentation, the top two bits (01 in this case) tell the hardware which segment register to use. The bottom bits represent the offset into that segment.",
+        "incorrect": {
+          "A": "The offset is in the bottom bits, not the top bits.",
+          "C": "Physical frame numbers come from page table entries in paging, not segmentation.",
+          "D": "Page table indexes are used in paging, not segmentation."
+        }
+      },
+      "source_notes": [
+        "[[Explicit Segmentation]]"
+      ]
+    },
+    {
+      "id": 9,
+      "text": "What is segmentation in operating systems?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "Dividing memory into fixed-sized pages",
+          "concepts": [
+            "Segmentation",
+            "Fixed-sized Pages"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Generalized base/bounds with multiple segments for different parts of address space",
+          "concepts": [
+            "Segmentation",
+            "Base and Bounds",
+            "Multiple Segments"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Allocating memory on the heap",
+          "concepts": [
+            "Segmentation",
+            "Heap Allocation"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Translating virtual to physical addresses using a page table",
+          "concepts": [
+            "Segmentation",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Segmentation is generalized base/bounds - it divides the address space into multiple segments (code, stack, heap, etc.), each with its own base and bounds registers.",
+        "incorrect": {
+          "A": "This describes paging, not segmentation.",
+          "C": "Heap allocation is a separate memory management function.",
+          "D": "Page tables are used in paging, not segmentation."
+        }
+      },
+      "source_notes": [
+        "[[Segmentation]]"
+      ]
+    },
+    {
+      "id": 10,
+      "text": "How does the hardware know which segment an address refers to in implicit segmentation? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "If address comes from program counter, it's in the code segment",
+          "concepts": [
+            "Implicit Segmentation",
+            "Program Counter",
+            "Code Segment"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "If address is based on stack/base pointer, it's in the stack segment",
+          "concepts": [
+            "Implicit Segmentation",
+            "Stack Pointer",
+            "Stack Segment"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Any other address is assumed to be in the heap",
+          "concepts": [
+            "Implicit Segmentation",
+            "Heap Segment"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "The top bits of the address specify the segment",
+          "concepts": [
+            "Explicit Segmentation",
+            "Virtual Address"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "explanation": {
+        "correct": "In implicit segmentation: 1) Address from program counter -> code segment, 2) Address from stack/base pointer -> stack segment, 3) Any other address -> heap segment.",
+        "incorrect": {
+          "D": "Top bits specifying the segment is explicit segmentation, not implicit."
+        }
+      },
+      "source_notes": [
+        "[[Implicit Segmentation]]"
+      ]
+    },
+    {
+      "id": 11,
+      "text": "What is the Translation Lookaside Buffer (TLB)?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "A data structure storing all page table entries",
+          "concepts": [
+            "Translation Lookaside Buffer",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "A hardware cache for recent address translations",
+          "concepts": [
+            "Translation Lookaside Buffer",
+            "Hardware Cache",
+            "Address Translation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "A register storing the base and bounds",
+          "concepts": [
+            "Translation Lookaside Buffer",
+            "Base and Bounds"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "A queue for pending memory requests",
+          "concepts": [
+            "Translation Lookaside Buffer",
+            "Queue"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The TLB (Translation Lookaside Buffer) is a hardware cache that stores recent virtual-to-physical address translations, avoiding the need to access the page table for every memory reference.",
+        "incorrect": {
+          "A": "The page table (not TLB) stores all page table entries.",
+          "C": "Base and bounds registers are used in segmentation, not related to TLB.",
+          "D": "The TLB is a cache, not a queue for pending requests."
+        }
+      },
+      "source_notes": [
+        "[[Translation Lookaside Buffer]]",
+        "[[Paging]]"
+      ]
+    },
+    {
+      "id": 12,
+      "text": "What problem does paging solve that segmentation has?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Paging is faster than segmentation",
+          "concepts": [
+            "Paging",
+            "External Fragmentation"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Paging avoids external fragmentation",
+          "concepts": [
+            "Paging",
+            "External Fragmentation",
+            "Fixed-sized Pages"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Paging supports more segments",
+          "concepts": [
+            "Paging",
+            "Segments"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Paging has simpler hardware requirements",
+          "concepts": [
+            "Paging",
+            "Hardware Requirements"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "Paging solves the external fragmentation problem of segmentation by using fixed-sized pages. With variable-sized segments, free space gets broken into unusable fragments, but fixed-sized pages avoid this.",
+        "incorrect": {
+          "A": "Paging isn't necessarily faster - it requires page table lookups (or TLB).",
+          "C": "Paging doesn't use the concept of segments at all.",
+          "D": "Paging actually requires more complex hardware (page tables, TLB) than simple segmentation."
+        }
+      },
+      "source_notes": [
+        "[[Paging]]",
+        "[[Fragmentation]]"
+      ]
+    },
+    {
+      "id": 13,
+      "text": "Which of the following are concepts related to paging? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Page Table",
+          "concepts": [
+            "Paging",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Translation Lookaside Buffer (TLB)",
+          "concepts": [
+            "Paging",
+            "TLB",
+            "Address Translation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Multi-Level Page Table",
+          "concepts": [
+            "Paging",
+            "Multi-Level Page Table"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Base and Bounds registers",
+          "concepts": [
+            "Segmentation",
+            "Base and Bounds"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "explanation": {
+        "correct": "Paging concepts include: 1) Page Table - maps virtual pages to physical frames, 2) TLB - caches recent translations, 3) Multi-Level Page Table - handles large address spaces efficiently.",
+        "incorrect": {
+          "D": "Base and bounds registers are used in segmentation, not paging."
+        }
+      },
+      "source_notes": [
+        "[[Paging]]",
+        "[[Page Table]]",
+        "[[Translation Lookaside Buffer]]"
+      ]
+    },
+    {
+      "id": 14,
+      "text": "What is the physical memory organization in paging?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "An array of variable-sized segments",
+          "concepts": [
+            "Paging",
+            "Variable-sized Segments"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "An array of fixed-sized page frames",
+          "concepts": [
+            "Paging",
+            "Page Frames",
+            "Physical Memory"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "A linked list of free blocks",
+          "concepts": [
+            "Paging",
+            "Linked List"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "A stack of allocated pages",
+          "concepts": [
+            "Paging",
+            "Stack"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "In paging, physical memory is viewed as an array of fixed-size slots called page frames. Each frame can contain a single virtual memory page.",
+        "incorrect": {
+          "A": "Variable-sized segments describe segmentation, not paging.",
+          "C": "A free list is used for tracking free memory, not organizing physical memory.",
+          "D": "There is no stack organization of pages in physical memory."
+        }
+      },
+      "source_notes": [
+        "[[Paging]]"
+      ]
+    },
+    {
+      "id": 15,
+      "text": "In the context of segmentation, what is the 'offset'?",
+      "type": "single",
+      "difficulty": "easy",
+      "options": [
+        {
+          "key": "A",
+          "text": "The location within a segment",
+          "concepts": [
+            "Explicit Segmentation",
+            "Offset",
+            "Segment"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "The base register value",
+          "concepts": [
+            "Explicit Segmentation",
+            "Base Register"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "The physical frame number",
+          "concepts": [
+            "Explicit Segmentation",
+            "Physical Frame"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "The page table index",
+          "concepts": [
+            "Explicit Segmentation",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": {
+        "correct": "The offset is the location within a segment. It's added to the base register value to calculate the physical address: base register + offset = physical address.",
+        "incorrect": {
+          "B": "The base register specifies where the segment starts, not the offset.",
+          "C": "Physical frame numbers are from paging, not segmentation.",
+          "D": "Page table indexes are from paging, not segmentation."
+        }
+      },
+      "source_notes": [
+        "[[Explicit Segmentation]]",
+        "[[Base and Bounds]]"
+      ]
+    },
+    {
+      "id": 16,
+      "text": "What is the relationship between virtual pages and physical page frames?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "Each virtual page maps to exactly one physical page frame",
+          "concepts": [
+            "Paging",
+            "Virtual Page",
+            "Physical Frame"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Virtual pages and physical frames have a many-to-many relationship",
+          "concepts": [
+            "Paging",
+            "Many-to-Many"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Physical frames are larger than virtual pages",
+          "concepts": [
+            "Paging",
+            "Page Size"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Virtual pages contain multiple physical frames",
+          "concepts": [
+            "Paging",
+            "Multiple Frames"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "explanation": {
+        "correct": "In paging, each virtual page maps to exactly one physical page frame (of the same size). The page table stores this mapping from virtual page number (VPN) to physical frame number (PFN).",
+        "incorrect": {
+          "B": "The relationship is one-to-one (one virtual page to one physical frame).",
+          "C": "Pages and frames are the same size in paging.",
+          "D": "A virtual page maps to one frame, not multiple frames."
+        }
+      },
+      "source_notes": [
+        "[[Paging]]",
+        "[[Page Table]]"
+      ]
+    },
+    {
+      "id": 17,
+      "text": "Which of the following statements about segmentation are true? (Select all that apply)",
+      "type": "multiple",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "Each segment has its own base and bounds registers",
+          "concepts": [
+            "Segmentation",
+            "Segment Registers",
+            "Base and Bounds"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Segmentation can lead to external fragmentation",
+          "concepts": [
+            "Segmentation",
+            "External Fragmentation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "The address space is divided into fixed-sized pages",
+          "concepts": [
+            "Paging",
+            "Fixed-sized Pages"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Implicit segmentation uses hardware to determine the segment",
+          "concepts": [
+            "Segmentation",
+            "Implicit Segmentation",
+            "Hardware"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "explanation": {
+        "correct": "Segmentation: 1) Each segment (code, stack, heap) has its own base/bounds registers, 2) Can lead to external fragmentation (variable-sized segments), 3) Implicit segmentation uses hardware (program counter, stack pointer) to determine the segment.",
+        "incorrect": {
+          "C": "Fixed-sized pages describe paging, not segmentation (segmentation uses variable-sized segments)."
+        }
+      },
+      "source_notes": [
+        "[[Segmentation]]",
+        "[[Implicit Segmentation]]",
+        "[[Explicit Segmentation]]"
+      ]
+    },
+    {
+      "id": 18,
+      "text": "What is the purpose of the offset bits in explicit segmentation?",
+      "type": "single",
+      "difficulty": "medium",
+      "options": [
+        {
+          "key": "A",
+          "text": "To select which segment register to use",
+          "concepts": [
+            "Explicit Segmentation",
+            "Segment Selector"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "To specify the location within the selected segment",
+          "concepts": [
+            "Explicit Segmentation",
+            "Offset",
+            "Location Within Segment"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "To calculate the physical frame number",
+          "concepts": [
+            "Explicit Segmentation",
+            "PFN"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "To index into the page table",
+          "concepts": [
+            "Explicit Segmentation",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "In explicit segmentation, the bottom bits (offset) specify the location within the selected segment. The top bits select the segment, and the offset says where in that segment.",
+        "incorrect": {
+          "A": "The top bits (not offset) select the segment register.",
+          "C": "Physical frame numbers come from page table entries in paging.",
+          "D": "Page table indexing is part of paging, not segmentation."
+        }
+      },
+      "source_notes": [
+        "[[Explicit Segmentation]]"
+      ]
+    },
+    {
+      "id": 19,
+      "text": "What is the main difference between explicit and implicit segmentation?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "Explicit uses variable-sized segments, implicit uses fixed-sized pages",
+          "concepts": [
+            "Explicit Segmentation",
+            "Variable-sized Segments"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "Explicit uses top bits of address to select segment, implicit uses how address was formed",
+          "concepts": [
+            "Implicit Segmentation",
+            "Hardware",
+            "Address Formation"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "Explicit requires a page table, implicit does not",
+          "concepts": [
+            "Paging",
+            "Page Table"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Explicit is faster than implicit",
+          "concepts": [
+            "Implicit Segmentation",
+            "Page Table"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "The main difference: Explicit segmentation uses the top bits of the virtual address to select the segment register while implicit segmentation has hardware determine the segment by how the address was formed (program counter -> code, stack pointer -> stack, etc.).",
+        "incorrect": {
+          "A": "Both explicit and implicit segmentation use variable-sized segments (not pages).",
+          "C": "Neither explicit nor implicit segmentation uses a page table - that's paging.",
+          "D": "There's no inherent speed difference stated between the two approaches."
+        }
+      },
+      "source_notes": [
+        "[[Explicit Segmentation]]",
+        "[[Implicit Segmentation]]"
+      ]
+    },
+    {
+      "id": 20,
+      "text": "Given a system with explicit segmentation using top 2 bits for segment selection, if virtual address is 4200 (binary: 0100000100000), what is the offset?",
+      "type": "single",
+      "difficulty": "hard",
+      "options": [
+        {
+          "key": "A",
+          "text": "01 (the top two bits)",
+          "concepts": [
+            "Explicit Segmentation",
+            "Segment Selector"
+          ]
+        },
+        {
+          "key": "B",
+          "text": "00000100000 (the bottom 11 bits)",
+          "concepts": [
+            "Explicit Segmentation",
+            "Offset",
+            "Virtual Address"
+          ]
+        },
+        {
+          "key": "C",
+          "text": "The entire binary number",
+          "concepts": [
+            "Explicit Segmentation",
+            "Virtual Address"
+          ]
+        },
+        {
+          "key": "D",
+          "text": "Cannot be determined from the information given",
+          "concepts": [
+            "Explicit Segmentation",
+            "Cannot Determine"
+          ]
+        }
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "explanation": {
+        "correct": "In explicit segmentation with top 2 bits for segment selection, the offset is the remaining bits after the top 2 bits. For 4200 = 0100000100000 (13 bits), the top 2 bits are '01' (segment), and the offset is '00000100000' (bottom 11 bits).",
+        "incorrect": {
+          "A": "The top two bits are the segment selector, not the offset.",
+          "C": "The entire binary number includes both segment and offset portions.",
+          "D": "The offset can be determined - it's the bits after the top 2 segment bits."
+        }
+      },
+      "source_notes": [
+        "[[Explicit Segmentation]]"
+      ]
+    }
+  ]
+}
